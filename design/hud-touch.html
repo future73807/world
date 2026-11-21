@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>高保真 · 默认 HUD · 触屏横屏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .minimap-wrap { position: absolute; top: 18px; left: 20px; }
+  .minimap { width: 108px; height: 108px; overflow: hidden; }
+  .minimap svg { width: 100%; height: 100%; }
+  .region { margin-top: 6px; width: 108px; text-align: center; }
+  .region .name { font-family: var(--font-title); font-size: 13px; letter-spacing: .1em; text-shadow: var(--shadow-text); }
+  .region .meta { font-size: 9.5px; color: var(--text-mid); text-shadow: var(--shadow-text); }
+
+  .quest { position: absolute; top: 162px; left: 20px; width: 190px; }
+  .quest .label { font-size: 9px; letter-spacing: .2em; color: var(--gold); text-shadow: var(--shadow-text); }
+  .quest h2 { margin-top: 5px; font-family: var(--font-title); font-size: 14.5px; text-shadow: var(--shadow-text); }
+
+  .top-right { position: absolute; top: 18px; right: 20px; display: flex; gap: 10px; }
+  .top-right .icon-btn { width: 44px; height: 44px; }
+
+  .stick { position: absolute; left: 34px; bottom: 40px; width: 124px; height: 124px; }
+  .stick .base { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(226,236,228,.22); background: radial-gradient(circle, rgba(12,30,36,.34), rgba(12,30,36,.14)); }
+  .stick .nub { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(226,236,228,.34), rgba(20,48,56,.5)); border: 1px solid rgba(226,236,228,.34); }
+  .stick .dir { position: absolute; left: 50%; top: -16px; transform: translateX(-50%); font-size: 9px; color: var(--text-low); }
+
+  .look { position: absolute; right: 0; top: 90px; bottom: 0; width: 42%; display: flex; justify-content: center; padding-top: 26px; }
+  .look span { font-size: 10px; letter-spacing: .18em; color: rgba(207,214,204,.42); }
+
+  .actions { position: absolute; right: 26px; bottom: 34px; width: 190px; height: 168px; }
+  .abtn { position: absolute; display: grid; place-items: center; gap: 2px; border-radius: 50%; border: 1px solid var(--ink-line-strong); background: var(--ink-glass-soft); backdrop-filter: var(--blur); color: var(--text-hi); font-size: 10px; }
+  .abtn .icon { width: 22px; height: 22px; }
+  .abtn.jump { right: 0; bottom: 44px; width: 74px; height: 74px; border-color: rgba(217,192,138,.4); }
+  .abtn.dash { right: 82px; bottom: 0; width: 58px; height: 58px; }
+  .abtn.use { right: 86px; bottom: 96px; width: 58px; height: 58px; border-color: rgba(143,214,194,.45); color: var(--accent); }
+
+  .status { position: absolute; left: 140px; top: 24px; display: flex; align-items: center; gap: 8px; }
+  .status .avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--ink-line-strong); background: var(--ink-glass-soft); display: grid; place-items: center; }
+  .status .avatar svg { width: 24px; height: 24px; }
+  .bar { width: 108px; height: 4px; border-radius: 2px; background: rgba(8,24,30,.6); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 72%; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); }
+
+  .safe { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; background: linear-gradient(0deg, rgba(6,18,23,.34), transparent); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="scene"></div>
+  <div class="hud">
+    <div class="minimap-wrap">
+      <div class="orb minimap ctl">
+        <svg viewBox="0 0 100 100">
+          <defs><clipPath id="mmt"><circle cx="50" cy="50" r="49"/></clipPath></defs>
+          <g clip-path="url(#mmt)">
+            <rect width="100" height="100" fill="#2c4f56"/>
+            <polygon points="14,52 38,26 70,30 88,54 66,82 30,80" fill="#5f8a68"/>
+            <polygon points="38,26 70,30 58,50 30,50" fill="#7ba473"/>
+            <g transform="translate(50,58) rotate(24)"><polygon points="0,-7 5,4.6 0,2.4 -5,4.6" fill="#f4efe2" stroke="#0f262d" stroke-width=".8"/></g>
+          </g>
+        </svg>
+      </div>
+      <div class="region"><div class="name">晨雾浅滩</div><div class="meta">清晨 · 薄雾</div></div>
+    </div>
+
+    <div class="quest"><div class="label">当前目标</div><h2>驱散浅滩的迷雾</h2></div>
+
+    <div class="top-right">
+      <button class="icon-btn ctl" data-icon="map"></button>
+      <button class="icon-btn ctl" data-icon="quest"></button>
+      <button class="icon-btn ctl" data-icon="gear"></button>
+    </div>
+
+    <div class="look"><span>滑动环视</span></div>
+
+    <div class="stick ctl"><div class="base"></div><div class="nub"></div><div class="dir">移动</div></div>
+
+    <div class="actions">
+      <button class="abtn use ctl"><span data-icon="hand"></span>互动</button>
+      <button class="abtn jump ctl"><span data-icon="jump"></span>跳跃</button>
+      <button class="abtn dash ctl"><span data-icon="dash"></span>冲刺</button>
+    </div>
+
+    <div class="status">
+      <div class="avatar"><svg viewBox="0 0 40 40"><path d="M20 4c7 5 12 11 12 18a12 12 0 0 1-24 0C8 15 13 9 20 4Z" fill="#8fd6c2"/><ellipse cx="15.5" cy="22" rx="1.6" ry="2.4" fill="#123a3c"/><ellipse cx="24.5" cy="22" rx="1.6" ry="2.4" fill="#123a3c"/></svg></div>
+      <div class="bar"><i></i></div>
+    </div>
+    <div class="safe"></div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+  mountScene(document.getElementById('scene'));
+  hydrateIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>高保真 · 暂停设置与世界创建 · 触屏横屏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .duo { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+  .half { position: relative; overflow: hidden; border-right: 1px solid rgba(214,226,220,.12); }
+  .half .tag { position: absolute; top: 12px; left: 14px; z-index: 3; font-size: 11px; letter-spacing: .14em; color: var(--text-mid); text-shadow: var(--shadow-text); }
+  .center { position: absolute; inset: 0; display: grid; place-items: center; padding: 26px 14px 14px; }
+  .menu { width: 100%; max-width: 330px; padding: 16px 18px 14px; max-height: 100%; }
+  .menu h1 { font-size: 17px; letter-spacing: .2em; text-align: center; }
+  .menu .sub { margin-top: 5px; text-align: center; font-size: 10px; color: var(--text-low); }
+  .resume { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 44px; margin-top: 12px; border-radius: var(--r-pill); border: 1px solid rgba(217,192,138,.5); background: linear-gradient(160deg, rgba(217,192,138,.28), rgba(217,192,138,.12)); color: #f2e6c6; font-size: 13px; letter-spacing: .14em; }
+  .resume .icon { width: 16px; height: 16px; }
+  .tabs { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tab { display: inline-flex; align-items: center; gap: 5px; height: 36px; padding: 0 11px; border-radius: var(--r-pill); border: 1px solid transparent; background: transparent; color: var(--text-mid); font-size: 11.5px; }
+  .tab .icon { width: 14px; height: 14px; }
+  .tab.active { color: var(--gold); border-color: var(--gold-soft); background: rgba(217,192,138,.1); }
+  .row { margin-top: 12px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-mid); }
+  .row label { flex: 1; }
+  .switch { position: relative; width: 44px; height: 26px; border-radius: 13px; background: rgba(214,226,220,.18); border: none; }
+  .switch i { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #cfd6cc; }
+  .switch.on { background: rgba(143,214,194,.34); }
+  .switch.on i { left: 21px; background: var(--accent); }
+
+  .create { width: 100%; max-width: 352px; padding: 16px 18px; max-height: 100%; }
+  .create h1 { font-size: 17px; letter-spacing: .14em; }
+  .create .inspire { margin-top: 10px; display: flex; gap: 10px; align-items: center; }
+  .create .inspire svg { width: 92px; height: 60px; border-radius: 8px; border: 1px solid var(--ink-line); flex: none; }
+  .create .inspire p { font-size: 11px; line-height: 1.7; color: var(--text-mid); }
+  .input { margin-top: 12px; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border-radius: var(--r-md); border: 1px solid var(--ink-line-strong); background: rgba(8,22,28,.42); font-size: 12px; }
+  .input .icon { width: 16px; height: 16px; color: var(--gold); flex: none; }
+  .presets { margin-top: 10px; display: flex; gap: 8px; }
+  .preset { flex: 1; height: 44px; border-radius: var(--r-md); border: 1px solid var(--ink-line); background: rgba(10,26,32,.32); color: var(--text-mid); font-size: 12px; font-family: var(--font-title); }
+  .preset.on { border-color: rgba(217,192,138,.48); background: rgba(217,192,138,.1); color: var(--gold); }
+  .actions { margin-top: 14px; display: flex; gap: 10px; }
+  .cancel { flex: 1; height: 44px; border-radius: var(--r-pill); border: 1px solid var(--ink-line); background: transparent; color: var(--text-mid); font-size: 12px; }
+  .go { flex: 1.4; height: 44px; border-radius: var(--r-pill); border: 1px solid rgba(217,192,138,.5); background: linear-gradient(160deg, rgba(217,192,138,.3), rgba(217,192,138,.12)); color: #f2e6c6; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="duo">
+    <div class="half">
+      <div class="scene"></div>
+      <div class="tag">暂停 / 设置 · 触屏（44px 点击区）</div>
+      <div class="center">
+        <div class="panel menu ctl">
+          <h1 class="title">迷雾群岛</h1><div class="sub">已暂停 · 晨雾浅滩</div>
+          <button class="resume ctl"><span data-icon="play"></span> 继续游戏</button>
+          <div class="tabs">
+            <button class="tab ctl"><span data-icon="keyboard"></span> 操作</button>
+            <button class="tab ctl active"><span data-icon="eye"></span> 镜头</button>
+            <button class="tab ctl"><span data-icon="sparkle"></span> 画面</button>
+            <button class="tab ctl"><span data-icon="sound"></span> 声音</button>
+          </div>
+          <div class="row"><label>松鼠标自动回正</label><button class="switch ctl"><i></i></button></div>
+          <div class="row"><label>镜头遮挡自动避让</label><button class="switch ctl on"><i></i></button></div>
+          <div class="row"><label>减少镜头晃动</label><button class="switch ctl on"><i></i></button></div>
+        </div>
+      </div>
+    </div>
+    <div class="half">
+      <div class="scene"></div>
+      <div class="tag">世界创建 · 触屏（高级参数默认折叠）</div>
+      <div class="center">
+        <div class="panel create ctl">
+          <h1 class="title">创造你的世界</h1>
+          <div class="inspire">
+            <svg viewBox="0 0 92 60"><rect width="92" height="60" fill="#3d6f7d"/><polygon points="6,44 30,22 58,28 82,46 54,56 20,54" fill="#7ba473"/><polygon points="20,54 54,56 82,46 80,52 54,60 22,58" fill="#8a8f6a"/></svg>
+            <p>晨雾群岛 · 缓丘与浅滩<br>种子 MIST-7F3A-42</p>
+          </div>
+          <div class="input"><span data-icon="sparkle"></span><span>有发光菌谷和缓丘的浮岛</span></div>
+          <div class="presets">
+            <button class="preset on ctl">浮岛晨雾</button><button class="preset ctl">湿地灯菌</button><button class="preset ctl">雪原高地</button>
+          </div>
+          <div class="actions"><button class="cancel ctl">取消</button><button class="go ctl">生成世界</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+  document.querySelectorAll('.half .scene').forEach(el => mountScene(el, true));
+  hydrateIcons();
+</script>
+</body>
+</html>

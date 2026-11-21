@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>高保真 · 默认 HUD · 桌面</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .minimap-wrap { position: absolute; top: var(--safe-y); left: var(--safe-x); }
+  .minimap { width: 168px; height: 168px; overflow: hidden; }
+  .minimap svg { width: 100%; height: 100%; }
+  .region { margin-top: 10px; text-align: center; width: 168px; }
+  .region .name { font-family: var(--font-title); font-size: 17px; letter-spacing: .14em; text-shadow: var(--shadow-text); }
+  .region .meta { margin-top: 3px; font-size: 11.5px; color: var(--text-mid); letter-spacing: .06em; text-shadow: var(--shadow-text); display: flex; gap: 6px; justify-content: center; align-items: center; }
+  .region .meta svg { width: 12px; height: 12px; }
+
+  .quest { position: absolute; top: 268px; left: var(--safe-x); width: 262px; }
+  .quest .label { display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: .22em; color: var(--gold); text-shadow: var(--shadow-text); }
+  .quest .label .icon { width: 15px; height: 15px; }
+  .quest h2 { margin-top: 7px; font-family: var(--font-title); font-size: 19px; font-weight: 600; letter-spacing: .05em; text-shadow: var(--shadow-text); }
+  .quest ul { margin-top: 9px; list-style: none; display: grid; gap: 6px; }
+  .quest li { display: flex; gap: 8px; align-items: baseline; font-size: 12.5px; color: var(--text-mid); text-shadow: var(--shadow-text); }
+  .quest li::before { content: ""; width: 5px; height: 5px; flex: none; transform: rotate(45deg) translateY(-1px); border: 1px solid var(--accent); }
+  .quest li.done { color: var(--text-low); }
+  .quest li.done::before { background: var(--accent); }
+  .quest .more { margin-top: 10px; font-size: 11px; color: var(--text-low); display: flex; gap: 6px; align-items: center; }
+
+  .top-right { position: absolute; top: var(--safe-y); right: var(--safe-x); display: flex; gap: 12px; }
+  .top-right .item { display: grid; justify-items: center; gap: 5px; }
+  .top-right .item span { font-size: 10px; color: var(--text-low); }
+
+  .status { position: absolute; left: var(--safe-x); bottom: var(--safe-y); display: flex; align-items: center; gap: 12px; }
+  .status .avatar { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--ink-line-strong); background: var(--ink-glass-soft); backdrop-filter: var(--blur); display: grid; place-items: center; }
+  .status .avatar svg { width: 38px; height: 38px; }
+  .status .bars { display: grid; gap: 7px; }
+  .status .row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-mid); text-shadow: var(--shadow-text); }
+  .status .row .icon { width: 14px; height: 14px; color: var(--accent); }
+  .bar { width: 148px; height: 5px; border-radius: 3px; background: rgba(8, 24, 30, .62); overflow: hidden; border: 1px solid rgba(214,226,220,.12); }
+  .bar i { display: block; height: 100%; border-radius: 3px; }
+  .bar.stamina i { width: 72%; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); }
+
+  .interact { position: absolute; right: 9%; bottom: 37%; display: flex; align-items: center; gap: 12px; padding: 10px 18px 10px 12px; border-radius: var(--r-pill); background: var(--ink-glass-soft); border: 1px solid var(--ink-line); backdrop-filter: var(--blur); }
+  .interact::after { content: ""; position: absolute; right: -52px; top: 50%; width: 44px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .interact .ring { position: relative; width: 38px; height: 38px; display: grid; place-items: center; }
+  .interact .ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+  .interact .ring .key { position: relative; min-width: 24px; height: 24px; }
+  .interact .txt { display: grid; gap: 2px; }
+  .interact .txt b { font-size: 13.5px; font-weight: 500; letter-spacing: .04em; }
+  .interact .txt small { font-size: 11px; color: var(--text-low); }
+
+  .hint { position: absolute; right: var(--safe-x); bottom: var(--safe-y); display: flex; gap: 14px; font-size: 11px; color: var(--text-low); text-shadow: var(--shadow-text); }
+  .hint div { display: flex; align-items: center; gap: 5px; }
+
+  .toast { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); text-align: center; }
+  .toast .title { font-size: 30px; letter-spacing: .34em; text-indent: .34em; text-shadow: var(--shadow-text); }
+  .toast .sub { margin-top: 8px; font-size: 12px; letter-spacing: .2em; color: var(--gold); text-shadow: var(--shadow-text); }
+  .toast .line { margin: 14px auto 0; width: 190px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="scene"></div>
+  <div class="hud">
+    <div class="minimap-wrap">
+      <div class="orb minimap ctl">
+        <svg viewBox="0 0 100 100">
+          <defs><clipPath id="mm"><circle cx="50" cy="50" r="49"/></clipPath></defs>
+          <g clip-path="url(#mm)">
+            <rect width="100" height="100" fill="#2c4f56"/>
+            <polygon points="14,52 38,26 70,30 88,54 66,82 30,80" fill="#5f8a68"/>
+            <polygon points="38,26 70,30 58,50 30,50" fill="#7ba473"/>
+            <polygon points="14,52 30,80 20,86 8,66" fill="#cbb98f"/>
+            <path d="M50 44 62 74 44 78Z" fill="#c9bd95" opacity=".6"/>
+            <circle cx="70" cy="38" r="12" fill="#dfe7d8" opacity=".3"/>
+            <circle cx="24" cy="30" r="14" fill="#dfe7d8" opacity=".22"/>
+            <g transform="translate(60,40)"><polygon points="0,-5 4,2 -4,2" fill="#2f5f52"/><rect x="-.8" y="2" width="1.6" height="3" fill="#5a4636"/></g>
+            <g transform="translate(40,62)"><polygon points="0,-5 4,2 -4,2" fill="#2f5f52"/><rect x="-.8" y="2" width="1.6" height="3" fill="#5a4636"/></g>
+            <g transform="translate(50,58) rotate(24)"><polygon points="0,-6 4.4,4 0,2 -4.4,4" fill="#f4efe2" stroke="#0f262d" stroke-width=".8"/></g>
+          </g>
+          <circle cx="50" cy="50" r="48.5" fill="none" stroke="rgba(226,236,228,.3)" stroke-width=".8"/>
+        </svg>
+      </div>
+      <div class="region">
+        <div class="name">晨雾浅滩</div>
+        <div class="meta"><span data-icon="drop"></span> 清晨 · 薄雾</div>
+      </div>
+    </div>
+
+    <div class="quest">
+      <div class="label"><span data-icon="quest"></span> 当前目标</div>
+      <h2>驱散浅滩的迷雾</h2>
+      <ul>
+        <li class="done">抵达第一处迷雾边缘</li>
+        <li>完成一次蓄力触摸</li>
+      </ul>
+      <div class="more"><span class="key">J</span> 目标详情</div>
+    </div>
+
+    <div class="top-right">
+      <div class="item"><button class="icon-btn ctl" data-icon="map"></button><span class="key">M</span></div>
+      <div class="item"><button class="icon-btn ctl" data-icon="quest"></button><span class="key">J</span></div>
+      <div class="item"><button class="icon-btn ctl" data-icon="gear"></button><span class="key">Esc</span></div>
+    </div>
+
+    <div class="toast">
+      <div class="title">晨雾浅滩</div>
+      <div class="sub">新 区 域 已 发 现</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="interact ctl">
+      <div class="ring">
+        <svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="17" fill="none" stroke="rgba(214,226,220,.2)" stroke-width="2"/><circle cx="19" cy="19" r="17" fill="none" stroke="#d9c08a" stroke-width="2" stroke-dasharray="106.8" stroke-dashoffset="42" stroke-linecap="round"/></svg>
+        <span class="key">E</span>
+      </div>
+      <div class="txt"><b>触摸迷雾</b><small>按住蓄力 · 松开取消</small></div>
+    </div>
+
+    <div class="status">
+      <div class="avatar">
+        <svg viewBox="0 0 40 40"><path d="M20 4c7 5 12 11 12 18a12 12 0 0 1-24 0C8 15 13 9 20 4Z" fill="#8fd6c2"/><ellipse cx="15.5" cy="22" rx="1.6" ry="2.4" fill="#123a3c"/><ellipse cx="24.5" cy="22" rx="1.6" ry="2.4" fill="#123a3c"/><path d="M17 27q3 3 6 0" stroke="#123a3c" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="bars">
+        <div class="row"><span data-icon="drop"></span> 小团 <span class="caption">Lv.1</span></div>
+        <div class="row"><span data-icon="dash"></span><div class="bar stamina"><i></i></div></div>
+      </div>
+    </div>
+
+    <div class="hint">
+      <div><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> 移动</div>
+      <div><span class="key">空格</span> 跳跃</div>
+      <div><span class="key">Shift</span> 冲刺</div>
+      <div><span data-icon="eye" style="display:inline-flex;width:14px"></span> 拖动环视</div>
+    </div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+  mountScene(document.getElementById('scene'));
+  hydrateIcons();
+</script>
+</body>
+</html>

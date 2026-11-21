@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>高保真 · 全屏地图 · 触屏横屏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .wrap { position: absolute; inset: 0; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .bar-top { display: flex; align-items: center; gap: 12px; }
+  .bar-top h1 { font-size: 18px; letter-spacing: .18em; text-shadow: var(--shadow-text); }
+  .bar-top .sub { font-size: 10px; color: var(--text-low); }
+  .bar-top .spacer { flex: 1; }
+  .ghost-btn { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: var(--r-pill); border: 1px solid var(--ink-line); background: var(--ink-glass-soft); color: var(--text-mid); font-size: 12px; }
+  .ghost-btn .icon { width: 16px; height: 16px; }
+  .map-body { position: relative; flex: 1; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--ink-line); }
+  .map-body > svg { width: 100%; height: 100%; }
+  .map-tools { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 8px; align-items: flex-end; }
+  .map-tools .zoom { display: grid; gap: 8px; }
+  .detail { position: absolute; left: 12px; bottom: 12px; right: 190px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; border-radius: var(--r-md); }
+  .detail .txt { flex: 1; min-width: 0; }
+  .detail h3 { font-family: var(--font-title); font-size: 15px; letter-spacing: .06em; }
+  .detail p { margin-top: 4px; font-size: 11px; color: var(--text-mid); }
+  .primary { height: 44px; padding: 0 18px; border-radius: var(--r-pill); border: 1px solid rgba(217,192,138,.5); background: linear-gradient(160deg, rgba(217,192,138,.28), rgba(217,192,138,.12)); color: #f0e3c4; font-size: 12px; white-space: nowrap; }
+  .gesture { position: absolute; left: 14px; top: 12px; font-size: 10px; color: var(--text-low); text-shadow: var(--shadow-text); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="scene"></div>
+  <div class="wrap">
+    <div class="bar-top">
+      <h1 class="title">世界地图</h1><span class="sub">已解锁 1 / 6 环</span>
+      <div class="spacer"></div>
+      <button class="ghost-btn ctl"><span data-icon="sliders"></span> 图例</button>
+      <button class="icon-btn ctl" data-icon="close"></button>
+    </div>
+    <div class="map-body ctl">
+      <svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet">
+        <rect width="800" height="280" fill="#16333c"/>
+        <path d="M250 140 320 66 440 56 540 116 556 190 450 236 330 226 250 190Z" fill="#5f8a68"/>
+        <path d="M320 66 440 56 420 140 320 150Z" fill="#7ba473"/>
+        <path d="M420 140 540 116 556 190 450 236Z" fill="#4f7a5e"/>
+        <g opacity=".4" fill="#dfe7d8"><ellipse cx="650" cy="130" rx="90" ry="80" opacity=".18"/><ellipse cx="140" cy="150" rx="80" ry="70" opacity=".12"/></g>
+        <g stroke="#d9c08a" stroke-width="2" stroke-dasharray="5 6" fill="none"><path d="M400 196 Q440 150 480 116"/></g>
+        <g transform="translate(480,116)"><circle r="12" fill="rgba(217,192,138,.18)"/><path d="M0-6 4 4 0 2-4 4Z" fill="#d9c08a"/></g>
+        <g transform="translate(400,196) rotate(28)"><polygon points="0,-11 7,8 0,4 -7,8" fill="#f4efe2" stroke="#0f262d" stroke-width="1"/></g>
+        <text x="440" y="42" text-anchor="middle" font-family="SimSun,serif" font-size="15" fill="#f4efe2" letter-spacing="3">晨雾浅滩</text>
+        <text x="480" y="145" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="11" fill="#cfd6cc">萤光林地</text>
+      </svg>
+      <div class="gesture">双指缩放 · 单指拖动 · 双击回到玩家</div>
+      <div class="panel detail ctl">
+        <div class="txt"><h3>萤光林地</h3><p>东北 · 约 142 BU · 夜间灯菌沿溪谷亮起</p></div>
+        <button class="primary ctl">设为当前目标</button>
+      </div>
+      <div class="map-tools">
+        <button class="ghost-btn ctl"><span data-icon="locate"></span> 回到玩家</button>
+        <div class="zoom"><button class="icon-btn ctl" data-icon="plus"></button><button class="icon-btn ctl" data-icon="minus"></button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared.js"></script>
+<script>
+  mountScene(document.getElementById('scene'), true);
+  hydrateIcons();
+</script>
+</body>
+</html>
