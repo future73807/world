@@ -25,10 +25,19 @@ function loadSettings(): EngineSettings {
 }
 
 /**
- * The load screen's cloud field. Lobes are placed across (and well past) the frame,
- * each with its own size, drift vector and stagger, so the veil does not fade as a
- * sheet: it breaks apart lobe by lobe, over the island that is already rendering
- * behind it.
+ * The load screen's cloud field — one layer, and it is OPAQUE on its own.
+ *
+ * The lobes are soft-edged, so "does it cover the frame" is a number, not a
+ * judgement: laid out as below (10×9, 24–38% of the width, centres running 10%
+ * past every edge) the thinnest point of the composite is fully opaque, checked
+ * on a grid over the whole frame: `npm run clouds:cover` (scripts/check-cloud-cover.mjs
+ * mirrors this layout, so the claim stays checkable after the layout changes).
+ * That matters because whatever shows between the lobes is the half-built world.
+ * A flat sheet under them would also cover, but a sheet thins uniformly: the
+ * island then surfaces through a milky pane instead of through the gaps the
+ * clouds leave. Each lobe carries its own size, drift, delay and how strongly its
+ * underside is shaded, so the field breaks apart cloud by cloud and never as one
+ * sheet or a pattern of scales.
  */
 function useCloudLobes() {
   return useMemo(() => {
@@ -37,38 +46,55 @@ function useCloudLobes() {
       seed = (seed * 1664525 + 1013904223) >>> 0;
       return seed / 4294967296;
     };
-    const lobes: React.CSSProperties[] = [];
-    // many small-to-medium masses, not a handful of discs: the veil has to read as
-    // a bank of cumulus, so that it can break up cloud by cloud
-    const cols = 9;
-    const rows = 7;
+    const lobes: { style: React.CSSProperties; bulges: number }[] = [];
+    const cols = 10;
+    const rows = 9;
+    // centres run past the frame so the edges and corners are inside cloud, not at its fringe
+    const pad = 10;
+    const stepX = (100 + 2 * pad) / cols;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const jitterX = (rnd() - 0.5) * 15;
-        const jitterY = (rnd() - 0.5) * 15;
-        // varied wide-to-tall proportions: a field of similar ellipses reads as a
-        // pattern, real cumulus varies a lot mass to mass
-        const w = 15 + rnd() * 20;
-        const h = w * (0.66 + rnd() * 0.5);
-        // drift away from the centre so the hole opens in the middle, first
-        const cx = ((c + 0.5) / cols) * 100 + jitterX;
-        const cy = ((r + 0.5) / rows) * 100 + jitterY;
-        const dx = (cx - 50) * 3.4 + (rnd() - 0.5) * 30;
-        const dy = (cy - 50) * 2.8 - 26 - rnd() * 26;
-        // The stagger must be at least as long as one lobe's own dissolve, or every
-        // cloud is still solid while the first ones leave and the field reads as a
-        // single fade. So the delays span ~1.8 s against a ~2.2 s dissolve: at any
-        // moment some clouds are whole, some are thinning, some are already gone.
-        const delay =
-          Math.abs(c - (cols - 1) / 2) * 132 + Math.abs(r - (rows - 1) / 2) * 186 + rnd() * 420;
+        // the order of these draws is part of the layout that was measured
+        const w = 24 + rnd() * 14;
+        const k = 1.0 + rnd() * 0.45;
+        // every other row slides half a cell: with the rows lined up, the shaded
+        // underside of each lobe joined its neighbours into straight diagonal lines
+        const slide = r % 2 ? stepX * 0.5 : 0;
+        const cx = -pad + (c + 0.5) * stepX + slide + (rnd() - 0.5) * 9;
+        const cy = -pad + ((r + 0.5) / rows) * (100 + 2 * pad) + (rnd() - 0.5) * 8;
+        // Every cloud LEAVES its own place before it fades (see cloudSwell): the
+        // direction is outward with a random lean, and never shorter than about a
+        // third of the frame — a cloud that only thins where it sits becomes a
+        // translucent disc over the island. These two draws keep the layout above
+        // unchanged (same number of draws per lobe), so the measured cover holds.
+        const ang = Math.atan2(cy - 50 + (rnd() - 0.5) * 14, (cx - 50) * 0.75 + (rnd() - 0.5) * 14);
+        const dist = 36 + Math.hypot(cx - 50, cy - 50) * 0.8;
+        const dx = Math.cos(ang) * dist * 1.15;
+        const dy = Math.sin(ang) * dist - 14;
+        // Partly from the middle out, mostly scattered: pure distance made the
+        // frame open like an iris, and no distance at all made it a uniform fade.
+        // The spread is wider than one lobe's own dissolve, or the field animates
+        // in lockstep.
+        const delay = Math.abs(c - (cols - 1) / 2) * 70 + Math.abs(r - (rows - 1) / 2) * 80 + rnd() * 520;
+        const sh = rnd();
         lobes.push({
+          // which of the three bulge arrangements (see .boot-mist i::before) this
+          // cloud carries. Identical bulges in every lobe chained into diagonal
+          // lines across the deck; three arrangements dealt out by position break
+          // the lines without spending a draw, so the measured cover still holds.
+          bulges: (c * 7 + r * 3) % 3,
+          style: {
           left: `${cx - w / 2}%`,
-          top: `${cy - h / 2}%`,
+          top: `${cy - (w * k) / 2}%`,
           width: `${w}%`,
-          height: `${h}%`,
+          height: `${w * k}%`,
           animationDelay: `${Math.round(delay)}ms`,
           ['--dx' as string]: `${dx}vw`,
           ['--dy' as string]: `${dy}vh`,
+          // how strongly the underside is shaded: none on about half the lobes. Ninety
+          // identical shaded bases line up into a weave; clouds do not all show one.
+          ['--sh' as string]: sh < 0.5 ? '0' : (0.3 + (sh - 0.5) * 1.2).toFixed(2),
+          },
         });
       }
     }
@@ -274,9 +300,9 @@ export default function App() {
         setBooted(true);
         // the opening mist takes about three seconds to part; the title goes with it,
         // and the HUD fades in behind them
-        // the cloud field takes about three seconds to break apart; the overlay
-        // must outlive its last lobe, or the reveal is cut off mid-way
-        window.setTimeout(() => setBootGone(true), 4700);
+        // the last cloud leaves at about 3.2 s (delay up to 1.2 s + a 2 s flight);
+        // the overlay must outlive it, or the reveal is cut off mid-way
+        window.setTimeout(() => setBootGone(true), 3700);
         window.setTimeout(() => setSettled(true), 1900);
       } catch (err) {
         console.error('Failed to start 3D scene', err);
@@ -424,10 +450,9 @@ export default function App() {
 
       {!bootGone && (
         <div className={`boot ${booted ? 'reveal' : ''}`}>
-          <div className="boot-haze" aria-hidden />
           <div className="boot-mist" aria-hidden>
-            {cloudLobes.map((style, i) => (
-              <i key={i} style={style} />
+            {cloudLobes.map(({ style, bulges }, i) => (
+              <i key={i} style={style} className={bulges ? `bulges-${bulges}` : undefined} />
             ))}
           </div>
           <div className="boot-inner">

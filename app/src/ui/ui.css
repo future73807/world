@@ -1663,9 +1663,9 @@ button {
 }
 
 /* loading
-   There is no loading picture. The world itself is on screen from the first
-   frame, under its own opening mist; this layer only lays a haze over it for the
-   text, and thins away as the mist parts onto the island. */
+   There is no loading picture: the load screen is a bank of cloud, opaque, over
+   the world that is already rendering underneath it. When the world is ready the
+   bank breaks apart a cloud at a time. */
 .boot {
   position: absolute;
   inset: 0;
@@ -1675,26 +1675,12 @@ button {
   pointer-events: none;
 }
 
-/* a thin mist wash, not a white sheet: the live 3D world is already rendering
-   under it and has to be readable through the gaps, while the clouds do the
-   hiding. It thins fast once the world is ready — the clouds are what the eye
-   actually watches leave. */
-.boot-haze {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(78% 62% at 50% 46%, rgba(255, 255, 255, 0.42) 0%, rgba(247, 252, 253, 0.5) 54%, rgba(226, 240, 246, 0.56) 100%);
-  transition: opacity 1200ms cubic-bezier(0.35, 0.05, 0.3, 1);
-}
-
-.boot.reveal .boot-haze {
-  opacity: 0;
-}
-
 /* --- the cloud field ---
-   The veil is a bank of cumulus, not a sheet: while the island is being made the
-   lobes sit still as a white field (over the live 3D world, which they hide), and
-   when it is ready each one swells, lifts and dissolves outward, so the island is
-   uncovered a cloud at a time. */
+   The veil IS the cloud bank: there is no sheet under it. While the island is
+   being made the lobes sit still as an opaque white deck over the live 3D world,
+   and when it is ready each one lifts, drifts out and thins away on its own
+   clock, so the island is uncovered a cloud at a time, through the gaps they
+   leave — never through a pane. */
 .boot-mist {
   position: absolute;
   inset: 0;
@@ -1706,19 +1692,23 @@ button {
   position: absolute;
   display: block;
   border-radius: 50%;
-  /* a cumulus lobe: hard-ish white body, blue-grey shaded base — the body needs a
-     crisp core or the field reads as lens bokeh instead of cloud */
+  /* The body is white all the way to its edge, and the edge is where this was
+     wrong before. It used to fade through a translucent pale blue: where two
+     lobes overlapped, their blue edges doubled into a lattice of lines across the
+     whole deck. White over white leaves no line. The cool tint now lives only in
+     the shaded base below (::after), which is dealt out irregularly. The alpha
+     stops here are what `npm run clouds:cover` composes — change them there too.
+     (No blur: it made no visible difference on a gradient this soft.) */
   background: radial-gradient(
     closest-side at 50% 50%,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.99) 62%,
-    rgba(250, 253, 255, 0.97) 74%,
-    rgba(226, 242, 252, 0.82) 84%,
-    rgba(205, 232, 247, 0) 100%
+    rgba(255, 255, 255, 1) 62%,
+    rgba(255, 255, 255, 0.99) 74%,
+    rgba(255, 255, 255, 0.9) 84%,
+    rgba(255, 255, 255, 0) 100%
   );
-  filter: blur(2.5px);
-  opacity: 0.94;
-  will-change: transform, opacity;
+  /* opaque: the cover is these lobes and nothing else */
+  opacity: 1;
 }
 
 /* shading band along the bottom of each lobe keeps the cloud volumetric */
@@ -1730,10 +1720,17 @@ button {
   bottom: 1%;
   height: 46%;
   border-radius: 50%;
-  background: radial-gradient(54% 70% at 50% 100%, rgba(150, 195, 226, 0.7), rgba(170, 208, 234, 0) 72%);
+  /* a flat shaded base, not a lens: the old narrower one read as a dash, and
+     ninety dashes in rows read as a weave */
+  background: radial-gradient(72% 58% at 50% 100%, rgba(150, 195, 226, 0.62), rgba(170, 208, 234, 0) 76%);
+  /* varied per lobe (--sh): ninety identical crescents read as a pattern of scales */
+  opacity: var(--sh, 1);
 }
 
-/* a single ellipse always reads as a smudge: each cloud carries offset bulges */
+/* a single ellipse always reads as a smudge: each cloud carries offset bulges.
+   Three arrangements, dealt out by position (.bulges-1 / .bulges-2 on the lobe):
+   with the same three in every lobe their centres chained into straight diagonal
+   lines right across the deck. */
 .boot-mist i::before {
   content: "";
   position: absolute;
@@ -1745,37 +1742,59 @@ button {
     radial-gradient(30% 34% at 52% 24%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0) 100%);
 }
 
+.boot-mist i.bulges-1::before {
+  background:
+    radial-gradient(40% 42% at 32% 32%, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.9) 68%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(38% 40% at 66% 72%, rgba(255, 255, 255, 0.98) 0%, rgba(248, 252, 255, 0.88) 66%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(28% 30% at 50% 14%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0) 100%);
+}
+
+.boot-mist i.bulges-2::before {
+  background:
+    radial-gradient(44% 46% at 48% 64%, rgba(255, 255, 255, 0.99) 0%, rgba(255, 255, 255, 0.9) 68%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(30% 34% at 22% 32%, rgba(255, 255, 255, 0.98) 0%, rgba(248, 252, 255, 0.88) 66%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(26% 30% at 78% 28%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0) 100%);
+}
+
 .boot.reveal .boot-mist i {
-  /* long enough to be watched: each lobe holds its white body for the first third,
-     then swells, lifts and thins over the rest */
-  animation: cloudSwell 2100ms cubic-bezier(0.25, 0.55, 0.3, 1) both;
+  animation: cloudSwell 2000ms cubic-bezier(0.25, 0.55, 0.3, 1) both;
+  /* only while they move: ninety standing layers would be held in GPU memory
+     for the whole load for nothing */
+  will-change: transform, opacity;
 }
 
 /* each lobe rises to full white, swells ~1.5×, drifts outward and thins away —
    staggered by its inline animation-delay, so the field opens as clouds do */
-/* A lobe stays a solid white cloud until it is already on its way out of the
-   frame: a cloud that hangs in place while it fades turns into a translucent
-   disc lying over the world, which is exactly what this must not look like. */
+/* Each lobe is one cloud leaving, and it leaves as a solid body. Because the
+   lobes overlap (that overlap is what makes the deck opaque), a place shows the
+   world only once every lobe over it has gone. So a lobe holds its white body
+   while it is already most of the way out, and only then thins — quickly. A lobe
+   that thinned first and drifted later hung over the island as a translucent
+   disc, which is exactly what the reveal must not look like. */
 @keyframes cloudSwell {
   0% {
-    opacity: 0.95;
+    opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
-  12% {
+  48% {
     opacity: 1;
-    transform: translate3d(calc(var(--dx, 0px) * 0.04), calc(var(--dy, 0px) * 0.04 - 3px), 0) scale(1.02);
+    transform: translate3d(calc(var(--dx, 0px) * 0.55), calc(var(--dy, 0px) * 0.55), 0) scale(1.04);
   }
-  52% {
-    opacity: 1;
-    transform: translate3d(calc(var(--dx, 0px) * 0.42), calc(var(--dy, 0px) * 0.42 - 20px), 0) scale(1.06);
+  64% {
+    opacity: 0.94;
+    transform: translate3d(calc(var(--dx, 0px) * 0.82), calc(var(--dy, 0px) * 0.82), 0) scale(1.08);
   }
-  78% {
-    opacity: 0.86;
-    transform: translate3d(calc(var(--dx, 0px) * 0.9), calc(var(--dy, 0px) * 0.9 - 46px), 0) scale(1.1);
+  76% {
+    opacity: 0.55;
+    transform: translate3d(calc(var(--dx, 0px) * 1.05), calc(var(--dy, 0px) * 1.05), 0) scale(1.11);
+  }
+  86% {
+    opacity: 0.14;
+    transform: translate3d(calc(var(--dx, 0px) * 1.25), calc(var(--dy, 0px) * 1.25), 0) scale(1.13);
   }
   100% {
     opacity: 0;
-    transform: translate3d(calc(var(--dx, 0px) * 1.45), calc(var(--dy, 0px) * 1.45 - 74px), 0) scale(1.14);
+    transform: translate3d(calc(var(--dx, 0px) * 1.45), calc(var(--dy, 0px) * 1.45), 0) scale(1.16);
   }
 }
 

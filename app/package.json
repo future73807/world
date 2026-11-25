@@ -15,7 +15,8 @@
     "assets:terrain:export": "node scripts/run-blender.mjs terrain-export",
     "assets": "npm run assets:prefabs && npm run assets:validate && npm run assets:terrain",
     "assets:gui": "node scripts/run-blender.mjs gui",
-    "world:analyze": "node scripts/analyze-world.mjs"
+    "world:analyze": "node scripts/analyze-world.mjs",
+    "clouds:cover": "node scripts/check-cloud-cover.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.77.0",
