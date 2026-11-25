@@ -8,6 +8,8 @@ export type Intent = {
   jump: boolean;
   sprint: boolean;
   interact: boolean;
+  /** held: swim downwards */
+  dive: boolean;
   pressed: Set<string>;
 };
 
@@ -22,6 +24,7 @@ export class InputController {
     jump: false,
     sprint: false,
     interact: false,
+    dive: false,
     pressed: new Set(),
   };
 
@@ -76,7 +79,7 @@ export class InputController {
       const k = e.code;
       this.keys.add(k);
       this.justPressed.add(k);
-      if (['Space', 'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(k)) {
+      if (['Space', 'KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(k)) {
         e.preventDefault();
       }
       this.markKbm();
@@ -213,6 +216,13 @@ export class InputController {
     this.justPressed.add('Space');
   }
 
+  private touchDive = false;
+
+  /** On-screen dive button (touch): held down while the pointer is on it. */
+  setTouchDive(v: boolean) {
+    this.touchDive = v;
+  }
+
   requestInteract(v: boolean) {
     this.touchInteract = v;
   }
@@ -241,6 +251,8 @@ export class InputController {
     i.jump = this.keys.has('Space') || this.justPressed.has('Space');
     i.sprint = this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') || this.touchSprint || this.rmbSprint;
     i.interact = this.keys.has('KeyE') || this.touchInteract;
+    // F to dive (never Ctrl: Ctrl+W, a swimmer's forward stroke, closes the tab)
+    i.dive = this.keys.has('KeyF') || this.keys.has('KeyX') || this.touchDive;
     i.pressed = new Set(this.justPressed);
     this.pendingLookX = 0;
     this.pendingLookY = 0;

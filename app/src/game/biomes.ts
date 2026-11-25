@@ -1,0 +1,356 @@
+/**
+ * Biomes of the Mist Isles.
+ *
+ * A biome is a climate, not a patch of ground. Each one is a region of temperature
+ * and moisture (the volcano adds volcanic activity), and the world's climate is one
+ * continuous field — so forest fades into grassland and grassland into desert over
+ * tens of BU, and nothing is laid out tile by tile. What a biome fixes is how the
+ * ground is shaped and coloured, and which Blender prefabs are at home there.
+ *
+ * Which prefabs actually grow where is decided by each species' niche (SPECIES
+ * below): a density that follows the climate, so a tree line or a shore is a
+ * gradient of mixed species rather than a border.
+ */
+import type { BiomeId } from './world';
+
+export type TileFeature = 'none' | 'volcano' | 'peak' | 'crater' | 'pond';
+
+export interface PropRule {
+  /** prefab id (see app/public/models/prefabs.json) */
+  model: string;
+  /** target number of instances per 40 BU tile when the niche is fully satisfied */
+  n: number;
+  minH?: number;
+  maxH?: number;
+  maxSlope?: number;
+  /** minimum distance between two instances of this rule */
+  spacing?: number;
+  /** sits on the water surface (lily pads, coral in the shallows) */
+  water?: boolean;
+  /** at most one per tile, placed on the flattest spot that qualifies */
+  landmark?: boolean;
+  /** 0..1 — only grow where a low-frequency patch noise exceeds this (drifts of grass) */
+  cluster?: number;
+  scale?: [number, number];
+}
+
+/**
+ * How much of each climate a place has. They partition the land (snow + desert +
+ * swamp + forest + meadow = 1 before the volcano takes its share); `taiga` says
+ * how cold-adapted the vegetation is inside the cold part.
+ */
+export interface BiomeWeights {
+  snow: number;
+  desert: number;
+  swamp: number;
+  forest: number;
+  meadow: number;
+  volcanic: number;
+  taiga: number;
+}
+
+/** A species and the climate it grows in: `niche` is a density factor from the climate (1 = as dense as `n`). */
+export interface SpeciesRule extends PropRule {
+  niche: (w: BiomeWeights, temp: number, moist: number) => number;
+}
+
+export interface BiomeDef {
+  id: BiomeId;
+  /** region name shown in the HUD */
+  label: string;
+  /** centre of the biome's climate: temperature 0 (cold) → 1 (hot), moisture 0 (dry) → 1 (wet) */
+  temp: number;
+  moist: number;
+  /** what the ground is like here: share of land, relief height, roughness */
+  land: number;
+  peak: number;
+  rough: number;
+  feature: TileFeature;
+  /** ground up to this height is shore-coloured */
+  beachH: number;
+  /** ground above this is snow-capped; 99 = never */
+  snowline: number;
+  /** sRGB hex ground palette */
+  ground: { shore: number; wet: number; low: number; mid: number; high: number; rock: number; deep: number };
+  /** map palette (sRGB hex) */
+  map: { low: number; high: number; shore: string };
+  /** the species at home here, in the numbers an AI region card may ask for */
+  props: PropRule[];
+  /** one line for the AI and the region summary */
+  blurb: string;
+}
+
+const R = (model: string, n: number, extra: Partial<PropRule> = {}): PropRule => ({ model, n, ...extra });
+
+/** smoothstep that also accepts a falling edge (from > to) */
+const ss = (from: number, to: number, v: number): number => {
+  const t = Math.max(0, Math.min(1, (v - from) / (to - from || 1e-9)));
+  return t * t * (3 - 2 * t);
+};
+
+export const BIOME_ORDER: BiomeId[] = ['meadow', 'forest', 'snow', 'desert', 'swamp', 'volcanic', 'beach', 'ocean'];
+
+export const BIOMES: Record<BiomeId, BiomeDef> = {
+  meadow: {
+    id: 'meadow', label: '风息草甸', temp: 0.6, moist: 0.4, land: 0.7, peak: 6, rough: 0.3,
+    feature: 'none', beachH: 1.3, snowline: 99,
+    ground: { shore: 0xe9dcb2, wet: 0xcdb98a, low: 0x9ccb6e, mid: 0x7fbf5c, high: 0xb2d984, rock: 0x94a0a2, deep: 0x6f7a70 },
+    map: { low: 0xa8ce93, high: 0xe0edc4, shore: '#f3ecdc' },
+    blurb: '缓坡草地，零星的平顶伞树和成片野花，适合放风筝的开阔地。',
+    props: [
+      R('meadow_tree_a', 6, { minH: 1.5, maxSlope: 0.3, spacing: 8 }),
+      R('shrub_a', 9, { minH: 1.3, spacing: 2.4 }),
+      R('meadow_bush', 6, { minH: 1.3, spacing: 2.4 }),
+      R('grass_a', 260, { minH: 1.2, maxSlope: 0.7, spacing: 0.9 }),
+      R('grass_b', 90, { minH: 1.4, maxSlope: 0.6, spacing: 1.1 }),
+      R('flower_a', 55, { minH: 1.3, maxSlope: 0.4, spacing: 1.4 }),
+      R('flower_b', 40, { minH: 1.3, maxSlope: 0.4, spacing: 1.4 }),
+      R('flower_c', 40, { minH: 1.3, maxSlope: 0.4, spacing: 1.4 }),
+      R('rock_a', 7, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+      R('pebbles', 12, { minH: 0.8, maxSlope: 0.9, spacing: 1.5 }),
+      R('landmark_arch', 1, { minH: 1.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+    ],
+  },
+  forest: {
+    id: 'forest', label: '苍郁林地', temp: 0.55, moist: 0.7, land: 0.8, peak: 9, rough: 0.42,
+    feature: 'none', beachH: 1.2, snowline: 99,
+    ground: { shore: 0xe6d8ae, wet: 0xc9b487, low: 0x8cc65f, mid: 0x63aa52, high: 0x93c86e, rock: 0x8a9490, deep: 0x66736a },
+    map: { low: 0x9cc68a, high: 0xd6e6b8, shore: '#f3ecdc' },
+    blurb: '起伏的密林，折伞树、高冠树和开粉花的绯花树混生，林下有蘑菇和倒木。',
+    props: [
+      R('forest_tree_a', 15, { minH: 1.4, maxSlope: 0.42, spacing: 3.6 }),
+      R('forest_tree_b', 10, { minH: 1.6, maxSlope: 0.4, spacing: 3.6 }),
+      R('forest_tree_c', 4, { minH: 1.5, maxSlope: 0.35, spacing: 4.2 }),
+      R('shrub_a', 8, { minH: 1.3, spacing: 2.2 }),
+      R('grass_a', 260, { minH: 1.2, maxSlope: 0.7, spacing: 0.9 }),
+      R('grass_b', 90, { minH: 1.3, maxSlope: 0.6, spacing: 1.0 }),
+      R('forest_mushroom_s', 45, { minH: 1.2, maxSlope: 0.5, spacing: 1.2 }),
+      R('forest_stump', 3, { minH: 1.3, maxSlope: 0.4, spacing: 4 }),
+      R('forest_log', 4, { minH: 1.2, maxSlope: 0.35, spacing: 4 }),
+      R('rock_a', 7, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+      R('rock_b', 4, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+      R('pebbles', 12, { minH: 0.8, maxSlope: 0.9, spacing: 1.5 }),
+      R('landmark_elder_tree', 1, { minH: 2.2, maxSlope: 0.25, spacing: 10, landmark: true }),
+    ],
+  },
+  snow: {
+    id: 'snow', label: '霜脊雪原', temp: 0.12, moist: 0.5, land: 0.72, peak: 14, rough: 0.55,
+    feature: 'none', beachH: 1.1, snowline: 0,
+    ground: { shore: 0xd7e3ea, wet: 0xb9cbd6, low: 0xf1f6fb, mid: 0xeaf1f8, high: 0xffffff, rock: 0x8794a3, deep: 0x7d8a94 },
+    map: { low: 0xeaf2f8, high: 0xffffff, shore: '#e4edf3' },
+    blurb: '刀脊一样的雪峰，成片的霜杉顶着厚雪，冰晶簇从冻土里斜插出来。',
+    props: [
+      R('snow_pine_a', 16, { minH: 1.4, maxSlope: 0.5, spacing: 3.6 }),
+      R('snow_pine_b', 12, { minH: 1.2, maxSlope: 0.5, spacing: 3.2 }),
+      R('snow_pine_c', 6, { minH: 1.6, maxSlope: 0.45, spacing: 4 }),
+      R('snow_dead_tree', 5, { minH: 1.3, maxSlope: 0.45, spacing: 4 }),
+      R('snow_rock', 12, { minH: 0.9, maxSlope: 0.95, spacing: 3 }),
+      R('rock_b', 5, { minH: 0.9, maxSlope: 0.95, spacing: 3 }),
+      R('ice_shard', 6, { minH: 1.2, maxSlope: 0.6, spacing: 4 }),
+      R('pebbles', 6, { minH: 0.8, maxSlope: 0.9, spacing: 1.6 }),
+      R('landmark_crystal', 1, { minH: 2.0, maxSlope: 0.25, spacing: 9, landmark: true }),
+    ],
+  },
+  desert: {
+    id: 'desert', label: '鸣沙荒漠', temp: 0.92, moist: 0.12, land: 0.68, peak: 7, rough: 0.3,
+    feature: 'none', beachH: 1.6, snowline: 99,
+    ground: { shore: 0xf0dfb0, wet: 0xd9c18c, low: 0xecd39a, mid: 0xe2c486, high: 0xf2ddad, rock: 0xc98a5c, deep: 0xb39a70 },
+    map: { low: 0xe8d19c, high: 0xf6e8c2, shore: '#f3ecdc' },
+    blurb: '一层层风成沙丘和赭红台地，柱状仙人掌顶着花，风蚀方尖碑半埋在沙里。',
+    props: [
+      R('desert_cactus_a', 7, { minH: 1.4, maxSlope: 0.45, spacing: 5 }),
+      R('desert_cactus_b', 9, { minH: 1.3, maxSlope: 0.45, spacing: 4 }),
+      R('desert_shrub', 13, { minH: 1.2, maxSlope: 0.5, spacing: 3 }),
+      R('desert_grass', 200, { minH: 1.1, maxSlope: 0.6, spacing: 1.0 }),
+      R('desert_mesa', 3, { minH: 1.4, maxSlope: 0.5, spacing: 8 }),
+      R('desert_boulder', 10, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+      R('rock_b', 4, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+      R('pebbles', 12, { minH: 0.8, maxSlope: 0.9, spacing: 1.5 }),
+      R('landmark_obelisk', 1, { minH: 1.8, maxSlope: 0.25, spacing: 9, landmark: true }),
+    ],
+  },
+  swamp: {
+    id: 'swamp', label: '沉雾泽地', temp: 0.65, moist: 0.95, land: 0.74, peak: 2.4, rough: 0.3,
+    feature: 'none', beachH: 0.9, snowline: 99,
+    ground: { shore: 0x6f6746, wet: 0x574f36, low: 0x6d7f45, mid: 0x5c7440, high: 0x7f9452, rock: 0x5d6a5e, deep: 0x4c5340 },
+    map: { low: 0x93a568, high: 0xb1bd86, shore: '#cfc49a' },
+    blurb: '比水面高不了多少的洼地，到处是水洼和芦苇，垂枝沼柳和发光的灯菌长在泥里。',
+    props: [
+      R('swamp_willow', 12, { minH: 0.7, maxSlope: 0.35, spacing: 4.6 }),
+      R('swamp_mushroom_a', 7, { minH: 0.6, maxSlope: 0.4, spacing: 4 }),
+      R('swamp_mushroom_b', 24, { minH: 0.5, maxSlope: 0.5, spacing: 2.2 }),
+      R('swamp_reeds', 150, { minH: -0.1, maxH: 1.2, maxSlope: 0.5, spacing: 0.8 }),
+      R('swamp_lily', 40, { minH: -1.4, maxH: -0.12, spacing: 1.0, water: true }),
+      R('swamp_snag', 6, { minH: 0.5, maxSlope: 0.4, spacing: 4 }),
+      R('swamp_mossrock', 9, { minH: 0.2, maxSlope: 0.9, spacing: 3 }),
+      R('forest_log', 4, { minH: 0.5, maxSlope: 0.35, spacing: 4 }),
+      R('grass_b', 90, { minH: 0.4, maxSlope: 0.6, spacing: 1.1 }),
+      R('landmark_giant_mushroom', 1, { minH: 0.6, maxSlope: 0.22, spacing: 10, landmark: true }),
+    ],
+  },
+  volcanic: {
+    id: 'volcanic', label: '余烬火山', temp: 0.9, moist: 0.25, land: 0.74, peak: 9, rough: 0.65,
+    feature: 'volcano', beachH: 1.2, snowline: 99,
+    ground: { shore: 0x3f3b3b, wet: 0x2c2929, low: 0x565350, mid: 0x48464a, high: 0x6d6a6a, rock: 0x3a3d44, deep: 0x2f3438 },
+    map: { low: 0x77747a, high: 0xa39fa4, shore: '#bdb8b2' },
+    blurb: '黑沙海岸背后的熄火山，玄武岩柱和黑曜石尖晶之间立着焦木，喷口还透着熔光。',
+    props: [
+      R('volcano_obsidian', 9, { minH: 1.0, maxSlope: 0.7, spacing: 4 }),
+      R('volcano_basalt', 7, { minH: 1.0, maxSlope: 0.7, spacing: 5 }),
+      R('volcano_charred', 10, { minH: 1.0, maxSlope: 0.5, spacing: 4.5 }),
+      R('volcano_rock', 16, { minH: 0.9, maxSlope: 0.95, spacing: 3 }),
+      R('rock_b', 6, { minH: 0.9, maxSlope: 0.95, spacing: 3 }),
+      R('pebbles', 14, { minH: 0.7, maxSlope: 0.9, spacing: 1.6 }),
+      R('landmark_vent', 1, { minH: 1.6, maxSlope: 0.3, spacing: 10, landmark: true }),
+    ],
+  },
+  beach: {
+    id: 'beach', label: '潮白沙岸', temp: 0.8, moist: 0.4, land: 0.6, peak: 3.2, rough: 0.22,
+    feature: 'none', beachH: 2.6, snowline: 99,
+    ground: { shore: 0xf2e6bf, wet: 0xdccb9c, low: 0xf0e0b4, mid: 0xe9d8a6, high: 0xc9d994, rock: 0xb9b4a6, deep: 0xa9a486 },
+    map: { low: 0xf1e6c6, high: 0xd6e4ae, shore: '#f3ecdc' },
+    blurb: '浅色的沙滩，弯椰树成排，浮木和海星散在水线上，远处立着鲸骨拱。',
+    props: [
+      R('palm_a', 8, { minH: 1.0, maxH: 4.5, maxSlope: 0.3, spacing: 5.5 }),
+      R('palm_b', 6, { minH: 1.0, maxH: 4.5, maxSlope: 0.3, spacing: 5 }),
+      R('beach_driftwood', 5, { minH: 0.4, maxH: 2.4, maxSlope: 0.4, spacing: 4 }),
+      R('rock_slab', 3, { minH: 0.8, maxSlope: 0.9, spacing: 4 }),
+      R('beach_starfish', 30, { minH: 0.25, maxH: 1.6, maxSlope: 0.3, spacing: 1.6 }),
+      R('landmark_ribs', 1, { minH: 0.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+    ],
+  },
+  ocean: {
+    id: 'ocean', label: '碧礁浅海', temp: 0.75, moist: 0.6, land: 0.24, peak: 2.4, rough: 0.25,
+    feature: 'none', beachH: 2.2, snowline: 99,
+    ground: { shore: 0xf4e8c6, wet: 0xe2d2a4, low: 0xf0e1b6, mid: 0xdfe6b8, high: 0xcfe0a8, rock: 0xc4bfae, deep: 0xb2ad90 },
+    map: { low: 0xf0e5c4, high: 0xd8e5b4, shore: '#f3ecdc' },
+    blurb: '几乎全是水的浅潟湖，只剩几道沙洲和小岛，五彩的珊瑚长在清澈的浅水里。',
+    props: [
+      R('palm_a', 3, { minH: 1.0, maxH: 4.0, maxSlope: 0.3, spacing: 6 }),
+      R('coral_branch', 36, { minH: -1.2, maxH: 0.7, maxSlope: 0.6, spacing: 1.3 }),
+      R('coral_brain', 18, { minH: -1.2, maxH: 0.7, maxSlope: 0.6, spacing: 1.6 }),
+      R('coral_fan', 18, { minH: -1.0, maxH: 0.7, maxSlope: 0.6, spacing: 1.6 }),
+      R('beach_starfish', 20, { minH: 0.25, maxH: 1.4, maxSlope: 0.3, spacing: 1.8 }),
+      R('beach_driftwood', 3, { minH: 0.4, maxH: 2.0, maxSlope: 0.4, spacing: 5 }),
+      R('landmark_ribs', 1, { minH: 0.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+    ],
+  },
+};
+
+/**
+ * Which biomes may border which. With a continuous climate most neighbours agree by
+ * themselves; the table is what an AI region card is held to when it steers a tile
+ * towards a biome of its own.
+ */
+export const BIOME_NEIGHBOURS: Record<BiomeId, BiomeId[]> = {
+  meadow: ['meadow', 'forest', 'beach', 'desert', 'snow', 'swamp'],
+  forest: ['forest', 'meadow', 'swamp', 'snow', 'desert'],
+  snow: ['snow', 'forest', 'meadow', 'volcanic'],
+  desert: ['desert', 'volcanic', 'beach', 'meadow', 'forest'],
+  swamp: ['swamp', 'forest', 'meadow', 'ocean'],
+  volcanic: ['volcanic', 'desert', 'snow', 'beach'],
+  beach: ['beach', 'ocean', 'desert', 'meadow', 'forest'],
+  ocean: ['ocean', 'beach', 'swamp', 'meadow'],
+};
+
+// --------------------------------------------------------------------------- species
+
+const S = (model: string, n: number, niche: SpeciesRule['niche'], extra: Partial<PropRule> = {}): SpeciesRule => ({ model, n, niche, ...extra });
+
+/** Palms and coral want warmth; cold shores stay bare. */
+const warm = (temp: number) => ss(0.4, 0.62, temp);
+/** Grass and broadleaf trees thin out as it freezes. */
+const frost = (w: BiomeWeights) => 1 - w.snow;
+/** Ferns and flowers shun aridity. */
+const arid = (w: BiomeWeights) => 1 - w.desert;
+
+/**
+ * Every species that spreads by climate, with the density it reaches where its niche
+ * is fully satisfied. A tile opened by the AI may list its own props instead; the
+ * birth island and tiles without a card use this table.
+ */
+export const SPECIES: SpeciesRule[] = [
+  // — temperate broadleaf forest
+  S('forest_tree_a', 15, (w) => w.forest * 0.9 + w.swamp * 0.1, { minH: 1.4, maxSlope: 0.42, spacing: 3.6 }),
+  S('forest_tree_b', 10, (w) => w.forest * 0.9 + w.swamp * 0.08, { minH: 1.6, maxSlope: 0.4, spacing: 3.6 }),
+  S('forest_tree_c', 4, (w) => w.forest * 0.8 + w.meadow * 0.06, { minH: 1.5, maxSlope: 0.35, spacing: 4.2 }),
+  S('forest_stump', 3, (w) => w.forest, { minH: 1.3, maxSlope: 0.4, spacing: 4 }),
+  S('forest_log', 4, (w) => w.forest + w.swamp * 0.5, { minH: 0.6, maxSlope: 0.35, spacing: 4 }),
+  S('forest_mushroom_s', 45, (w) => w.forest * 0.9 + w.swamp * 0.6, { minH: 0.5, maxSlope: 0.5, spacing: 1.2 }),
+
+  // — grassland: scattered umbrella trees, bushes, drifts of grass and flowers
+  S('meadow_tree_a', 6, (w) => w.meadow * 0.9 + w.forest * 0.08, { minH: 1.5, maxSlope: 0.3, spacing: 8 }),
+  S('meadow_bush', 6, (w) => w.meadow, { minH: 1.3, spacing: 2.4 }),
+  S('shrub_a', 8, (w) => w.meadow * 0.8 + w.forest * 0.35 + w.swamp * 0.2, { minH: 1.3, spacing: 2.2 }),
+  S('grass_a', 300, (w) => (w.meadow + w.forest * 0.85 + w.swamp * 0.5) * frost(w) * 0.95 + 0.04, { minH: 0.8, maxSlope: 0.7, spacing: 0.9, cluster: -0.25 }),
+  S('grass_b', 110, (w) => (w.meadow * 0.9 + w.forest * 0.45 + w.swamp * 0.5) * frost(w) * 0.95, { minH: 0.6, maxSlope: 0.6, spacing: 1.0 }),
+  S('flower_a', 55, (w) => (w.meadow * 0.9 + w.forest * 0.3) * arid(w) * frost(w), { minH: 1.1, maxSlope: 0.4, spacing: 1.4 }),
+  S('flower_b', 45, (w) => (w.meadow * 0.8 + w.forest * 0.3) * arid(w) * frost(w), { minH: 1.1, maxSlope: 0.4, spacing: 1.4 }),
+  S('flower_c', 45, (w) => (w.meadow * 0.75 + w.forest * 0.25) * arid(w) * frost(w), { minH: 1.1, maxSlope: 0.4, spacing: 1.4 }),
+
+  // — stones turn up everywhere; slabs like dry ground
+  S('rock_a', 7, () => 0.8, { minH: 0.8, maxSlope: 0.95, spacing: 3 }),
+  S('rock_b', 4, (w) => 0.6 + w.snow * 0.8 + w.volcanic * 0.6, { minH: 0.6, maxSlope: 0.95, spacing: 3 }),
+  S('pebbles', 12, () => 0.9, { minH: 0.5, maxSlope: 0.95, spacing: 1.5 }),
+  S('rock_slab', 3, (w) => 0.15 + w.desert * 0.85, { minH: 0.8, maxSlope: 0.9, spacing: 4 }),
+
+  // — the cold: pines take over from broadleaf trees, then only snow and ice remain
+  S('snow_pine_a', 16, (w) => w.taiga, { minH: 1.4, maxSlope: 0.5, spacing: 3.6 }),
+  S('snow_pine_b', 12, (w) => w.taiga * 0.9, { minH: 1.2, maxSlope: 0.5, spacing: 3.2 }),
+  S('snow_pine_c', 6, (w) => w.taiga * 0.7, { minH: 1.6, maxSlope: 0.45, spacing: 4 }),
+  S('snow_dead_tree', 5, (_w, temp) => ss(0.32, 0.16, temp), { minH: 1.3, maxSlope: 0.45, spacing: 4 }),
+  S('snow_rock', 12, (w) => w.snow, { minH: 0.9, maxSlope: 0.95, spacing: 3 }),
+  S('ice_shard', 6, (w) => w.snow * (1 - w.taiga * 0.4), { minH: 1.2, maxSlope: 0.6, spacing: 4 }),
+
+  // — the dry side: cactus, thorn scrub, mesas
+  S('desert_cactus_a', 7, (w) => w.desert, { minH: 1.4, maxSlope: 0.45, spacing: 5 }),
+  S('desert_cactus_b', 9, (w) => w.desert, { minH: 1.3, maxSlope: 0.45, spacing: 4 }),
+  S('desert_shrub', 13, (w, _t, moist) => w.desert * 0.85 + w.meadow * ss(0.42, 0.2, moist) * 0.6, { minH: 1.2, maxSlope: 0.5, spacing: 3 }),
+  S('desert_grass', 200, (w) => w.desert * 0.9, { minH: 1.0, maxSlope: 0.6, spacing: 1.0 }),
+  S('desert_mesa', 3, (w) => w.desert, { minH: 1.4, maxSlope: 0.5, spacing: 8 }),
+  S('desert_boulder', 10, (w) => w.desert, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
+
+  // — warm wet lowland: willows, glowing mushrooms, reeds and lilies
+  S('swamp_willow', 12, (w) => w.swamp, { minH: 0.7, maxSlope: 0.35, spacing: 4.6 }),
+  S('swamp_mushroom_a', 7, (w) => w.swamp, { minH: 0.6, maxSlope: 0.4, spacing: 4 }),
+  S('swamp_mushroom_b', 24, (w) => w.swamp, { minH: 0.5, maxSlope: 0.5, spacing: 2.2 }),
+  S('swamp_reeds', 150, (w) => w.swamp + w.forest * 0.06 + w.meadow * 0.03, { minH: -0.1, maxH: 1.2, maxSlope: 0.5, spacing: 0.8 }),
+  S('swamp_lily', 40, (w) => w.swamp, { minH: -1.4, maxH: -0.12, spacing: 1.0, water: true }),
+  S('swamp_snag', 6, (w) => w.swamp, { minH: 0.5, maxSlope: 0.4, spacing: 4 }),
+  S('swamp_mossrock', 9, (w) => w.swamp, { minH: 0.2, maxSlope: 0.9, spacing: 3 }),
+
+  // — volcanic ground
+  S('volcano_obsidian', 9, (w) => w.volcanic, { minH: 1.0, maxSlope: 0.7, spacing: 4 }),
+  S('volcano_basalt', 7, (w) => w.volcanic, { minH: 1.0, maxSlope: 0.7, spacing: 5 }),
+  S('volcano_charred', 10, (w) => w.volcanic, { minH: 1.0, maxSlope: 0.5, spacing: 4.5 }),
+  S('volcano_rock', 16, (w) => w.volcanic, { minH: 0.7, maxSlope: 0.95, spacing: 3 }),
+
+  // — warm shores and the shallow sea
+  S('palm_a', 8, (_w, temp) => warm(temp), { minH: 1.0, maxH: 4.5, maxSlope: 0.3, spacing: 5.5 }),
+  S('palm_b', 6, (_w, temp) => warm(temp), { minH: 1.0, maxH: 4.5, maxSlope: 0.3, spacing: 5 }),
+  S('beach_driftwood', 5, () => 1, { minH: 0.4, maxH: 2.4, maxSlope: 0.4, spacing: 4 }),
+  S('beach_starfish', 30, (_w, temp) => warm(temp), { minH: 0.25, maxH: 1.6, maxSlope: 0.3, spacing: 1.6 }),
+  // coral only ever grows under water, on the shallow floor
+  S('coral_branch', 36, (_w, temp) => warm(temp), { minH: -1.8, maxH: -0.08, maxSlope: 0.6, spacing: 1.3 }),
+  S('coral_brain', 18, (_w, temp) => warm(temp), { minH: -1.8, maxH: -0.08, maxSlope: 0.6, spacing: 1.6 }),
+  S('coral_fan', 18, (_w, temp) => warm(temp), { minH: -1.6, maxH: -0.08, maxSlope: 0.6, spacing: 1.6 }),
+];
+
+/** One landmark at most per tile, whichever is most at home there. */
+export const LANDMARKS: SpeciesRule[] = [
+  S('landmark_elder_tree', 1, (w) => w.forest, { minH: 2.2, maxSlope: 0.25, spacing: 10, landmark: true }),
+  S('landmark_arch', 1, (w) => w.meadow, { minH: 1.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+  S('landmark_crystal', 1, (w) => w.snow, { minH: 2.0, maxSlope: 0.25, spacing: 9, landmark: true }),
+  S('landmark_obelisk', 1, (w) => w.desert, { minH: 1.8, maxSlope: 0.25, spacing: 9, landmark: true }),
+  S('landmark_giant_mushroom', 1, (w) => w.swamp, { minH: 0.6, maxSlope: 0.22, spacing: 10, landmark: true }),
+  S('landmark_vent', 1, (w) => w.volcanic, { minH: 1.6, maxSlope: 0.3, spacing: 10, landmark: true }),
+  S('landmark_ribs', 1, (_w, temp) => warm(temp) * 0.8, { minH: 0.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+];
+
+export const DIRECTIONS8 = ['北', '东北', '东', '东南', '南', '西南', '西', '西北'];
+
+/** Chinese compass name of a tile relative to the player (north = -z). */
+export function compassName(dx: number, dz: number): string {
+  const a = (Math.atan2(dx, -dz) + Math.PI * 2) % (Math.PI * 2);
+  return DIRECTIONS8[Math.round(a / (Math.PI / 4)) % 8];
+}

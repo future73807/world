@@ -1,0 +1,1748 @@
+{
+ "version": 2,
+ "blender": "4.3.2",
+ "generated": "2026-11-24 23:56:40",
+ "glb": "prefabs.glb",
+ "models": {
+  "beach_driftwood": {
+   "id": "beach_driftwood",
+   "label": "浮木",
+   "kind": "rock",
+   "biomes": [
+    "beach",
+    "ocean"
+   ],
+   "desc": "被海水冲白了的扭曲浮木。",
+   "group": "beach",
+   "tris": 412,
+   "lod1Tris": 130,
+   "glow": false,
+   "size": [
+    2.838,
+    1.144,
+    1.076
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.52,
+    "h": 0.62
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.4
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "beach_starfish": {
+   "id": "beach_starfish",
+   "label": "海星",
+   "kind": "detail",
+   "biomes": [
+    "beach"
+   ],
+   "desc": "趴在沙上的橙红色五角海星。",
+   "group": "beach",
+   "tris": 40,
+   "lod1Tris": 40,
+   "glow": false,
+   "size": [
+    0.615,
+    0.075,
+    0.647
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.9,
+    1.15
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "coral_brain": {
+   "id": "coral_brain",
+   "label": "脑珊瑚",
+   "kind": "rock",
+   "biomes": [
+    "ocean",
+    "beach"
+   ],
+   "desc": "表面沟回起伏的淡紫色脑珊瑚。",
+   "group": "beach",
+   "tris": 1720,
+   "lod1Tris": 220,
+   "glow": false,
+   "size": [
+    1.117,
+    0.337,
+    0.944
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.46,
+    "h": 0.62
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.5
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "coral_branch": {
+   "id": "coral_branch",
+   "label": "鹿角珊瑚",
+   "kind": "plant",
+   "biomes": [
+    "ocean",
+    "beach"
+   ],
+   "desc": "粉红色的分叉鹿角珊瑚。",
+   "group": "beach",
+   "tris": 900,
+   "lod1Tris": 120,
+   "glow": false,
+   "size": [
+    0.505,
+    1.104,
+    0.413
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.6
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "coral_fan": {
+   "id": "coral_fan",
+   "label": "扇珊瑚",
+   "kind": "plant",
+   "biomes": [
+    "ocean",
+    "beach"
+   ],
+   "desc": "像一把橙色小扇子的扇珊瑚。",
+   "group": "beach",
+   "tris": 1140,
+   "lod1Tris": 88,
+   "glow": false,
+   "size": [
+    1.019,
+    1.202,
+    0.067
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.5
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "desert_boulder": {
+   "id": "desert_boulder",
+   "label": "赭石",
+   "kind": "rock",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "暖赭色的风蚀巨石。",
+   "group": "desert",
+   "tris": 172,
+   "lod1Tris": 54,
+   "glow": false,
+   "size": [
+    1.669,
+    0.605,
+    1.259
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.72,
+    "h": 1.05
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.6
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "desert_cactus_a": {
+   "id": "desert_cactus_a",
+   "label": "柱仙人掌",
+   "kind": "tree",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "带棱的墨绿柱状仙人掌，两条手臂向上弯，顶端开一朵粉花。",
+   "group": "desert",
+   "tris": 1064,
+   "lod1Tris": 487,
+   "glow": false,
+   "size": [
+    1.526,
+    2.551,
+    0.832
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.42,
+    "h": 2.5
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.0,
+   "farCut": 24
+  },
+  "desert_cactus_b": {
+   "id": "desert_cactus_b",
+   "label": "刺球仙人掌",
+   "kind": "shrub",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "圆鼓鼓的刺球仙人掌，顶着一朵黄花。",
+   "group": "desert",
+   "tris": 422,
+   "lod1Tris": 174,
+   "glow": false,
+   "size": [
+    1.152,
+    0.858,
+    1.121
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.45,
+    "h": 0.8
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.0,
+   "farCut": 24
+  },
+  "desert_grass": {
+   "id": "desert_grass",
+   "label": "针茅",
+   "kind": "plant",
+   "biomes": [
+    "desert",
+    "beach"
+   ],
+   "desc": "一丛金黄色的干草。",
+   "group": "desert",
+   "tris": 364,
+   "lod1Tris": 89,
+   "glow": false,
+   "size": [
+    0.543,
+    0.667,
+    0.775
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.4
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 28
+  },
+  "desert_mesa": {
+   "id": "desert_mesa",
+   "label": "风蚀岩丘",
+   "kind": "rock",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "一层层赭红砂岩叠起来的小岩丘。",
+   "group": "desert",
+   "tris": 490,
+   "lod1Tris": 156,
+   "glow": false,
+   "size": [
+    3.706,
+    2.28,
+    3.832
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.75,
+    "h": 2.5
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "desert_shrub": {
+   "id": "desert_shrub",
+   "label": "刺灌",
+   "kind": "shrub",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "干枯多刺的灰绿小灌木。",
+   "group": "desert",
+   "tris": 642,
+   "lod1Tris": 47,
+   "glow": false,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.35
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "flower_a": {
+   "id": "flower_a",
+   "label": "白星花",
+   "kind": "detail",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "六瓣白色小花，黄花心。",
+   "group": "shared",
+   "tris": 732,
+   "lod1Tris": 107,
+   "glow": false,
+   "size": [
+    0.336,
+    0.615,
+    0.329
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "flower_b": {
+   "id": "flower_b",
+   "label": "粉铃花",
+   "kind": "detail",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "五瓣粉色小花。",
+   "group": "shared",
+   "tris": 732,
+   "lod1Tris": 107,
+   "glow": false,
+   "size": [
+    0.336,
+    0.615,
+    0.329
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "flower_c": {
+   "id": "flower_c",
+   "label": "蓝星花",
+   "kind": "detail",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "五瓣天蓝色小花。",
+   "group": "shared",
+   "tris": 692,
+   "lod1Tris": 97,
+   "glow": false,
+   "size": [
+    0.335,
+    0.615,
+    0.326
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "forest_log": {
+   "id": "forest_log",
+   "label": "倒木",
+   "kind": "rock",
+   "biomes": [
+    "forest",
+    "meadow",
+    "swamp",
+    "beach"
+   ],
+   "desc": "横躺在地上的倒木，背阴面长满苔。",
+   "group": "forest",
+   "tris": 412,
+   "lod1Tris": 130,
+   "glow": false,
+   "size": [
+    3.178,
+    1.042,
+    1.001
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.5,
+    "h": 0.86
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "forest_mushroom_s": {
+   "id": "forest_mushroom_s",
+   "label": "小红菇",
+   "kind": "detail",
+   "biomes": [
+    "forest",
+    "meadow",
+    "swamp"
+   ],
+   "desc": "伞盖红色带白点的迷你小蘑菇。",
+   "group": "forest",
+   "tris": 801,
+   "lod1Tris": 255,
+   "glow": false,
+   "size": [
+    0.486,
+    0.791,
+    0.487
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.4
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "forest_stump": {
+   "id": "forest_stump",
+   "label": "老树桩",
+   "kind": "rock",
+   "biomes": [
+    "forest",
+    "meadow",
+    "swamp"
+   ],
+   "desc": "被砍断的老树桩，断面是浅色年轮。",
+   "group": "forest",
+   "tris": 567,
+   "lod1Tris": 181,
+   "glow": false,
+   "size": [
+    1.965,
+    1.174,
+    1.821
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.64,
+    "h": 1.12
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.4
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "forest_tree_a": {
+   "id": "forest_tree_a",
+   "label": "折伞树",
+   "kind": "tree",
+   "biomes": [
+    "forest",
+    "meadow"
+   ],
+   "desc": "S 形树干、外张的板根和一大团云朵状树冠的阔叶树。",
+   "group": "forest",
+   "tris": 1736,
+   "lod1Tris": 360,
+   "glow": false,
+   "size": [
+    4.732,
+    5.332,
+    4.005
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.52,
+    "h": 4.9
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.2
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "forest_tree_b": {
+   "id": "forest_tree_b",
+   "label": "高冠树",
+   "kind": "tree",
+   "biomes": [
+    "forest"
+   ],
+   "desc": "树干笔直高挑、树冠是竖长椭圆的深绿大树。",
+   "group": "forest",
+   "tris": 1736,
+   "lod1Tris": 340,
+   "glow": false,
+   "size": [
+    3.91,
+    6.275,
+    3.734
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.48,
+    "h": 6.2
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.15
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "forest_tree_c": {
+   "id": "forest_tree_c",
+   "label": "绯花树",
+   "kind": "tree",
+   "biomes": [
+    "forest",
+    "meadow"
+   ],
+   "desc": "枝条向四周铺开、开满粉白花朵的花树。",
+   "group": "forest",
+   "tris": 1736,
+   "lod1Tris": 360,
+   "glow": false,
+   "size": [
+    4.623,
+    5.094,
+    4.067
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.46,
+    "h": 4.6
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.2
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "grass_a": {
+   "id": "grass_a",
+   "label": "青草丛",
+   "kind": "plant",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "一小丛宽叶青草。",
+   "group": "shared",
+   "tris": 448,
+   "lod1Tris": 43,
+   "glow": false,
+   "size": [
+    0.356,
+    0.368,
+    0.408
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.35
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 30
+  },
+  "grass_b": {
+   "id": "grass_b",
+   "label": "高草丛",
+   "kind": "plant",
+   "biomes": [
+    "meadow",
+    "forest",
+    "swamp"
+   ],
+   "desc": "更高的细叶草，草尖偏黄绿。",
+   "group": "shared",
+   "tris": 364,
+   "lod1Tris": 43,
+   "glow": false,
+   "size": [
+    0.543,
+    0.667,
+    0.775
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.35
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 30
+  },
+  "ice_shard": {
+   "id": "ice_shard",
+   "label": "冰晶簇",
+   "kind": "rock",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "从冻土里斜插出来的几支淡蓝冰晶。",
+   "group": "snow",
+   "tris": 288,
+   "lod1Tris": 120,
+   "glow": true,
+   "size": [
+    0.998,
+    1.947,
+    1.59
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.58,
+    "h": 2.25
+   },
+   "material": {
+    "roughness": 0.22,
+    "metalness": 0.05
+   },
+   "scale": [
+    0.7,
+    1.4
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "landmark_arch": {
+   "id": "landmark_arch",
+   "label": "苔痕石拱",
+   "kind": "landmark",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "一座横跨小径的风化石拱，顶上长满青苔。",
+   "group": "landmark",
+   "tris": 1942,
+   "lod1Tris": 170,
+   "glow": false,
+   "size": [
+    9.425,
+    6.34,
+    1.957
+   ],
+   "base": -0.06,
+   "collide": [
+    {
+     "x": 3.25,
+     "z": 0,
+     "r": 0.82,
+     "h": 4.5
+    },
+    {
+     "x": -3.25,
+     "z": 0,
+     "r": 0.82,
+     "h": 4.5
+    }
+   ],
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "landmark_crystal": {
+   "id": "landmark_crystal",
+   "label": "霜晶巨簇",
+   "kind": "landmark",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "一人多高的发光冰晶巨簇，是雪原上的路标。",
+   "group": "landmark",
+   "tris": 532,
+   "lod1Tris": 185,
+   "glow": true,
+   "size": [
+    2.404,
+    5.998,
+    2.6
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.7,
+    "h": 6.8
+   },
+   "material": {
+    "roughness": 0.2,
+    "metalness": 0.05
+   },
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "landmark_elder_tree": {
+   "id": "landmark_elder_tree",
+   "label": "古树",
+   "kind": "landmark",
+   "biomes": [
+    "forest",
+    "meadow"
+   ],
+   "desc": "要好几只史莱姆才抱得住的古树，树冠像一座绿色小山。",
+   "group": "landmark",
+   "tris": 1736,
+   "lod1Tris": 594,
+   "glow": false,
+   "size": [
+    9.977,
+    11.842,
+    9.254
+   ],
+   "base": -0.527,
+   "collide": {
+    "r": 1.15,
+    "h": 9.5
+   },
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.0,
+   "farCut": 80
+  },
+  "landmark_giant_mushroom": {
+   "id": "landmark_giant_mushroom",
+   "label": "母菌",
+   "kind": "landmark",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "沼泽中央那株会发光的巨型母菌，菌盖大得能躲雨。",
+   "group": "landmark",
+   "tris": 1734,
+   "lod1Tris": 387,
+   "glow": true,
+   "size": [
+    6.24,
+    6.054,
+    6.216
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.05,
+    "h": 5.8
+   },
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "landmark_obelisk": {
+   "id": "landmark_obelisk",
+   "label": "风蚀方尖碑",
+   "kind": "landmark",
+   "biomes": [
+    "desert"
+   ],
+   "desc": "半埋在沙里的赭红砂岩方尖碑。",
+   "group": "landmark",
+   "tris": 1206,
+   "lod1Tris": 384,
+   "glow": false,
+   "size": [
+    2.606,
+    6.42,
+    1.695
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.18,
+    "h": 6.9
+   },
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "landmark_ribs": {
+   "id": "landmark_ribs",
+   "label": "鲸骨拱",
+   "kind": "landmark",
+   "biomes": [
+    "beach",
+    "ocean"
+   ],
+   "desc": "沙滩上并排立着的两道灰白鲸骨拱门。",
+   "group": "landmark",
+   "tris": 2192,
+   "lod1Tris": 190,
+   "glow": false,
+   "size": [
+    5.179,
+    5.563,
+    4.44
+   ],
+   "base": -0.06,
+   "collide": [
+    {
+     "x": 2.15,
+     "z": 0.75,
+     "r": 0.46,
+     "h": 4.6
+    },
+    {
+     "x": -2.15,
+     "z": 0.75,
+     "r": 0.46,
+     "h": 4.6
+    },
+    {
+     "x": 1.85,
+     "z": -1.15,
+     "r": 0.4,
+     "h": 4.1
+    },
+    {
+     "x": -1.85,
+     "z": -1.15,
+     "r": 0.4,
+     "h": 4.1
+    }
+   ],
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "landmark_vent": {
+   "id": "landmark_vent",
+   "label": "余温喷口",
+   "kind": "landmark",
+   "biomes": [
+    "volcanic"
+   ],
+   "desc": "一座还在冒着橙红熔光的熄火山喷口。",
+   "group": "landmark",
+   "tris": 1110,
+   "lod1Tris": 360,
+   "glow": true,
+   "size": [
+    4.366,
+    3.167,
+    4.362
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 2.15,
+    "h": 3.35
+   },
+   "material": {},
+   "scale": [
+    1,
+    1
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 70
+  },
+  "meadow_bush": {
+   "id": "meadow_bush",
+   "label": "金雀花丛",
+   "kind": "shrub",
+   "biomes": [
+    "meadow",
+    "beach"
+   ],
+   "desc": "贴地的一大团绿叶，顶上开满星星点点的黄花。",
+   "group": "meadow",
+   "tris": 676,
+   "lod1Tris": 36,
+   "glow": false,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "meadow_tree_a": {
+   "id": "meadow_tree_a",
+   "label": "平顶伞树",
+   "kind": "tree",
+   "biomes": [
+    "meadow"
+   ],
+   "desc": "树干分叉后摊开成一顶扁平伞状树冠的草原大树。",
+   "group": "meadow",
+   "tris": 1736,
+   "lod1Tris": 555,
+   "glow": false,
+   "size": [
+    4.279,
+    4.265,
+    3.667
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.46,
+    "h": 4.15
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "palm_a": {
+   "id": "palm_a",
+   "label": "弯椰树",
+   "kind": "tree",
+   "biomes": [
+    "beach",
+    "ocean",
+    "desert"
+   ],
+   "desc": "树干向一侧弯过去、顶端一蓬羽叶和几颗椰子的椰子树。",
+   "group": "beach",
+   "tris": 3128,
+   "lod1Tris": 420,
+   "glow": false,
+   "size": [
+    6.014,
+    6.599,
+    5.266
+   ],
+   "base": -0.323,
+   "collide": {
+    "r": 0.36,
+    "h": 6.2
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.2
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "palm_b": {
+   "id": "palm_b",
+   "label": "矮椰",
+   "kind": "tree",
+   "biomes": [
+    "beach",
+    "ocean"
+   ],
+   "desc": "矮一些、树干弯得更厉害的椰子树。",
+   "group": "beach",
+   "tris": 2536,
+   "lod1Tris": 354,
+   "glow": false,
+   "size": [
+    4.833,
+    4.814,
+    4.015
+   ],
+   "base": -0.321,
+   "collide": {
+    "r": 0.32,
+    "h": 4.4
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "pebbles": {
+   "id": "pebbles",
+   "label": "碎石堆",
+   "kind": "detail",
+   "biomes": [
+    "meadow",
+    "forest",
+    "beach",
+    "snow",
+    "desert",
+    "volcanic"
+   ],
+   "desc": "几块挤在一起的小碎石。",
+   "group": "shared",
+   "tris": 80,
+   "lod1Tris": 40,
+   "glow": false,
+   "size": [
+    1.02,
+    0.288,
+    0.721
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.5
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "rock_a": {
+   "id": "rock_a",
+   "label": "苔石",
+   "kind": "rock",
+   "biomes": [
+    "meadow",
+    "forest",
+    "swamp"
+   ],
+   "desc": "圆润的灰绿巨石，顶面覆着一层薄苔。",
+   "group": "shared",
+   "tris": 292,
+   "lod1Tris": 92,
+   "glow": false,
+   "size": [
+    1.617,
+    0.68,
+    1.408
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.72,
+    "h": 1.05
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.6
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "rock_b": {
+   "id": "rock_b",
+   "label": "棱石",
+   "kind": "rock",
+   "biomes": [
+    "meadow",
+    "forest",
+    "snow",
+    "volcanic"
+   ],
+   "desc": "棱角分明的灰色岩块，切面像被劈过。",
+   "group": "shared",
+   "tris": 172,
+   "lod1Tris": 54,
+   "glow": false,
+   "size": [
+    1.897,
+    0.797,
+    1.469
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.78,
+    "h": 1.18
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.5
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "rock_slab": {
+   "id": "rock_slab",
+   "label": "层岩",
+   "kind": "rock",
+   "biomes": [
+    "meadow",
+    "forest",
+    "snow",
+    "beach"
+   ],
+   "desc": "叠了三层的扁平石板。",
+   "group": "shared",
+   "tris": 160,
+   "lod1Tris": 50,
+   "glow": false,
+   "size": [
+    2.126,
+    1.247,
+    1.582
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.02,
+    "h": 1.18
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.4
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "shrub_a": {
+   "id": "shrub_a",
+   "label": "圆灌木",
+   "kind": "shrub",
+   "biomes": [
+    "meadow",
+    "forest"
+   ],
+   "desc": "低矮密实的阔叶灌木。",
+   "group": "shared",
+   "tris": 692,
+   "lod1Tris": 52,
+   "glow": false,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "snow_dead_tree": {
+   "id": "snow_dead_tree",
+   "label": "枯桦",
+   "kind": "tree",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "落光了叶子的灰白枯树，枝条向天空张开。",
+   "group": "snow",
+   "tris": 3208,
+   "lod1Tris": 1026,
+   "glow": false,
+   "size": [
+    4.278,
+    4.759,
+    2.864
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.34,
+    "h": 4.8
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "snow_pine_a": {
+   "id": "snow_pine_a",
+   "label": "霜杉",
+   "kind": "tree",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "层叠锥形树冠的针叶杉，每层托着一道厚雪。",
+   "group": "snow",
+   "tris": 322,
+   "lod1Tris": 94,
+   "glow": false,
+   "size": [
+    3.726,
+    7.816,
+    3.474
+   ],
+   "base": -0.352,
+   "collide": {
+    "r": 0.4,
+    "h": 6.2
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "snow_pine_b": {
+   "id": "snow_pine_b",
+   "label": "矮冷杉",
+   "kind": "tree",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "矮壮的三层小冷杉。",
+   "group": "snow",
+   "tris": 259,
+   "lod1Tris": 74,
+   "glow": false,
+   "size": [
+    2.916,
+    4.896,
+    2.793
+   ],
+   "base": -0.353,
+   "collide": {
+    "r": 0.34,
+    "h": 3.4
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.3
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "snow_pine_c": {
+   "id": "snow_pine_c",
+   "label": "雪松",
+   "kind": "tree",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "高耸的五层雪松。",
+   "group": "snow",
+   "tris": 385,
+   "lod1Tris": 114,
+   "glow": false,
+   "size": [
+    4.027,
+    8.919,
+    3.905
+   ],
+   "base": -0.352,
+   "collide": {
+    "r": 0.42,
+    "h": 7.6
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.15
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "snow_rock": {
+   "id": "snow_rock",
+   "label": "雪岩",
+   "kind": "rock",
+   "biomes": [
+    "snow"
+   ],
+   "desc": "顶面积着厚雪的蓝灰色岩石。",
+   "group": "snow",
+   "tris": 420,
+   "lod1Tris": 133,
+   "glow": false,
+   "size": [
+    1.795,
+    1.135,
+    1.473
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.86,
+    "h": 1.18
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.6
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "swamp_lily": {
+   "id": "swamp_lily",
+   "label": "睡莲",
+   "kind": "detail",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "浮在水面的几片睡莲叶。",
+   "group": "swamp",
+   "tris": 272,
+   "lod1Tris": 86,
+   "glow": false,
+   "size": [
+    1.303,
+    0.235,
+    1.209
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.9,
+    1.15
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "swamp_mossrock": {
+   "id": "swamp_mossrock",
+   "label": "泽石",
+   "kind": "rock",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "裹满厚苔的湿石头。",
+   "group": "swamp",
+   "tris": 598,
+   "lod1Tris": 190,
+   "glow": false,
+   "size": [
+    1.669,
+    0.625,
+    1.362
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.82,
+    "h": 1.05
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.5
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "swamp_mushroom_a": {
+   "id": "swamp_mushroom_a",
+   "label": "灯菌",
+   "kind": "tree",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "伞盖青绿、菌褶会发光的高大真菌。",
+   "group": "swamp",
+   "tris": 861,
+   "lod1Tris": 267,
+   "glow": true,
+   "size": [
+    2.187,
+    3.074,
+    2.191
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.38,
+    "h": 2.65
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "swamp_mushroom_b": {
+   "id": "swamp_mushroom_b",
+   "label": "琥珀菌",
+   "kind": "shrub",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "菌褶透着暖琥珀光的小蘑菇。",
+   "group": "swamp",
+   "tris": 861,
+   "lod1Tris": 267,
+   "glow": true,
+   "size": [
+    1.174,
+    1.696,
+    1.177
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.3,
+    "h": 1.45
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.35
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "swamp_reeds": {
+   "id": "swamp_reeds",
+   "label": "芦苇",
+   "kind": "plant",
+   "biomes": [
+    "swamp",
+    "beach"
+   ],
+   "desc": "一丛宽叶芦苇，几根直挺的茎顶着褐色的蒲棒和一枝芦花。",
+   "group": "swamp",
+   "tris": 820,
+   "lod1Tris": 95,
+   "glow": false,
+   "size": [
+    0.704,
+    2.26,
+    0.542
+   ],
+   "base": -0.06,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.35
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 26
+  },
+  "swamp_snag": {
+   "id": "swamp_snag",
+   "label": "枯木",
+   "kind": "tree",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "没有叶子、枝干扭曲发黑的沼泽枯木。",
+   "group": "swamp",
+   "tris": 3208,
+   "lod1Tris": 1026,
+   "glow": false,
+   "size": [
+    4.278,
+    4.759,
+    2.864
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.44,
+    "h": 3.8
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "swamp_willow": {
+   "id": "swamp_willow",
+   "label": "垂枝沼柳",
+   "kind": "tree",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "树冠像一把撑开的绿伞，伞沿垂下一帘帘细长的枝叶。",
+   "group": "swamp",
+   "tris": 6832,
+   "lod1Tris": 434,
+   "glow": false,
+   "size": [
+    4.842,
+    4.74,
+    4.154
+   ],
+   "base": -0.2,
+   "collide": {
+    "r": 0.62,
+    "h": 4.7
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.2
+   ],
+   "castShadow": true,
+   "sink": 0.2,
+   "farCut": 24
+  },
+  "volcano_basalt": {
+   "id": "volcano_basalt",
+   "label": "玄武岩柱",
+   "kind": "rock",
+   "biomes": [
+    "volcanic"
+   ],
+   "desc": "五六根高矮不齐的六棱玄武岩石柱挤在一起。",
+   "group": "volcanic",
+   "tris": 288,
+   "lod1Tris": 90,
+   "glow": false,
+   "size": [
+    1.25,
+    2.447,
+    1.354
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 1.0,
+    "h": 2.65
+   },
+   "material": {},
+   "scale": [
+    0.8,
+    1.4
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "volcano_charred": {
+   "id": "volcano_charred",
+   "label": "焦木",
+   "kind": "tree",
+   "biomes": [
+    "volcanic"
+   ],
+   "desc": "被烧焦的枯树，树干的裂缝里还透着橙红的余烬。",
+   "group": "volcanic",
+   "tris": 3384,
+   "lod1Tris": 292,
+   "glow": true,
+   "size": [
+    3.353,
+    4.684,
+    3.76
+   ],
+   "base": -0.18,
+   "collide": {
+    "r": 0.46,
+    "h": 4.15
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.18,
+   "farCut": 24
+  },
+  "volcano_obsidian": {
+   "id": "volcano_obsidian",
+   "label": "黑曜岩簇",
+   "kind": "rock",
+   "biomes": [
+    "volcanic"
+   ],
+   "desc": "几支乌黑发亮的黑曜石尖晶从地上斜插出来。",
+   "group": "volcanic",
+   "tris": 288,
+   "lod1Tris": 88,
+   "glow": false,
+   "size": [
+    0.998,
+    1.947,
+    1.59
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.76,
+    "h": 2.45
+   },
+   "material": {
+    "roughness": 0.28,
+    "metalness": 0.15
+   },
+   "scale": [
+    0.8,
+    1.5
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  },
+  "volcano_rock": {
+   "id": "volcano_rock",
+   "label": "熔壳岩",
+   "kind": "rock",
+   "biomes": [
+    "volcanic"
+   ],
+   "desc": "多棱的深灰熔岩块，脚边淌着一小滩发光的熔岩。",
+   "group": "volcanic",
+   "tris": 210,
+   "lod1Tris": 91,
+   "glow": true,
+   "size": [
+    1.535,
+    1.022,
+    1.27
+   ],
+   "base": -0.06,
+   "collide": {
+    "r": 0.82,
+    "h": 1.28
+   },
+   "material": {},
+   "scale": [
+    0.7,
+    1.6
+   ],
+   "castShadow": true,
+   "sink": 0.06,
+   "farCut": 24
+  }
+ }
+}

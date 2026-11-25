@@ -1,0 +1,395 @@
+[
+ {
+  "id": "volcano_obsidian",
+  "label": "黑曜岩簇",
+  "kind": "rock",
+  "group": "volcanic",
+  "biomes": [
+   "volcanic"
+  ],
+  "seed": 701,
+  "desc": "几支乌黑发亮的黑曜石尖晶从地上斜插出来。",
+  "collide": {
+   "r": 0.7,
+   "h": 2.0
+  },
+  "scale": [
+   0.8,
+   1.5
+  ],
+  "material": {
+   "roughness": 0.28,
+   "metalness": 0.15
+  },
+  "parts": [
+   {
+    "type": "crystal",
+    "h": 2.1,
+    "shards": 5,
+    "sides": 5,
+    "paint": {
+     "color": "#17181f",
+     "color2": "#4d5372",
+     "under": "#0b0c10",
+     "mode": "normal",
+     "jitter": 0.08
+    }
+   }
+  ]
+ },
+ {
+  "id": "volcano_basalt",
+  "label": "玄武岩柱",
+  "kind": "rock",
+  "group": "volcanic",
+  "biomes": [
+   "volcanic"
+  ],
+  "seed": 702,
+  "desc": "五六根高矮不齐的六棱玄武岩石柱挤在一起。",
+  "collide": {
+   "r": 1.0,
+   "h": 2.4
+  },
+  "scale": [
+   0.8,
+   1.4
+  ],
+  "parts": [
+   {
+    "type": "loft",
+    "sides": 6,
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 0.38
+     },
+     {
+      "y": 2.3,
+      "r": 0.35
+     },
+     {
+      "y": 2.36,
+      "r": 0.3
+     }
+    ],
+    "paint": {
+     "color": "#3c4048",
+     "color2": "#6b707c",
+     "under": "#262930",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 6,
+    "rot": 12,
+    "at": [
+     0.56,
+     0,
+     0.12
+    ],
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 0.36
+     },
+     {
+      "y": 1.7,
+      "r": 0.34
+     },
+     {
+      "y": 1.76,
+      "r": 0.29
+     }
+    ],
+    "paint": {
+     "color": "#363a42",
+     "color2": "#636874",
+     "under": "#22252b",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 6,
+    "rot": -8,
+    "at": [
+     -0.5,
+     0,
+     0.26
+    ],
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 0.34
+     },
+     {
+      "y": 1.2,
+      "r": 0.32
+     },
+     {
+      "y": 1.26,
+      "r": 0.27
+     }
+    ],
+    "paint": {
+     "color": "#40444c",
+     "color2": "#717682",
+     "under": "#282b31",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 6,
+    "rot": 20,
+    "at": [
+     0.14,
+     0,
+     -0.56
+    ],
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 0.33
+     },
+     {
+      "y": 0.9,
+      "r": 0.31
+     },
+     {
+      "y": 0.96,
+      "r": 0.26
+     }
+    ],
+    "paint": {
+     "color": "#34383f",
+     "color2": "#606570",
+     "under": "#212329",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 6,
+    "rot": 4,
+    "at": [
+     -0.2,
+     0,
+     -0.47
+    ],
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 0.3
+     },
+     {
+      "y": 1.5,
+      "r": 0.28
+     },
+     {
+      "y": 1.56,
+      "r": 0.24
+     }
+    ],
+    "paint": {
+     "color": "#3a3e46",
+     "color2": "#696e7a",
+     "under": "#25282e",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   }
+  ]
+ },
+ {
+  "id": "volcano_charred",
+  "label": "焦木",
+  "kind": "tree",
+  "group": "volcanic",
+  "biomes": [
+   "volcanic"
+  ],
+  "seed": 703,
+  "desc": "被烧焦的枯树，树干的裂缝里还透着橙红的余烬。",
+  "collide": {
+   "r": 0.42,
+   "h": 3.6
+  },
+  "sink": 0.2,
+  "scale": [
+   0.85,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 3.6,
+    "r0": 0.3,
+    "r1": 0.05,
+    "bend": [
+     0.22,
+     0.14
+    ],
+    "wobble": 0.2,
+    "flare": 0.5,
+    "roots": {
+     "n": 4,
+     "len": 0.8,
+     "r": 0.13
+    },
+    "branches": {
+     "n": 5,
+     "from": 0.45,
+     "to": 0.9,
+     "len": [
+      0.8,
+      1.4
+     ],
+     "rise": [
+      0.4,
+      1.1
+     ],
+     "r": 0.07
+    },
+    "bark": {
+     "color": "#26231f",
+     "color2": "#46403a",
+     "mode": "height",
+     "jitter": 0.07
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 5,
+    "glow": true,
+    "at": [
+     0.27,
+     1.15,
+     0.1
+    ],
+    "rings": [
+     {
+      "y": -0.07,
+      "r": 0.07
+     },
+     {
+      "y": 0.0,
+      "r": 0.11
+     },
+     {
+      "y": 0.08,
+      "r": 0.06
+     },
+     {
+      "y": 0.12,
+      "r": 0.0
+     }
+    ],
+    "paint": {
+     "color": "#ff6a1f",
+     "color2": "#ffd066",
+     "mode": "normal"
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 7,
+    "glow": true,
+    "at": [
+     0.5,
+     0.0,
+     0.3
+    ],
+    "rings": [
+     {
+      "y": 0.0,
+      "r": 0.36
+     },
+     {
+      "y": 0.03,
+      "r": 0.36
+     }
+    ],
+    "paint": {
+     "color": "#ff5a14",
+     "color2": "#ffb347",
+     "mode": "normal"
+    }
+   }
+  ]
+ },
+ {
+  "id": "volcano_rock",
+  "label": "熔壳岩",
+  "kind": "rock",
+  "group": "volcanic",
+  "biomes": [
+   "volcanic"
+  ],
+  "seed": 704,
+  "desc": "多棱的深灰熔岩块，脚边淌着一小滩发光的熔岩。",
+  "collide": {
+   "r": 0.72,
+   "h": 1.2
+  },
+  "scale": [
+   0.7,
+   1.6
+  ],
+  "parts": [
+   {
+    "type": "rock",
+    "style": "angular",
+    "size": [
+     1.7,
+     1.2,
+     1.5
+    ],
+    "tris": 150,
+    "noise": 0.26,
+    "facets": 11,
+    "soft": 13,
+    "paint": {
+     "color": "#3a3d44",
+     "color2": "#6a6f7a",
+     "under": "#202227",
+     "mode": "normal",
+     "jitter": 0.06
+    },
+    "points": 13
+   },
+   {
+    "type": "loft",
+    "sides": 7,
+    "irreg": 0.2,
+    "glow": true,
+    "at": [
+     0.62,
+     0.0,
+     0.42
+    ],
+    "rings": [
+     {
+      "y": 0.0,
+      "r": 0.42
+     },
+     {
+      "y": 0.03,
+      "r": 0.42
+     }
+    ],
+    "paint": {
+     "color": "#ff5a14",
+     "color2": "#ffc45a",
+     "mode": "normal"
+    }
+   }
+  ]
+ }
+]

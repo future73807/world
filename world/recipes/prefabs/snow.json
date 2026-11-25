@@ -1,0 +1,296 @@
+[
+ {
+  "id": "snow_pine_a",
+  "label": "霜杉",
+  "kind": "tree",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 401,
+  "desc": "层叠锥形树冠的针叶杉，每层托着一道厚雪。",
+  "collide": {
+   "r": 0.4,
+   "h": 6.2
+  },
+  "sink": 0.2,
+  "scale": [
+   0.8,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "pine",
+    "h": 6.2,
+    "r0": 0.2,
+    "radius": 1.75,
+    "layers": 4,
+    "snow": true,
+    "overlap": 1.8,
+    "irreg": 0.12,
+    "bark": {
+     "color": "#5b4634",
+     "color2": "#7a624a",
+     "mode": "height"
+    },
+    "needles": {
+     "color": "#3b7d6c",
+     "color2": "#86c9a0",
+     "under": "#24514a",
+     "mode": "normal",
+     "jitter": 0.05
+    },
+    "snowPaint": {
+     "color": "#eef6fd",
+     "color2": "#ffffff",
+     "under": "#d6e4f2",
+     "mode": "normal",
+     "jitter": 0.015
+    }
+   }
+  ]
+ },
+ {
+  "id": "snow_pine_b",
+  "label": "矮冷杉",
+  "kind": "tree",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 402,
+  "desc": "矮壮的三层小冷杉。",
+  "collide": {
+   "r": 0.34,
+   "h": 3.4
+  },
+  "sink": 0.2,
+  "scale": [
+   0.8,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "pine",
+    "h": 3.4,
+    "r0": 0.16,
+    "radius": 1.35,
+    "layers": 3,
+    "snow": true,
+    "overlap": 1.8,
+    "irreg": 0.12,
+    "bark": {
+     "color": "#5b4634",
+     "color2": "#7a624a",
+     "mode": "height"
+    },
+    "needles": {
+     "color": "#3f8470",
+     "color2": "#8ecfa6",
+     "under": "#26564e",
+     "mode": "normal",
+     "jitter": 0.05
+    },
+    "snowPaint": {
+     "color": "#eef6fd",
+     "color2": "#ffffff",
+     "under": "#d6e4f2",
+     "mode": "normal",
+     "jitter": 0.015
+    }
+   }
+  ]
+ },
+ {
+  "id": "snow_pine_c",
+  "label": "雪松",
+  "kind": "tree",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 403,
+  "desc": "高耸的五层雪松。",
+  "collide": {
+   "r": 0.42,
+   "h": 7.6
+  },
+  "sink": 0.2,
+  "scale": [
+   0.85,
+   1.15
+  ],
+  "parts": [
+   {
+    "type": "pine",
+    "h": 7.6,
+    "r0": 0.22,
+    "radius": 1.9,
+    "layers": 5,
+    "snow": true,
+    "overlap": 1.8,
+    "irreg": 0.1,
+    "bark": {
+     "color": "#54402f",
+     "color2": "#74604a",
+     "mode": "height"
+    },
+    "needles": {
+     "color": "#357263",
+     "color2": "#7fc297",
+     "under": "#1f4a45",
+     "mode": "normal",
+     "jitter": 0.05
+    },
+    "snowPaint": {
+     "color": "#eef6fd",
+     "color2": "#ffffff",
+     "under": "#d6e4f2",
+     "mode": "normal",
+     "jitter": 0.015
+    }
+   }
+  ]
+ },
+ {
+  "id": "snow_dead_tree",
+  "label": "枯桦",
+  "kind": "tree",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 404,
+  "desc": "落光了叶子的灰白枯树，枝条向天空张开。",
+  "collide": {
+   "r": 0.3,
+   "h": 4.4
+  },
+  "sink": 0.2,
+  "scale": [
+   0.85,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 4.4,
+    "r0": 0.22,
+    "r1": 0.05,
+    "bend": [
+     0.2,
+     -0.1
+    ],
+    "wobble": 0.16,
+    "flare": 0.4,
+    "roots": {
+     "n": 3,
+     "len": 0.6,
+     "r": 0.11
+    },
+    "branches": {
+     "n": 6,
+     "from": 0.4,
+     "to": 0.9,
+     "len": [
+      0.9,
+      1.6
+     ],
+     "rise": [
+      0.6,
+      1.4
+     ],
+     "r": 0.07
+    },
+    "bark": {
+     "color": "#cfcabd",
+     "color2": "#efede6",
+     "mode": "height",
+     "jitter": 0.08
+    }
+   }
+  ]
+ },
+ {
+  "id": "snow_rock",
+  "label": "雪岩",
+  "kind": "rock",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 405,
+  "desc": "顶面积着厚雪的蓝灰色岩石。",
+  "collide": {
+   "r": 0.78,
+   "h": 1.2
+  },
+  "scale": [
+   0.7,
+   1.6
+  ],
+  "parts": [
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     1.8,
+     1.2,
+     1.6
+    ],
+    "points": 26,
+    "noise": 0.24,
+    "paint": {
+     "color": "#7e8b9a",
+     "color2": "#aeb9c4",
+     "under": "#4f5a67",
+     "mode": "normal",
+     "jitter": 0.05,
+     "coat": {
+      "color": "#f4faff",
+      "t0": 0.42,
+      "amount": 0.96
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ice_shard",
+  "label": "冰晶簇",
+  "kind": "rock",
+  "group": "snow",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 406,
+  "desc": "从冻土里斜插出来的几支淡蓝冰晶。",
+  "collide": {
+   "r": 0.5,
+   "h": 1.8
+  },
+  "scale": [
+   0.7,
+   1.4
+  ],
+  "material": {
+   "roughness": 0.22,
+   "metalness": 0.05
+  },
+  "parts": [
+   {
+    "type": "crystal",
+    "h": 1.9,
+    "shards": 5,
+    "sides": 5,
+    "paint": {
+     "color": "#5fbfe4",
+     "color2": "#dffaff",
+     "under": "#2a7fa6",
+     "mode": "normal",
+     "jitter": 0.06
+    }
+   }
+  ]
+ }
+]

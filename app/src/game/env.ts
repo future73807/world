@@ -180,89 +180,6 @@ export function buildFarIslets(seed: number): THREE.Group {
   return group;
 }
 
-/** Animated sea: faceted low-poly waves plus a wide shallow-water ring. */
-export class Sea {
-  readonly mesh: THREE.Mesh;
-  readonly foamMesh: THREE.Mesh;
-  private geo: THREE.PlaneGeometry;
-  private basePositions: Float32Array;
-  private readonly radius = 420;
-  private time = 0;
-  private readonly segs = 110;
-
-  constructor() {
-    this.geo = new THREE.PlaneGeometry(this.radius * 2, this.radius * 2, this.segs, this.segs);
-    this.geo.rotateX(-Math.PI / 2);
-    this.basePositions = Float32Array.from(this.geo.getAttribute('position').array as Float32Array);
-
-    const count = this.geo.getAttribute('position').count;
-    const colors = new Float32Array(count * 3);
-    const deep = new THREE.Color(PAL.waterDeep);
-    const shallow = new THREE.Color(PAL.waterShallow);
-    const mid = new THREE.Color(PAL.waterMid);
-    const pos = this.geo.getAttribute('position') as THREE.BufferAttribute;
-    for (let i = 0; i < count; i++) {
-      const d = Math.hypot(pos.getX(i), pos.getZ(i));
-      const c = deep
-        .clone()
-        .lerp(mid, THREE.MathUtils.clamp(1 - d / 210, 0, 1))
-        .lerp(shallow, Math.max(0, 1 - d / 68) * 0.9);
-      colors[i * 3] = c.r;
-      colors[i * 3 + 1] = c.g;
-      colors[i * 3 + 2] = c.b;
-    }
-    this.geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const mat = new THREE.MeshStandardMaterial({
-      vertexColors: true,
-      flatShading: true,
-      roughness: 0.14,
-      metalness: 0.34,
-      transparent: true,
-      opacity: 0.96,
-      envMapIntensity: 1.15,
-    });
-    this.mesh = new THREE.Mesh(this.geo, mat);
-    this.mesh.receiveShadow = true;
-    this.mesh.name = 'Water_Surface';
-
-    // sparkle ribbon: a thin brighter sheet just under the surface near shore
-    const foamGeo = new THREE.RingGeometry(30, 130, 64, 6);
-    foamGeo.rotateX(-Math.PI / 2);
-    const foamMat = new THREE.MeshBasicMaterial({
-      color: PAL.waterShallow,
-      transparent: true,
-      opacity: 0.2,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-    });
-    this.foamMesh = new THREE.Mesh(foamGeo, foamMat);
-    this.foamMesh.position.y = 0.045;
-    this.foamMesh.name = 'Water_ShallowRing';
-  }
-
-  update(dt: number) {
-    this.time += dt;
-    const pos = this.geo.getAttribute('position') as THREE.BufferAttribute;
-    const t = this.time;
-    const arr = pos.array as Float32Array;
-    for (let i = 0; i < arr.length; i += 3) {
-      const x = this.basePositions[i];
-      const z = this.basePositions[i + 2];
-      const d = Math.hypot(x, z);
-      const fade = THREE.MathUtils.clamp(1 - d / 210, 0, 1);
-      const w =
-        Math.sin(x * 0.075 + t * 0.72) * 0.2 +
-        Math.sin(z * 0.062 - t * 0.58) * 0.17 +
-        Math.sin((x + z) * 0.115 + t * 1.05) * 0.09 +
-        Math.sin((x - z) * 0.032 - t * 0.35) * 0.12;
-      arr[i + 1] = w * fade;
-    }
-    pos.needsUpdate = true;
-    this.geo.computeVertexNormals();
-  }
-}
-
 /**
  * Dense mist bank around the known world — the frontier must FULLY occlude
  * whatever lies beyond (open sea, unbuilt land), while leaving the sky itself
@@ -270,7 +187,7 @@ export class Sea {
  * the inner wall's top sits ~+4.7° above the horizon — every degree of sea and
  * distance is hidden, and only the outermost faint haze grazes the frame top.
  */
-function puffTexture(): THREE.CanvasTexture {
+export function puffTexture(): THREE.CanvasTexture {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
   const g = c.getContext('2d')!;
@@ -307,80 +224,127 @@ function puffTexture(): THREE.CanvasTexture {
 }
 
 /**
- * The frontier: a hard-ish white "air wall" behind, and a front layer of
- * drifting particle puffs. The wall is what actually occludes the unbuilt
- * world; the puffs are the part the player brushes through, which is why they
- * are dense, layered in two depth bands, and animated.
+ * A mist bank laid along a coastline: `stations` are points on the shore, each
+ * with the unit vector that points toward the unknown. Two depth bands per
+ * station — a dense low front the player brushes through, and a big faint wall
+ * behind it — so the frontier has thickness and fully hides what lies beyond.
  */
-export function buildMistRing(innerR: number): THREE.Group {
+export interface MistStation {
+  x: number;
+  z: number;
+  nx: number;
+  nz: number;
+}
+
+export function buildMistAlong(stations: MistStation[], seed = 911): THREE.Group {
   const group = new THREE.Group();
   group.name = 'Mist_Wall';
-  const rnd = mulberry32(911);
-
-  // far strata — the "air wall" behind the particles
-  const layers = [
-    { y: 0, op: 0.55, r: innerR * 1.07, h: 21, seg: 96 },
-    { y: 0.5, op: 0.3, r: innerR * 1.16, h: 22, seg: 96 },
-  ];
-  layers.forEach((l, i) => {
-    const geo = new THREE.CylinderGeometry(l.r, l.r * 1.012, l.h, l.seg, 1, true);
-    const mat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: l.op,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-      fog: false,
-      blending: THREE.NormalBlending,
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.y = l.y;
-    mesh.renderOrder = 8 + i;
-    group.add(mesh);
-  });
-
-  // Front particle band: two depth shells so the frontier has thickness when
-  // you walk into it. Each puff keeps its own colour / opacity / drift phase.
+  const rnd = mulberry32(seed);
   const tex = puffTexture();
   const tints = [0xffffff, 0xf8fcfe, 0xeef6fa, 0xffffff];
-  const shells = [
-    { rMul: 0.975, n: 1.9, sMin: 7.5, sMax: 14, opMin: 0.7, opMax: 0.96, order: 11 },
-    { rMul: 1.035, n: 2.6, sMin: 10, sMax: 19, opMin: 0.5, opMax: 0.8, order: 10 },
-  ];
 
-  for (const shell of shells) {
-    const puffs = Math.max(72, Math.ceil((innerR * Math.PI * 2) / shell.n));
-    for (let i = 0; i < puffs; i++) {
-      const a = (i / puffs) * Math.PI * 2 + (rnd() - 0.5) * 0.06;
-      const r = innerR * (shell.rMul + (rnd() - 0.5) * 0.03);
-      const s = shell.sMin + rnd() * (shell.sMax - shell.sMin);
-      const mat = new THREE.SpriteMaterial({
-        map: tex,
-        color: tints[Math.floor(rnd() * tints.length)],
-        transparent: true,
-        opacity: shell.opMin + rnd() * (shell.opMax - shell.opMin),
-        depthWrite: false,
-        depthTest: true,
-        fog: false,
-      });
-      const sp = new THREE.Sprite(mat);
-      const y = 4.8 + rnd() * 10.5;
-      sp.position.set(Math.cos(a) * r, y, Math.sin(a) * r);
-      sp.scale.set(s, s * 0.6, 1);
-      sp.renderOrder = shell.order;
-      // per-puff drift so the band breathes instead of being a fixed ring
-      sp.userData.baseY = y;
-      sp.userData.baseX = sp.position.x;
-      sp.userData.baseZ = sp.position.z;
-      sp.userData.phase = rnd() * Math.PI * 2;
-      sp.userData.amp = 0.5 + rnd() * 1.1;
-      sp.userData.drift = 0.25 + rnd() * 0.4;
-      sp.userData.radial = (rnd() - 0.5) * 0.9;
-      group.add(sp);
+  const add = (x: number, z: number, y: number, size: number, op: number, order: number) => {
+    const mat = new THREE.SpriteMaterial({
+      map: tex,
+      color: tints[Math.floor(rnd() * tints.length)],
+      transparent: true,
+      opacity: op,
+      depthWrite: false,
+      depthTest: true,
+      fog: false,
+    });
+    const sp = new THREE.Sprite(mat);
+    sp.position.set(x, y, z);
+    sp.scale.set(size, size * 0.6, 1);
+    sp.renderOrder = order;
+    sp.userData.baseY = y;
+    sp.userData.baseX = x;
+    sp.userData.baseZ = z;
+    sp.userData.phase = rnd() * Math.PI * 2;
+    sp.userData.amp = 0.5 + rnd() * 1.1;
+    sp.userData.drift = 0.25 + rnd() * 0.4;
+    sp.userData.radial = (rnd() - 0.5) * 0.9;
+    sp.userData.op0 = op;
+    group.add(sp);
+  };
+
+  for (const st of stations) {
+    for (let k = 0; k < 2; k++) {
+      const off = 6.5 + rnd() * 3.5;
+      const side = (rnd() - 0.5) * 3.4;
+      add(st.x + st.nx * off - st.nz * side, st.z + st.nz * off + st.nx * side, 4.6 + rnd() * 9.5, 8 + rnd() * 6.5, 0.7 + rnd() * 0.26, 11);
     }
+    const off = 14 + rnd() * 7;
+    const side = (rnd() - 0.5) * 5;
+    add(st.x + st.nx * off - st.nz * side, st.z + st.nz * off + st.nx * side, 7 + rnd() * 10, 15 + rnd() * 8, 0.5 + rnd() * 0.3, 10);
   }
-
   return group;
+}
+
+/** Scales every puff's opacity (1 = as authored); used to dissolve a bank as the frontier moves. */
+export function setMistOpacity(group: THREE.Object3D, k: number) {
+  group.traverse((o) => {
+    const m = (o as THREE.Sprite).material as THREE.SpriteMaterial | undefined;
+    if (m && typeof o.userData.op0 === 'number') m.opacity = o.userData.op0 * k;
+  });
+}
+
+/**
+ * A loose swirl of puffs inside a tile that is being generated: the in-world
+ * "loading" state. Rotated by the engine while the region is being built.
+ * (cx, cz) is the tile's centre: the player stands just outside the tile, and
+ * puffs that still drift up to the lens are faded by updateFormingMist().
+ */
+export function buildFormingMist(cx: number, cz: number, seed = 515): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'Mist_Forming';
+  const rnd = mulberry32(seed);
+  const tex = puffTexture();
+  for (let i = 0; i < 26; i++) {
+    const a = rnd() * Math.PI * 2;
+    const r = 2 + rnd() * 11;
+    const mat = new THREE.SpriteMaterial({
+      map: tex,
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.3 + rnd() * 0.25,
+      depthWrite: false,
+      fog: false,
+    });
+    const sp = new THREE.Sprite(mat);
+    const size = 8 + rnd() * 7;
+    sp.scale.set(size, size * 0.62, 1);
+    sp.position.set(Math.cos(a) * r, 2.5 + rnd() * 8, Math.sin(a) * r);
+    sp.renderOrder = 9;
+    sp.userData.op = mat.opacity;
+    sp.userData.phase = rnd() * Math.PI * 2;
+    sp.userData.baseY = sp.position.y;
+    sp.userData.r = r;
+    sp.userData.a0 = a;
+    sp.userData.spin = 0.12 + rnd() * 0.16;
+    group.add(sp);
+  }
+  group.position.set(cx, 0, cz);
+  return group;
+}
+
+/** `eye`, when given, is the camera: puffs within ~7 BU of it vanish, so the slime stays visible. */
+export function updateFormingMist(group: THREE.Object3D, t: number, eye?: THREE.Vector3) {
+  for (const child of group.children) {
+    const d = child.userData;
+    if (typeof d.r !== 'number') continue;
+    const a = d.a0 + t * d.spin;
+    child.position.x = Math.cos(a) * d.r;
+    child.position.z = Math.sin(a) * d.r;
+    child.position.y = d.baseY + Math.sin(t * 0.5 + d.phase) * 1.4;
+    let k = 1;
+    if (eye) {
+      const dist = Math.hypot(child.position.x + group.position.x - eye.x, child.position.y - eye.y, child.position.z + group.position.z - eye.z);
+      k = Math.min(1, Math.max(0, (dist - 7) / 10));
+      k = k * k;
+    }
+    (child as THREE.Sprite).material.opacity = d.op * k;
+  }
 }
 
 /** Animates the frontier puffs: slow vertical breathing plus a lateral drift. */

@@ -81,9 +81,12 @@ function profileRings(): RingSpec[] {
 
 /** Two gel nubs on the crown, defined as a displacement of the dome itself. */
 const HORN_ANGLE = 0.62; // separation from the FRONT axis, radians
-const HORN_SIGMA = 0.24;
-const HORN_LIFT = 0.44; // extra height at the nub centre
-const HORN_BULGE = 0.24; // radial swell at the nub centre
+// Nubs read as "horns" once they clear the crown silhouette, but at 0.44/0.24
+// they dominated the head. Roughly half the lift and a tighter gaussian keeps
+// them as small gel points on the shoulder instead of a second dome.
+const HORN_SIGMA = 0.19;
+const HORN_LIFT = 0.24; // extra height at the nub centre
+const HORN_BULGE = 0.13; // radial swell at the nub centre
 // The nub is centred on the upper crown (t≈0.78) where the dome is already
 // narrow, so the lift clears the apex ring instead of sinking into it.
 const HORN_T = 0.78;

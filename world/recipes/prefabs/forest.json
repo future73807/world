@@ -1,0 +1,416 @@
+[
+ {
+  "id": "forest_tree_a",
+  "label": "折伞树",
+  "kind": "tree",
+  "group": "forest",
+  "biomes": [
+   "forest",
+   "meadow"
+  ],
+  "seed": 201,
+  "desc": "S 形树干、外张的板根和一大团云朵状树冠的阔叶树。",
+  "collide": {
+   "r": 0.5,
+   "h": 4.7
+  },
+  "sink": 0.25,
+  "scale": [
+   0.85,
+   1.2
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 4.7,
+    "r0": 0.36,
+    "r1": 0.1,
+    "bend": [
+     0.3,
+     -0.2
+    ],
+    "wobble": 0.12,
+    "flare": 0.45,
+    "roots": {
+     "n": 4,
+     "len": 0.95,
+     "r": 0.18
+    },
+    "branches": {
+     "n": 5,
+     "from": 0.5,
+     "to": 0.78,
+     "len": [
+      1.0,
+      1.6
+     ],
+     "rise": [
+      0.4,
+      0.9
+     ],
+     "r": 0.11
+    },
+    "bark": {
+     "color": "#6b5240",
+     "color2": "#a98a6a",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      4.0,
+      2.7,
+      4.0
+     ],
+     "lobes": 6,
+     "noise": 0.2,
+     "tris": 560,
+     "top": true,
+     "paint": {
+      "color": "#6db04f",
+      "color2": "#b9df82",
+      "under": "#3b6d3c",
+      "mode": "normal",
+      "jitter": 0.05,
+      "hue": 0.014
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "forest_tree_b",
+  "label": "高冠树",
+  "kind": "tree",
+  "group": "forest",
+  "biomes": [
+   "forest"
+  ],
+  "seed": 202,
+  "desc": "树干笔直高挑、树冠是竖长椭圆的深绿大树。",
+  "collide": {
+   "r": 0.46,
+   "h": 5.6
+  },
+  "sink": 0.25,
+  "scale": [
+   0.85,
+   1.15
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 5.6,
+    "r0": 0.34,
+    "r1": 0.09,
+    "bend": [
+     0.08,
+     0.1
+    ],
+    "wobble": 0.06,
+    "flare": 0.4,
+    "roots": {
+     "n": 4,
+     "len": 0.85,
+     "r": 0.16
+    },
+    "branches": {
+     "n": 4,
+     "from": 0.6,
+     "to": 0.84,
+     "len": [
+      0.8,
+      1.3
+     ],
+     "rise": [
+      0.4,
+      0.8
+     ],
+     "r": 0.1
+    },
+    "bark": {
+     "color": "#5d4838",
+     "color2": "#8f7456",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      3.9,
+      3.4,
+      3.9
+     ],
+     "lobes": 5,
+     "noise": 0.17,
+     "tris": 560,
+     "top": true,
+     "paint": {
+      "color": "#4f9549",
+      "color2": "#9fd070",
+      "under": "#2d6136",
+      "mode": "normal",
+      "jitter": 0.05,
+      "hue": 0.012
+     },
+     "crownY": 0.88
+    }
+   }
+  ]
+ },
+ {
+  "id": "forest_tree_c",
+  "label": "绯花树",
+  "kind": "tree",
+  "group": "forest",
+  "biomes": [
+   "forest",
+   "meadow"
+  ],
+  "seed": 203,
+  "desc": "枝条向四周铺开、开满粉白花朵的花树。",
+  "collide": {
+   "r": 0.46,
+   "h": 4.3
+  },
+  "sink": 0.25,
+  "scale": [
+   0.85,
+   1.2
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 4.3,
+    "r0": 0.32,
+    "r1": 0.1,
+    "bend": [
+     -0.2,
+     0.25
+    ],
+    "wobble": 0.14,
+    "flare": 0.4,
+    "roots": {
+     "n": 3,
+     "len": 0.8,
+     "r": 0.15
+    },
+    "branches": {
+     "n": 6,
+     "from": 0.52,
+     "to": 0.76,
+     "len": [
+      1.3,
+      2.0
+     ],
+     "rise": [
+      0.5,
+      1.0
+     ],
+     "r": 0.1
+    },
+    "bark": {
+     "color": "#5a4638",
+     "color2": "#8a6e56",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      4.6,
+      2.2,
+      4.6
+     ],
+     "lobes": 7,
+     "noise": 0.2,
+     "tris": 620,
+     "paint": {
+      "color": "#ee9db2",
+      "color2": "#ffe6ec",
+      "under": "#c46f8c",
+      "mode": "normal",
+      "jitter": 0.04,
+      "hue": 0.01
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "forest_stump",
+  "label": "老树桩",
+  "kind": "rock",
+  "group": "forest",
+  "biomes": [
+   "forest",
+   "meadow",
+   "swamp"
+  ],
+  "seed": 204,
+  "desc": "被砍断的老树桩，断面是浅色年轮。",
+  "collide": {
+   "r": 0.6,
+   "h": 0.8
+  },
+  "scale": [
+   0.8,
+   1.4
+  ],
+  "parts": [
+   {
+    "type": "limb",
+    "path": [
+     [
+      0,
+      -0.2,
+      0
+     ],
+     [
+      0.05,
+      0.55,
+      0.03
+     ],
+     [
+      0.08,
+      0.76,
+      0.04
+     ]
+    ],
+    "radii": [
+     0.62,
+     0.5,
+     0.44
+    ],
+    "sides": 9,
+    "sub": 3,
+    "flare": 0.5,
+    "noise": 0.05,
+    "noiseF": 4,
+    "paint": {
+     "color": "#6b5240",
+     "color2": "#9a7c5e",
+     "mode": "bands",
+     "bandH": 0.26,
+     "jitter": 0.06,
+     "zones": [
+      {
+       "y0": 0.7,
+       "y1": 9,
+       "color": "#d9c09a",
+       "mode": "replace"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "forest_log",
+  "label": "倒木",
+  "kind": "rock",
+  "group": "forest",
+  "biomes": [
+   "forest",
+   "meadow",
+   "swamp",
+   "beach"
+  ],
+  "seed": 205,
+  "desc": "横躺在地上的倒木，背阴面长满苔。",
+  "collide": {
+   "r": 0.48,
+   "h": 0.8
+  },
+  "scale": [
+   0.8,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "limb",
+    "path": [
+     [
+      -1.5,
+      0.3,
+      0
+     ],
+     [
+      0,
+      0.34,
+      0.05
+     ],
+     [
+      1.5,
+      0.32,
+      -0.04
+     ]
+    ],
+    "radii": [
+     0.4,
+     0.38,
+     0.3
+    ],
+    "sides": 9,
+    "sub": 5,
+    "noise": 0.05,
+    "noiseF": 3,
+    "paint": {
+     "color": "#6b5240",
+     "color2": "#9a7c5e",
+     "mode": "bands",
+     "bandH": 0.5,
+     "jitter": 0.06,
+     "coat": {
+      "color": "#7fa355",
+      "t0": 0.45,
+      "amount": 0.85
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "forest_mushroom_s",
+  "label": "小红菇",
+  "kind": "detail",
+  "group": "forest",
+  "biomes": [
+   "forest",
+   "meadow",
+   "swamp"
+  ],
+  "seed": 206,
+  "desc": "伞盖红色带白点的迷你小蘑菇。",
+  "collide": false,
+  "castShadow": false,
+  "scale": [
+   0.8,
+   1.4
+  ],
+  "lod1": {
+   "spots": 0
+  },
+  "parts": [
+   {
+    "type": "mushroom",
+    "h": 0.3,
+    "capR": 0.2,
+    "capH": 0.14,
+    "bend": 0.04,
+    "spots": 4,
+    "sides": 9,
+    "stalk": {
+     "color": "#e6dcc4",
+     "color2": "#f6efdc",
+     "mode": "height"
+    },
+    "cap": {
+     "color": "#c9503a",
+     "color2": "#ea7a5e",
+     "mode": "normal",
+     "jitter": 0.03
+    },
+    "gill": {
+     "color": "#efe3c8",
+     "mode": "uniform"
+    }
+   }
+  ]
+ }
+]

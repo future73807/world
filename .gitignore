@@ -1,2 +1,13 @@
 .zcode/*
 *.tsbuildinfo
+
+# local server state: AI keys, logs, generated models, job data
+runtime/
+# Blender backup files and pipeline markers/logs
+*.blend1
+world/renders/_*
+world_v2/renders/*.log
+# derived input of the Blender terrain export (regenerate: npm run assets:terrain)
+world/terrain/
+# Python byte-code of the Blender scripts
+__pycache__/

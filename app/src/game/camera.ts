@@ -28,6 +28,8 @@ export class ThirdPersonCamera {
   private occlusionMax = Infinity;
   /** optional assist: turns the camera behind the player while moving. Off by default. */
   movementAssist = false;
+  /** how fast the orbit follows its targets: 1 in play, far less while the opening mist parts */
+  ease = 1;
   sensitivity = 1;
   invertY = false;
 
@@ -83,6 +85,17 @@ export class ThirdPersonCamera {
     this.initialised = true;
   }
 
+  /**
+   * Places the eye for the opening shot — high and far back, to settle down onto
+   * the slime — while the targets stay where play will frame it.
+   */
+  begin(yaw: number, pitch: number, distance: number) {
+    this.yaw = yaw;
+    this.pitch = pitch;
+    this.distance = distance;
+    this.initialised = false;
+  }
+
   /** External framing override used by diagnostics/screenshots (never by gameplay input). */
   frame(yaw: number, pitch: number, distance: number) {
     this.targetYaw = this.yaw = yaw;
@@ -114,9 +127,9 @@ export class ThirdPersonCamera {
       // (kept gentle so it never fights a manual look)
     }
 
-    this.yaw = damp(this.yaw, this.targetYaw, 13, dt);
-    this.pitch = damp(this.pitch, this.targetPitch, 13, dt);
-    this.distance = damp(this.distance, this.targetDistance, 8, dt);
+    this.yaw = damp(this.yaw, this.targetYaw, 13 * this.ease, dt);
+    this.pitch = damp(this.pitch, this.targetPitch, 13 * this.ease, dt);
+    this.distance = damp(this.distance, this.targetDistance, 8 * this.ease, dt);
 
     // Sprint widens the lens and pulls the eye back a touch. Without a visible
     // change in framing, a 2.2x speed increase reads as "the ground scrolls",

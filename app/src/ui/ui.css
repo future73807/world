@@ -124,7 +124,7 @@ button {
   pointer-events: auto;
 }
 
-/* minimap: glass disc, no hard rim */
+/* minimap: a disc with a frayed rim, painted in the canvas itself (see raggedRim) */
 .minimap-wrap {
   position: absolute;
   left: var(--safe-x);
@@ -139,41 +139,21 @@ button {
   position: relative;
   width: 272px;
   height: 272px;
-  border-radius: 50%;
 }
 
 .orb canvas {
   display: block;
-  border-radius: 50%;
-  /* the disc itself fades out, so there is no visible crop circle */
-  /* a long, gentle fade: the disc has no visible edge at all */
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 38%, rgba(0, 0, 0, 0.9) 58%, rgba(0, 0, 0, 0.4) 80%, transparent 96%);
-  mask-image: radial-gradient(circle at 50% 50%, #000 38%, rgba(0, 0, 0, 0.9) 58%, rgba(0, 0, 0, 0.4) 80%, transparent 96%);
-  filter: drop-shadow(0 4px 16px rgba(20, 62, 74, 0.32));
-}
-
-.orb-haze {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  /* frosted glass ring: blurs the map itself at the rim */
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 46%, rgba(0, 0, 0, 0.75) 70%, #000 92%);
-  mask-image: radial-gradient(circle at 50% 50%, transparent 46%, rgba(0, 0, 0, 0.75) 70%, #000 92%);
+  /* no crop circle and no fade here: the canvas carries its own ragged edge, and
+     the shadow takes that shape */
+  filter: drop-shadow(0 4px 14px rgba(20, 62, 74, 0.3));
 }
 
 .orb-glass {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
   pointer-events: none;
-  /* a faint glass dome + a whisper of an inner ring */
-  background:
-    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 42%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 66%, rgba(255, 255, 255, 0.1) 90%, rgba(255, 255, 255, 0) 100%);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.12);
+  /* a faint highlight in the upper left, well inside the rim */
+  background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0) 44%);
 }
 
 .orb-north {
@@ -454,36 +434,30 @@ button {
   padding-top: 18px;
 }
 
-/* one close button style for every page and the help book */
-/* Close control: just the hand-drawn white ✕, icon-pack style. Hover shows a
-   soft shadow bloom so it reads on the light blurred pages. */
-/* Close control: the icon pack's X, on every page. It is a visible button on the
-   light sheets (soft white disc + shadow) so it never disappears into the page. */
+/* One close mark for every page and the help book: the icon pack's X and nothing
+   else — no disc behind it. A soft shadow blooms on hover so it reads on the light
+   sheets without needing a background. */
 .close-btn {
   position: absolute;
-  top: 22px;
-  right: 26px;
+  top: 26px;
+  right: 30px;
   z-index: 60;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
+  background: none;
   color: var(--ink-strong);
   cursor: pointer;
-  box-shadow: 0 3px 14px rgba(16, 56, 68, 0.18);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: transform var(--t-mid) var(--ease), background var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease);
+  transition: transform var(--t-mid) var(--ease), filter var(--t-mid) var(--ease);
 }
 
 .close-btn:hover {
-  background: #ffffff;
-  box-shadow: 0 6px 20px rgba(16, 56, 68, 0.26);
-  transform: scale(1.07);
+  transform: scale(1.12);
+  filter: drop-shadow(0 4px 10px rgba(16, 56, 68, 0.28));
 }
 
 .close-btn:active {
@@ -638,9 +612,9 @@ button {
 
 /* reset-world confirm dialog */
 .confirm-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 200;
   display: grid;
   place-items: center;
   background: rgba(10, 36, 44, 0.34);
@@ -718,6 +692,7 @@ button {
 /* every control row is its own translucent glass capsule */
 .set-row {
   position: relative;
+  flex: none; /* a list taller than the sheet scrolls; it never squeezes a row (status lines collapsed to nothing) */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -942,6 +917,9 @@ button {
 /* A real paper book that physically turns: sheets rotate over the spine in 3D.
    Boards, fore-edges and spine shading keep it from reading like a slide deck. */
 .book-overlay {
+  /* how far the page-turn arrows stand outside the book; the book's width below
+     subtracts exactly this, so arrows and pages always fit the frame together */
+  --book-wing: 70px;
   position: absolute;
   inset: 0;
   z-index: 22;
@@ -955,7 +933,9 @@ button {
 
 .book {
   position: relative;
-  width: min(92vw, 1200px);
+  /* 92vw of page, plus the arrows standing clear of it on both sides: without the
+     subtraction the book took 92vw on its own and pushed its arrows off-screen */
+  width: min(calc(92vw - 2 * var(--book-wing)), 1200px);
   height: min(80vh, 660px);
   perspective: 2600px;
   animation: bookOpen 620ms var(--ease) both;
@@ -964,30 +944,30 @@ button {
   filter: drop-shadow(0 30px 60px rgba(6, 22, 28, 0.55)) drop-shadow(0 4px 14px rgba(6, 22, 28, 0.35));
 }
 
-/* the cover lip: a few pixels, not a frame. Anything wider reads as a picture
-   frame around two pages instead of a bound book. */
+/* Cover: a real leather board with an even lip on every side. Symmetric insets
+   matter — the old asymmetric ones made the page block poke out at the bottom
+   only, which read as a crooked, jagged edge. */
 .book::before {
   content: "";
   position: absolute;
-  inset: -5px -4px -9px;
-  border-radius: 9px 8px 8px 9px;
-  background: linear-gradient(150deg, #8a7551 0%, #6a5940 42%, #4d402e 100%);
+  inset: -16px;
+  border-radius: 16px;
+  background: linear-gradient(150deg, #8f7a55 0%, #6d5b41 44%, #4b3e2c 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 240, 205, 0.2),
-    inset 0 -2px 5px rgba(0, 0, 0, 0.35);
-  z-index: -1;
+    inset 0 2px 0 rgba(255, 240, 205, 0.24),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.4);
+  z-index: -2;
 }
 
-/* page block thickness along the bottom + outer edges */
+/* Page block: the stacked leaves, inset INSIDE the cover so a clean leather
+   border shows all the way round, and the cream edges line up on every side. */
 .book::after {
   content: "";
   position: absolute;
-  top: 2px;
-  bottom: -6px;
-  left: 3px;
-  right: 3px;
-  border-radius: 3px 3px 5px 5px;
-  background: repeating-linear-gradient(180deg, #efe6d1 0 1.4px, #d8ccb0 1.4px 2.4px);
+  inset: -9px;
+  border-radius: 9px;
+  background: repeating-linear-gradient(180deg, #f2e9d5 0 1.5px, #dccfb2 1.5px 2.6px);
+  box-shadow: inset 0 0 0 1px rgba(140, 118, 82, 0.28);
   z-index: -1;
 }
 
@@ -1022,21 +1002,23 @@ button {
   gap: 12px;
 }
 
-/* a double-ruled plate around the title, as on the reference cover pages */
+/* The cover carries the SAME inner frame as every content page, at the same
+   inset. Two different decorations at two different insets is what made the
+   spreads look crooked ("内页参差不齐"). */
 .board-inner::before {
   content: "";
   position: absolute;
-  inset: 42px 38px;
-  border: 1.5px solid rgba(150, 128, 92, 0.42);
-  border-radius: 4px;
+  inset: 22px;
+  border: 1px solid rgba(150, 128, 92, 0.32);
+  border-radius: 3px;
   pointer-events: none;
 }
 
 .board-inner::after {
   content: "";
   position: absolute;
-  inset: 48px 44px;
-  border: 0.8px solid rgba(150, 128, 92, 0.26);
+  inset: 27px;
+  border: 0.7px solid rgba(150, 128, 92, 0.18);
   border-radius: 3px;
   pointer-events: none;
 }
@@ -1079,40 +1061,7 @@ button {
   opacity: 0.9;
 }
 
-/* ribbon marker draped over the spine, as in the reference spreads */
-.book-ribbon {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  width: 46px;
-  height: 96px;
-  transform: translateX(-50%);
-  z-index: 320;
-  pointer-events: none;
-  filter: drop-shadow(0 4px 10px rgba(40, 30, 14, 0.4));
-}
-
-.book-ribbon span {
-  display: block;
-  width: 100%;
-  height: 74px;
-  background: linear-gradient(180deg, #3e6f96, #2c5878 62%, #24485f);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-}
-
-.book-ribbon span::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 12px;
-  width: 16px;
-  height: 16px;
-  transform: translateX(-50%) rotate(45deg);
-  border: 1.4px solid rgba(255, 255, 255, 0.62);
-}
-
-/* one turning leaf */
+/* one turning leaf: rotates about the spine in 3D */
 .sheet {
   position: absolute;
   top: 0;
@@ -1121,7 +1070,9 @@ button {
   height: 100%;
   transform-origin: left center;
   transform-style: preserve-3d;
-  transition: transform 780ms cubic-bezier(0.42, 0.08, 0.24, 1);
+  /* the slow start and the settle at the end are what tell the eye this is paper:
+     a sheet accelerates away from the hand and falls into place */
+  transition: transform 900ms cubic-bezier(0.36, 0.02, 0.2, 1);
   will-change: transform;
 }
 
@@ -1129,40 +1080,59 @@ button {
   transform: rotateY(-180deg);
 }
 
+/* While a sheet is in the air it is the nearest thing to the eye and carries the
+   light: a soft shadow follows the curl. It goes on the FACES, never on the sheet:
+   a filter on the sheet flattens its 3D transform, and the paper's back then shows
+   its front's text mirrored through it. */
+.sheet.turning .sheet-face {
+  animation: leafShade 900ms cubic-bezier(0.36, 0.02, 0.2, 1) both;
+}
+
+@keyframes leafShade {
+  0% { box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); }
+  45% { box-shadow: inset 0 0 60px rgba(70, 51, 24, 0.2), 0 16px 30px rgba(60, 44, 20, 0.24); }
+  100% { box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); }
+}
+
 .sheet-face {
   position: absolute;
   inset: 0;
+  /* a leaf is read from one side only. Chromium paints the hidden face mirrored
+     through the paper when it is merely backface-hidden, so each face is simply
+     not drawn while it is turned away. */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   overflow: hidden;
   background: linear-gradient(180deg, #fdf9ee, #f5eeda);
-  padding: 40px 44px;
+  /* text sits inside the ruled frame: 22px frame inset + breathing room */
+  padding: 44px 48px;
   color: #4a4232;
 }
 
-/* corner rules: the reference spreads ring every page with fine lines */
-.corner {
+/* Every page is ringed by the same frame at the same inset as the cover plate.
+   ::after is already the fore-edge stack, so the frame uses ::before. */
+.sheet-face::before {
+  content: "";
   position: absolute;
-  width: 26px;
-  height: 26px;
-  border: 0 solid rgba(150, 128, 92, 0.5);
+  inset: 22px;
+  border: 1px solid rgba(150, 128, 92, 0.32);
+  border-radius: 3px;
   pointer-events: none;
+  z-index: 0;
 }
-
-.corner.tl { top: 18px; left: 18px; border-width: 1.4px 0 0 1.4px; }
-.corner.tr { top: 18px; right: 18px; border-width: 1.4px 1.4px 0 0; }
-.corner.bl { bottom: 18px; left: 18px; border-width: 0 0 1.4px 1.4px; }
-.corner.br { bottom: 18px; right: 18px; border-width: 0 1.4px 1.4px 0; }
 
 .folio {
   position: absolute;
-  bottom: 20px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
+  padding: 0 8px;
+  background: linear-gradient(180deg, #fdf9ee, #f5eeda);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 11px;
   letter-spacing: 0.2em;
   color: rgba(140, 118, 84, 0.7);
+  z-index: 1;
 }
 
 /* fore-edge page stack lines */
@@ -1213,18 +1183,63 @@ button {
     inset 2px 0 0 rgba(255, 246, 224, 0.5);
 }
 
-/* The help book's close mark is a permanent control: it rides ABOVE the turning
-   sheets (z 400, sheet stack tops out at 300), sits on the backdrop rather than
-   on paper, and never moves or dims as pages turn. */
-.book-close {
+/* The close mark is page furniture: a plain X drawn straight on the paper, at the
+   TOP-RIGHT OF THE SPREAD. A sheet covers the right half from its front and the
+   left half from its back, so the back face carries the mark on ITS top-right,
+   which is the spread's top-left once the sheet has turned. Both faces are right
+   handed, so the glyph is never seen mirrored. */
+.book-cross {
   position: absolute;
-  top: -18px;
-  right: -18px;
-  z-index: 400;
-  border-color: rgba(255, 255, 255, 0.96);
-  background: rgba(255, 255, 255, 0.94);
-  color: #5d4d31;
-  box-shadow: 0 6px 22px rgba(24, 20, 10, 0.34);
+  top: 30px;
+  right: 30px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(106, 90, 60, 0.72);
+  cursor: pointer;
+  z-index: 3;
+  transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.sheet-face.back .book-cross {
+  right: auto;
+  left: 30px;
+}
+
+.book-cross:hover {
+  color: #4a3d24;
+  background: rgba(150, 128, 92, 0.12);
+}
+
+.board-inner .book-cross {
+  position: static;
+  margin-top: 18px;
+}
+
+.board-inner.back-cover {
+  gap: 10px;
+}
+
+.board-hint {
+  position: relative;
+  margin-top: 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  color: rgba(120, 98, 64, 0.55);
+}
+
+/* page content: a small label, a real heading, airy body text */
+.book-kicker {
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-align: center;
+  color: rgba(140, 118, 84, 0.8);
+  margin-bottom: 8px;
 }
 
 /* page-turn controls: bare white chevrons at the outer edges */
@@ -1251,17 +1266,17 @@ button {
   transform: translateY(-50%) scale(1.08);
 }
 
-.book-arrow.left { left: -70px; }
-.book-arrow.right { right: -70px; }
+.book-arrow.left { left: calc(-1 * var(--book-wing)); }
+.book-arrow.right { right: calc(-1 * var(--book-wing)); }
 
 /* page content typography */
 .book-h {
   font-family: var(--font-title);
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 600;
-  letter-spacing: 0.22em;
-  color: #6a5a3c;
-  margin-bottom: 16px;
+  letter-spacing: 0.16em;
+  color: #5b4b30;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -1278,17 +1293,20 @@ button {
 }
 
 .book-lead {
-  font-size: 13.5px;
-  color: rgba(106, 90, 60, 0.75);
-  margin-bottom: 16px;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: rgba(106, 90, 60, 0.78);
+  margin-bottom: 14px;
   text-align: center;
 }
 
 .book-p {
-  font-size: 15px;
+  font-size: 13.5px;
   line-height: 1.95;
-  color: #4a4232;
-  margin-bottom: 13px;
+  color: #483f2e;
+  margin-bottom: 11px;
+  text-align: justify;
+  text-justify: inter-ideograph;
 }
 
 .book-keys {
@@ -1300,7 +1318,7 @@ button {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 5px 0;
+  padding: 3.5px 0;
   border-bottom: 1px solid rgba(150, 128, 92, 0.14);
   font-size: 13.5px;
   color: #4a4232;
@@ -1323,6 +1341,45 @@ button {
   letter-spacing: 0.06em;
   color: #6a5a3c;
   box-shadow: 0 1px 2px rgba(80, 62, 34, 0.14);
+}
+
+.book-plate {
+  display: block;
+  width: 100%;
+  margin: 6px 0 16px;
+  border: 1px solid rgba(120, 100, 62, 0.22);
+  border-radius: 8px;
+  background: #eaf5f7;
+  box-shadow: inset 0 0 0 4px rgba(255, 252, 244, 0.6);
+}
+
+.book-p.tight {
+  font-size: 13.5px;
+  line-height: 1.85;
+  margin-bottom: 8px;
+}
+
+.book-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 2px solid rgba(150, 128, 92, 0.5);
+  background: rgba(150, 128, 92, 0.07);
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.book-note b {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #6a5a3c;
+}
+
+.book-note span {
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: rgba(74, 66, 50, 0.86);
 }
 
 .book-figure {
@@ -1437,31 +1494,6 @@ button {
   animation: wishIn 340ms var(--ease) both;
 }
 
-/* the tip sits under the subtitle, above the input — a soft inline pill */
-.wish-tip {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  width: fit-content;
-  margin: 22px auto 0;
-  padding: 12px 26px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(53, 199, 242, 0.14), rgba(53, 199, 242, 0.05));
-  border: 1px solid rgba(53, 199, 242, 0.2);
-  font-size: 17px;
-  letter-spacing: 0.05em;
-  color: #1c7fa0;
-}
-
-.wish-tip-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--blue);
-  box-shadow: 0 0 8px rgba(53, 199, 242, 0.7);
-  flex: none;
-}
-
 .wish-title {
   font-family: var(--font-title);
   font-size: 40px;
@@ -1477,6 +1509,11 @@ button {
   font-size: 17px;
   letter-spacing: 0.05em;
   color: var(--ink-soft);
+}
+
+/* a second line (no model configured) follows the first closely */
+.wish-sub + .wish-sub {
+  margin-top: 6px;
 }
 
 .wish-input {
@@ -1625,68 +1662,62 @@ button {
   }
 }
 
-/* loading */
+/* loading
+   There is no loading picture. The world itself is on screen from the first
+   frame, under its own opening mist; this layer only lays a haze over it for the
+   text, and thins away as the mist parts onto the island. */
 .boot {
   position: absolute;
   inset: 0;
   z-index: 40;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(120% 90% at 50% 34%, #ffffff 0%, #eef8fb 46%, #cfe8ee 100%);
-  transition: opacity 520ms var(--ease);
-}
-
-.boot.gone {
-  opacity: 0;
   pointer-events: none;
 }
 
-/* --- loading-complete reveal ---
-   The reference frame is a sky full of soft, rounded cumulus. So the load
-   overlay does not "fade out": it BREAKS INTO CLOUDS. A field of white cloud
-   lobes fills the screen, then each lobe swells, lifts and dissolves outward as
-   the island appears behind it. */
-.boot-sky {
+/* a thin mist wash, not a white sheet: the live 3D world is already rendering
+   under it and has to be readable through the gaps, while the clouds do the
+   hiding. It thins fast once the world is ready — the clouds are what the eye
+   actually watches leave. */
+.boot-haze {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  /* the reference: deep blue at the zenith easing to a pale horizon */
-  background: linear-gradient(
-    180deg,
-    #1a63c8 0%,
-    #2f86dc 22%,
-    #63b6ee 48%,
-    #a6dbf6 72%,
-    #d9f0fb 100%
-  );
+  background: radial-gradient(78% 62% at 50% 46%, rgba(255, 255, 255, 0.42) 0%, rgba(247, 252, 253, 0.5) 54%, rgba(226, 240, 246, 0.56) 100%);
+  transition: opacity 1200ms cubic-bezier(0.35, 0.05, 0.3, 1);
 }
 
+.boot.reveal .boot-haze {
+  opacity: 0;
+}
+
+/* --- the cloud field ---
+   The veil is a bank of cumulus, not a sheet: while the island is being made the
+   lobes sit still as a white field (over the live 3D world, which they hide), and
+   when it is ready each one swells, lifts and dissolves outward, so the island is
+   uncovered a cloud at a time. */
 .boot-mist {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   overflow: hidden;
-  opacity: 0;
+  pointer-events: none;
 }
 
-/* one cloud lobe: a soft white body with a shaded underside */
 .boot-mist i {
   position: absolute;
   display: block;
   border-radius: 50%;
-  /* a cumulus lobe: hard-ish white body, blue-grey shaded base. The body needs a
-     crisp-ish core or the field reads as lens bokeh instead of cloud. */
-  background:
-    radial-gradient(closest-side at 50% 50%,
-      #ffffff 0%,
-      #ffffff 62%,
-      rgba(250, 253, 255, 0.98) 74%,
-      rgba(226, 242, 252, 0.86) 84%,
-      rgba(205, 232, 247, 0) 100%);
-  filter: blur(2px);
-  opacity: 0;
+  /* a cumulus lobe: hard-ish white body, blue-grey shaded base — the body needs a
+     crisp core or the field reads as lens bokeh instead of cloud */
+  background: radial-gradient(
+    closest-side at 50% 50%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.99) 62%,
+    rgba(250, 253, 255, 0.97) 74%,
+    rgba(226, 242, 252, 0.82) 84%,
+    rgba(205, 232, 247, 0) 100%
+  );
+  filter: blur(2.5px);
+  opacity: 0.94;
   will-change: transform, opacity;
 }
 
@@ -1699,12 +1730,10 @@ button {
   bottom: 1%;
   height: 46%;
   border-radius: 50%;
-  /* shaded base: what gives a flat white ellipse the volume of a cloud */
-  background: radial-gradient(54% 70% at 50% 100%, rgba(150, 195, 226, 0.78), rgba(170, 208, 234, 0) 72%);
+  background: radial-gradient(54% 70% at 50% 100%, rgba(150, 195, 226, 0.7), rgba(170, 208, 234, 0) 72%);
 }
 
-/* satellite lobes: a single ellipse always reads as a smudge; real cumulus is a
-   cluster of rounded masses, so each cloud carries two offset bulges */
+/* a single ellipse always reads as a smudge: each cloud carries offset bulges */
 .boot-mist i::before {
   content: "";
   position: absolute;
@@ -1716,77 +1745,67 @@ button {
     radial-gradient(30% 34% at 52% 24%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.92) 62%, rgba(255, 255, 255, 0) 100%);
 }
 
-.boot.reveal {
-  pointer-events: none;
-  animation: bootSheetOut 1180ms ease-in 100ms both;
-}
-
-.boot.reveal .boot-sky {
-  animation: bootSkyIn 1000ms ease-out both;
-}
-
-.boot.reveal .boot-mist {
-  animation: mistFieldIn 380ms ease-out both;
-}
-
 .boot.reveal .boot-mist i {
-  animation: cloudSwell 1150ms cubic-bezier(0.2, 0.66, 0.26, 1) both;
+  /* long enough to be watched: each lobe holds its white body for the first third,
+     then swells, lifts and thins over the rest */
+  animation: cloudSwell 2100ms cubic-bezier(0.25, 0.55, 0.3, 1) both;
 }
 
-.boot.reveal .boot-inner {
-  animation: bootInnerOut 420ms var(--ease) both;
-}
-
-@keyframes bootSheetOut {
-  0% { opacity: 1; }
-  40% { opacity: 1; }
-  74% { opacity: 0.72; }
-  100% { opacity: 0; }
-}
-
-/* The blue is only a BACKDROP for the cumulus while they break up; it must be
-   gone before the world is revealed or the whole frame reads as a blue tint. */
-@keyframes bootSkyIn {
-  0% { opacity: 0; }
-  30% { opacity: 0.92; }
-  62% { opacity: 0.62; }
-  100% { opacity: 0; }
-}
-
-@keyframes mistFieldIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Each lobe swells ~1.9× while drifting outward, then thins out. Staggered by
-   animation-delay (set inline per lobe), so the field opens like real cumulus
-   breaking up rather than a single sheet scaling. */
+/* each lobe rises to full white, swells ~1.5×, drifts outward and thins away —
+   staggered by its inline animation-delay, so the field opens as clouds do */
+/* A lobe stays a solid white cloud until it is already on its way out of the
+   frame: a cloud that hangs in place while it fades turns into a translucent
+   disc lying over the world, which is exactly what this must not look like. */
 @keyframes cloudSwell {
   0% {
-    opacity: 0.98;
-    transform: translate3d(0, 0, 0) scale(0.9);
+    opacity: 0.95;
+    transform: translate3d(0, 0, 0) scale(1);
   }
-  20% {
+  12% {
     opacity: 1;
-    transform: translate3d(calc(var(--dx, 0px) * 0.12), calc(var(--dy, 0px) * 0.12 - 8px), 0) scale(1.02);
+    transform: translate3d(calc(var(--dx, 0px) * 0.04), calc(var(--dy, 0px) * 0.04 - 3px), 0) scale(1.02);
   }
-  55% {
-    opacity: 0.62;
-    transform: translate3d(calc(var(--dx, 0px) * 0.62), calc(var(--dy, 0px) * 0.62 - 30px), 0) scale(1.22);
+  52% {
+    opacity: 1;
+    transform: translate3d(calc(var(--dx, 0px) * 0.42), calc(var(--dy, 0px) * 0.42 - 20px), 0) scale(1.06);
+  }
+  78% {
+    opacity: 0.86;
+    transform: translate3d(calc(var(--dx, 0px) * 0.9), calc(var(--dy, 0px) * 0.9 - 46px), 0) scale(1.1);
   }
   100% {
     opacity: 0;
-    transform: translate3d(var(--dx, 0px), calc(var(--dy, 0px) - 70px), 0) scale(1.45);
+    transform: translate3d(calc(var(--dx, 0px) * 1.45), calc(var(--dy, 0px) * 1.45 - 74px), 0) scale(1.14);
   }
 }
 
-.boot-inner {
-  animation: bootInnerOut 400ms var(--ease) both;
+/* the title lingers a moment into the reveal, then lifts away with the mist */
+.boot.reveal .boot-inner {
+  animation: bootInnerOut 900ms var(--ease) 350ms both;
 }
 
 @keyframes bootInnerOut {
   from { opacity: 1; transform: none; }
-  to { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 0; transform: translateY(-14px); }
+}
+
+/* while the mist parts the HUD stays back, then fades in behind it */
+.stage.settling .hud {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.settling .hud .ctl {
+  pointer-events: none;
+}
+
+.stage:not(.settling) .hud {
+  animation: hudIn 1300ms var(--ease) backwards;
+}
+
+@keyframes hudIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .boot-inner {
@@ -1812,34 +1831,40 @@ button {
   color: rgba(20, 140, 175, 0.85);
 }
 
-/* loader: a soft track with a travelling highlight and a real progress fill */
+/* loader: the same pale track with a cool fill as the stamina pill and the
+   generation card, filling as the world is made */
 .boot-bar {
   position: relative;
-  width: 420px;
-  height: 8px;
-  margin: 44px auto 0;
+  width: 300px;
+  height: 7px;
+  margin: 38px auto 0;
+  padding: 1px;
   border-radius: 999px;
-  background: rgba(24, 70, 80, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(24, 70, 80, 0.08);
+  box-shadow: inset 0 1px 2px rgba(24, 70, 80, 0.08);
   overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(24, 70, 80, 0.12);
 }
 
 .boot-bar i {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
   border-radius: 999px;
-  background:
-    linear-gradient(90deg, transparent 0%, #6fe0ff 30%, #22b3e6 55%, transparent 100%);
-  animation: bootSlide 1.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  background: linear-gradient(90deg, #2fbdec, #8ce8ff);
+  transform-origin: left center;
+  transform: scaleX(0.12);
+  animation: bootFill 9s cubic-bezier(0.18, 0.72, 0.32, 1) forwards;
 }
 
-.boot-bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+@keyframes bootFill {
+  0% { transform: scaleX(0.08); }
+  32% { transform: scaleX(0.46); }
+  58% { transform: scaleX(0.68); }
+  78% { transform: scaleX(0.86); }
+  100% { transform: scaleX(1); }
 }
 
 .boot-hint {
@@ -1890,15 +1915,6 @@ button {
   to {
     opacity: 1;
     transform: translate(-50%, 0);
-  }
-}
-
-@keyframes bootSlide {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
   }
 }
 
@@ -1987,10 +2003,27 @@ button {
     width: 110px;
   }
 
+  /* on a narrow frame the arrows cannot stand outside the book: they come in
+     over the board edges instead. The old rule also set overflow-y here, which
+     clipped anything outside the book — the arrows included — entirely. */
   .book {
-    grid-template-columns: 1fr;
-    overflow-y: auto;
+    overflow: visible;
   }
+
+  /* inside the book they would sit under the sheets (which stack up to z 300):
+     lift them, and keep them small enough to clear the text column (48px in) */
+  .book-arrow {
+    width: 40px;
+    height: 40px;
+    z-index: 400;
+    /* they sit on the paper now, not on the dark overlay: white on cream was invisible */
+    color: rgba(91, 75, 48, 0.9);
+    border-color: rgba(120, 98, 64, 0.34);
+    background: rgba(255, 252, 244, 0.82);
+  }
+
+  .book-arrow.left { left: 6px; }
+  .book-arrow.right { right: 6px; }
 
   .book-spine {
     display: none;
@@ -2017,10 +2050,358 @@ button {
   }
 }
 
+
+/* =====================================================================
+   Region generation — the in-world loading state
+   ===================================================================== */
+
+/* progress ring pinned (in screen space) above the tile being generated */
+.gen-badge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  transition: opacity 240ms var(--ease);
+  will-change: transform;
+}
+
+.gen-badge svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+  filter: drop-shadow(0 2px 8px rgba(24, 70, 80, 0.28));
+}
+
+.gen-ring-bg {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: rgba(24, 70, 80, 0.12);
+  stroke-width: 4;
+}
+
+.gen-ring {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 420ms linear;
+}
+
+.gen-badge-label {
+  max-width: 240px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-strong);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: var(--shadow-chip);
+}
+
+/* the card at the bottom of the screen while a region is made: a turning ring, a
+   bar drawn exactly like the stamina pill, and a cancel. No names, no stages. */
+/* hung above the box being opened: the top-left corner is the anchor, and the
+   component's own transform (written every frame from the projection) places it */
+.gen-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  width: min(380px, calc(100vw - 48px));
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 30px rgba(16, 56, 68, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: opacity 200ms var(--ease);
+  will-change: transform;
+}
+
+/* a page open (help, map, settings) does not lose the card, it just steps back */
+.gen-card.hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.gen-card-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* a plain white ring turning on its own: soft ends, no colour */
+.gen-spin {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: conic-gradient(from 0turn, rgba(24, 70, 80, 0) 0deg, rgba(24, 70, 80, 0.16) 130deg, rgba(24, 70, 80, 0.62) 340deg, rgba(24, 70, 80, 0.62) 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  animation: genSpin 900ms linear infinite;
+}
+
+@keyframes genSpin {
+  to { transform: rotate(1turn); }
+}
+
+.gen-card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.gen-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--ink-strong);
+}
+
+/* the stamina pill's track and fill, at card width */
+.gen-card-bar {
+  position: relative;
+  margin-top: 9px;
+  height: 11px;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(24, 70, 80, 0.1);
+  box-shadow: inset 0 1px 2px rgba(16, 56, 68, 0.1);
+  overflow: hidden;
+}
+
+.gen-card-bar i {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2fbdec, #8ce8ff);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease);
+}
+
+.gen-cancel {
+  flex: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink-faint);
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.gen-cancel:hover {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+/* ---------------------------------- models & AI page */
+
+.text-input {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--ink-faint);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-strong);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+
+.text-input::placeholder {
+  color: var(--ink-soft);
+}
+
+.text-input:focus {
+  border-color: rgba(70, 207, 246, 0.7);
+  box-shadow: 0 0 0 3px rgba(70, 207, 246, 0.18);
+}
+
+.text-input:disabled {
+  opacity: 0.5;
+}
+
+.btn-ghost {
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid var(--ink-faint);
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(24, 70, 80, 0.06);
+}
+
+.btn-ghost:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-ghost.primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #ffffff;
+}
+
+.btn-ghost.primary:hover:not(:disabled) {
+  background: var(--ink-strong);
+}
+
+.btn-ghost:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.model-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* a status line sits between capsule rows: slim, transparent, right-aligned */
+.set-row.set-row-status {
+  min-height: 0;
+  padding: 0 30px;
+  margin-top: -6px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: block;
+}
+
+.model-status {
+  min-height: 18px;
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.model-status.ok {
+  color: #1f8f6a;
+}
+
+.model-status.err {
+  color: #c2453f;
+}
+
+.model-section {
+  margin: 12px 6px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: rgba(24, 70, 80, 0.42);
+}
+
+.model-fact {
+  font-size: 14px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.model-offline {
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 238, 222, 0.92);
+  color: #8a4a1f;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.model-offline code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  font-family: ui-monospace, Consolas, monospace;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ---------------------------------- under water --------------------------------- */
+
+/* The eye is below the surface: a teal wash over the whole picture, heavier towards
+   the edges, with the surface light shimmering at the top. It sits under every other
+   HUD element and takes no pointer events. */
+.underwater {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms var(--ease);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(214, 246, 250, 0.34) 0%, rgba(120, 214, 226, 0.12) 34%, rgba(20, 110, 140, 0) 62%),
+    radial-gradient(130% 110% at 50% 55%, rgba(18, 104, 136, 0) 48%, rgba(10, 70, 98, 0.46) 100%),
+    linear-gradient(180deg, rgba(46, 176, 198, 0.24), rgba(16, 96, 130, 0.36));
+}
+
+.underwater.on {
+  opacity: 1;
+}
+
+/* touch: jump out of the water / hold to dive */
+.swim-btns {
+  position: absolute;
+  right: var(--safe-x);
+  bottom: var(--safe-y);
+  display: flex;
+  gap: 14px;
+  z-index: 6;
+}
+
+.swim-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.26);
+  color: #ffffff;
+  font: inherit;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  touch-action: none;
+  user-select: none;
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.swim-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.5);
 }

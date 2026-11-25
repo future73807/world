@@ -1,0 +1,765 @@
+{
+ "generated": "2026-11-24 23:56:40",
+ "kept": [
+  "desert_cactus_a",
+  "desert_cactus_b",
+  "landmark_elder_tree",
+  "palm_a",
+  "palm_b",
+  "snow_pine_a",
+  "snow_pine_b",
+  "snow_pine_c"
+ ],
+ "rebuilt": [
+  "beach_driftwood",
+  "beach_starfish",
+  "coral_brain",
+  "coral_branch",
+  "coral_fan",
+  "desert_boulder",
+  "desert_grass",
+  "desert_mesa",
+  "desert_shrub",
+  "flower_a",
+  "flower_b",
+  "flower_c",
+  "forest_log",
+  "forest_mushroom_s",
+  "forest_stump",
+  "forest_tree_a",
+  "forest_tree_b",
+  "forest_tree_c",
+  "grass_a",
+  "grass_b",
+  "ice_shard",
+  "landmark_arch",
+  "landmark_crystal",
+  "landmark_giant_mushroom",
+  "landmark_obelisk",
+  "landmark_ribs",
+  "landmark_vent",
+  "meadow_bush",
+  "meadow_tree_a",
+  "pebbles",
+  "rock_a",
+  "rock_b",
+  "rock_slab",
+  "shrub_a",
+  "snow_dead_tree",
+  "snow_rock",
+  "swamp_lily",
+  "swamp_mossrock",
+  "swamp_mushroom_a",
+  "swamp_mushroom_b",
+  "swamp_reeds",
+  "swamp_snag",
+  "swamp_willow",
+  "volcano_basalt",
+  "volcano_charred",
+  "volcano_obsidian",
+  "volcano_rock"
+ ],
+ "models": {
+  "beach_driftwood": {
+   "tris": 412,
+   "lod1Tris": 130,
+   "size": [
+    2.838,
+    1.144,
+    1.076
+   ],
+   "collide": {
+    "r": 0.52,
+    "h": 0.62
+   }
+  },
+  "beach_starfish": {
+   "tris": 40,
+   "lod1Tris": 40,
+   "size": [
+    0.615,
+    0.075,
+    0.647
+   ],
+   "collide": false
+  },
+  "coral_brain": {
+   "tris": 1720,
+   "lod1Tris": 220,
+   "size": [
+    1.117,
+    0.337,
+    0.944
+   ],
+   "collide": {
+    "r": 0.46,
+    "h": 0.62
+   }
+  },
+  "coral_branch": {
+   "tris": 900,
+   "lod1Tris": 120,
+   "size": [
+    0.505,
+    1.104,
+    0.413
+   ],
+   "collide": false
+  },
+  "coral_fan": {
+   "tris": 1140,
+   "lod1Tris": 88,
+   "size": [
+    1.019,
+    1.202,
+    0.067
+   ],
+   "collide": false
+  },
+  "desert_boulder": {
+   "tris": 172,
+   "lod1Tris": 54,
+   "size": [
+    1.669,
+    0.605,
+    1.259
+   ],
+   "collide": {
+    "r": 0.72,
+    "h": 1.05
+   }
+  },
+  "desert_cactus_a": {
+   "tris": 1064,
+   "lod1Tris": 487,
+   "size": [
+    1.526,
+    2.551,
+    0.832
+   ],
+   "collide": {
+    "r": 0.42,
+    "h": 2.5
+   }
+  },
+  "desert_cactus_b": {
+   "tris": 422,
+   "lod1Tris": 174,
+   "size": [
+    1.152,
+    0.858,
+    1.121
+   ],
+   "collide": {
+    "r": 0.45,
+    "h": 0.8
+   }
+  },
+  "desert_grass": {
+   "tris": 364,
+   "lod1Tris": 89,
+   "size": [
+    0.543,
+    0.667,
+    0.775
+   ],
+   "collide": false
+  },
+  "desert_mesa": {
+   "tris": 490,
+   "lod1Tris": 156,
+   "size": [
+    3.706,
+    2.28,
+    3.832
+   ],
+   "collide": {
+    "r": 1.75,
+    "h": 2.5
+   }
+  },
+  "desert_shrub": {
+   "tris": 642,
+   "lod1Tris": 47,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "collide": false
+  },
+  "flower_a": {
+   "tris": 732,
+   "lod1Tris": 107,
+   "size": [
+    0.336,
+    0.615,
+    0.329
+   ],
+   "collide": false
+  },
+  "flower_b": {
+   "tris": 732,
+   "lod1Tris": 107,
+   "size": [
+    0.336,
+    0.615,
+    0.329
+   ],
+   "collide": false
+  },
+  "flower_c": {
+   "tris": 692,
+   "lod1Tris": 97,
+   "size": [
+    0.335,
+    0.615,
+    0.326
+   ],
+   "collide": false
+  },
+  "forest_log": {
+   "tris": 412,
+   "lod1Tris": 130,
+   "size": [
+    3.178,
+    1.042,
+    1.001
+   ],
+   "collide": {
+    "r": 0.5,
+    "h": 0.86
+   }
+  },
+  "forest_mushroom_s": {
+   "tris": 801,
+   "lod1Tris": 255,
+   "size": [
+    0.486,
+    0.791,
+    0.487
+   ],
+   "collide": false
+  },
+  "forest_stump": {
+   "tris": 567,
+   "lod1Tris": 181,
+   "size": [
+    1.965,
+    1.174,
+    1.821
+   ],
+   "collide": {
+    "r": 0.64,
+    "h": 1.12
+   }
+  },
+  "forest_tree_a": {
+   "tris": 1736,
+   "lod1Tris": 360,
+   "size": [
+    4.732,
+    5.332,
+    4.005
+   ],
+   "collide": {
+    "r": 0.52,
+    "h": 4.9
+   }
+  },
+  "forest_tree_b": {
+   "tris": 1736,
+   "lod1Tris": 340,
+   "size": [
+    3.91,
+    6.275,
+    3.734
+   ],
+   "collide": {
+    "r": 0.48,
+    "h": 6.2
+   }
+  },
+  "forest_tree_c": {
+   "tris": 1736,
+   "lod1Tris": 360,
+   "size": [
+    4.623,
+    5.094,
+    4.067
+   ],
+   "collide": {
+    "r": 0.46,
+    "h": 4.6
+   }
+  },
+  "grass_a": {
+   "tris": 448,
+   "lod1Tris": 43,
+   "size": [
+    0.356,
+    0.368,
+    0.408
+   ],
+   "collide": false
+  },
+  "grass_b": {
+   "tris": 364,
+   "lod1Tris": 43,
+   "size": [
+    0.543,
+    0.667,
+    0.775
+   ],
+   "collide": false
+  },
+  "ice_shard": {
+   "tris": 288,
+   "lod1Tris": 120,
+   "size": [
+    0.998,
+    1.947,
+    1.59
+   ],
+   "collide": {
+    "r": 0.58,
+    "h": 2.25
+   }
+  },
+  "landmark_arch": {
+   "tris": 1942,
+   "lod1Tris": 170,
+   "size": [
+    9.425,
+    6.34,
+    1.957
+   ],
+   "collide": [
+    {
+     "x": 3.25,
+     "z": 0,
+     "r": 0.82,
+     "h": 4.5
+    },
+    {
+     "x": -3.25,
+     "z": 0,
+     "r": 0.82,
+     "h": 4.5
+    }
+   ]
+  },
+  "landmark_crystal": {
+   "tris": 532,
+   "lod1Tris": 185,
+   "size": [
+    2.404,
+    5.998,
+    2.6
+   ],
+   "collide": {
+    "r": 1.7,
+    "h": 6.8
+   }
+  },
+  "landmark_elder_tree": {
+   "tris": 1736,
+   "lod1Tris": 594,
+   "size": [
+    9.977,
+    11.842,
+    9.254
+   ],
+   "collide": {
+    "r": 1.15,
+    "h": 9.5
+   }
+  },
+  "landmark_giant_mushroom": {
+   "tris": 1734,
+   "lod1Tris": 387,
+   "size": [
+    6.24,
+    6.054,
+    6.216
+   ],
+   "collide": {
+    "r": 1.05,
+    "h": 5.8
+   }
+  },
+  "landmark_obelisk": {
+   "tris": 1206,
+   "lod1Tris": 384,
+   "size": [
+    2.606,
+    6.42,
+    1.695
+   ],
+   "collide": {
+    "r": 1.18,
+    "h": 6.9
+   }
+  },
+  "landmark_ribs": {
+   "tris": 2192,
+   "lod1Tris": 190,
+   "size": [
+    5.179,
+    5.563,
+    4.44
+   ],
+   "collide": [
+    {
+     "x": 2.15,
+     "z": 0.75,
+     "r": 0.46,
+     "h": 4.6
+    },
+    {
+     "x": -2.15,
+     "z": 0.75,
+     "r": 0.46,
+     "h": 4.6
+    },
+    {
+     "x": 1.85,
+     "z": -1.15,
+     "r": 0.4,
+     "h": 4.1
+    },
+    {
+     "x": -1.85,
+     "z": -1.15,
+     "r": 0.4,
+     "h": 4.1
+    }
+   ]
+  },
+  "landmark_vent": {
+   "tris": 1110,
+   "lod1Tris": 360,
+   "size": [
+    4.366,
+    3.167,
+    4.362
+   ],
+   "collide": {
+    "r": 2.15,
+    "h": 3.35
+   }
+  },
+  "meadow_bush": {
+   "tris": 676,
+   "lod1Tris": 36,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "collide": false
+  },
+  "meadow_tree_a": {
+   "tris": 1736,
+   "lod1Tris": 555,
+   "size": [
+    4.279,
+    4.265,
+    3.667
+   ],
+   "collide": {
+    "r": 0.46,
+    "h": 4.15
+   }
+  },
+  "palm_a": {
+   "tris": 3128,
+   "lod1Tris": 420,
+   "size": [
+    6.014,
+    6.599,
+    5.266
+   ],
+   "collide": {
+    "r": 0.36,
+    "h": 6.2
+   }
+  },
+  "palm_b": {
+   "tris": 2536,
+   "lod1Tris": 354,
+   "size": [
+    4.833,
+    4.814,
+    4.015
+   ],
+   "collide": {
+    "r": 0.32,
+    "h": 4.4
+   }
+  },
+  "pebbles": {
+   "tris": 80,
+   "lod1Tris": 40,
+   "size": [
+    1.02,
+    0.288,
+    0.721
+   ],
+   "collide": false
+  },
+  "rock_a": {
+   "tris": 292,
+   "lod1Tris": 92,
+   "size": [
+    1.617,
+    0.68,
+    1.408
+   ],
+   "collide": {
+    "r": 0.72,
+    "h": 1.05
+   }
+  },
+  "rock_b": {
+   "tris": 172,
+   "lod1Tris": 54,
+   "size": [
+    1.897,
+    0.797,
+    1.469
+   ],
+   "collide": {
+    "r": 0.78,
+    "h": 1.18
+   }
+  },
+  "rock_slab": {
+   "tris": 160,
+   "lod1Tris": 50,
+   "size": [
+    2.126,
+    1.247,
+    1.582
+   ],
+   "collide": {
+    "r": 1.02,
+    "h": 1.18
+   }
+  },
+  "shrub_a": {
+   "tris": 692,
+   "lod1Tris": 52,
+   "size": [
+    2.1,
+    1.616,
+    1.68
+   ],
+   "collide": false
+  },
+  "snow_dead_tree": {
+   "tris": 3208,
+   "lod1Tris": 1026,
+   "size": [
+    4.278,
+    4.759,
+    2.864
+   ],
+   "collide": {
+    "r": 0.34,
+    "h": 4.8
+   }
+  },
+  "snow_pine_a": {
+   "tris": 322,
+   "lod1Tris": 94,
+   "size": [
+    3.726,
+    7.816,
+    3.474
+   ],
+   "collide": {
+    "r": 0.4,
+    "h": 6.2
+   }
+  },
+  "snow_pine_b": {
+   "tris": 259,
+   "lod1Tris": 74,
+   "size": [
+    2.916,
+    4.896,
+    2.793
+   ],
+   "collide": {
+    "r": 0.34,
+    "h": 3.4
+   }
+  },
+  "snow_pine_c": {
+   "tris": 385,
+   "lod1Tris": 114,
+   "size": [
+    4.027,
+    8.919,
+    3.905
+   ],
+   "collide": {
+    "r": 0.42,
+    "h": 7.6
+   }
+  },
+  "snow_rock": {
+   "tris": 420,
+   "lod1Tris": 133,
+   "size": [
+    1.795,
+    1.135,
+    1.473
+   ],
+   "collide": {
+    "r": 0.86,
+    "h": 1.18
+   }
+  },
+  "swamp_lily": {
+   "tris": 272,
+   "lod1Tris": 86,
+   "size": [
+    1.303,
+    0.235,
+    1.209
+   ],
+   "collide": false
+  },
+  "swamp_mossrock": {
+   "tris": 598,
+   "lod1Tris": 190,
+   "size": [
+    1.669,
+    0.625,
+    1.362
+   ],
+   "collide": {
+    "r": 0.82,
+    "h": 1.05
+   }
+  },
+  "swamp_mushroom_a": {
+   "tris": 861,
+   "lod1Tris": 267,
+   "size": [
+    2.187,
+    3.074,
+    2.191
+   ],
+   "collide": {
+    "r": 0.38,
+    "h": 2.65
+   }
+  },
+  "swamp_mushroom_b": {
+   "tris": 861,
+   "lod1Tris": 267,
+   "size": [
+    1.174,
+    1.696,
+    1.177
+   ],
+   "collide": {
+    "r": 0.3,
+    "h": 1.45
+   }
+  },
+  "swamp_reeds": {
+   "tris": 820,
+   "lod1Tris": 95,
+   "size": [
+    0.704,
+    2.26,
+    0.542
+   ],
+   "collide": false
+  },
+  "swamp_snag": {
+   "tris": 3208,
+   "lod1Tris": 1026,
+   "size": [
+    4.278,
+    4.759,
+    2.864
+   ],
+   "collide": {
+    "r": 0.44,
+    "h": 3.8
+   }
+  },
+  "swamp_willow": {
+   "tris": 6832,
+   "lod1Tris": 434,
+   "size": [
+    4.842,
+    4.74,
+    4.154
+   ],
+   "collide": {
+    "r": 0.62,
+    "h": 4.7
+   }
+  },
+  "volcano_basalt": {
+   "tris": 288,
+   "lod1Tris": 90,
+   "size": [
+    1.25,
+    2.447,
+    1.354
+   ],
+   "collide": {
+    "r": 1.0,
+    "h": 2.65
+   }
+  },
+  "volcano_charred": {
+   "tris": 3384,
+   "lod1Tris": 292,
+   "size": [
+    3.353,
+    4.684,
+    3.76
+   ],
+   "collide": {
+    "r": 0.46,
+    "h": 4.15
+   }
+  },
+  "volcano_obsidian": {
+   "tris": 288,
+   "lod1Tris": 88,
+   "size": [
+    0.998,
+    1.947,
+    1.59
+   ],
+   "collide": {
+    "r": 0.76,
+    "h": 2.45
+   }
+  },
+  "volcano_rock": {
+   "tris": 210,
+   "lod1Tris": 91,
+   "size": [
+    1.535,
+    1.022,
+    1.27
+   ],
+   "collide": {
+    "r": 0.82,
+    "h": 1.28
+   }
+  }
+ },
+ "totalNearTris": 59750,
+ "totalLodTris": 12038
+}

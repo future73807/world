@@ -87,120 +87,150 @@ const rnd = () => {
   return (seed - 1) / 2147483646;
 };
 
+let fogShape: HTMLCanvasElement | null = null;
+let fogShapeJoined: HTMLCanvasElement | null = null;
+
 /**
- * Bakes a blurred, cloud-textured copy of the fog mask. Expensive (blur +
- * gradient blobs), so callers cache it and only rebuild when the mask changes.
- * Unknown ground reads as a soft white-blue cloud bank, like the reference map
- * where the uncharted area is a haze of cumulus rather than a grey rectangle.
+ * Bakes the SHAPE of the fog from the fog-of-war mask: a white sheet whose alpha
+ * is the mask's, softened at the edges so coastlines and the frontier feather.
+ *
+ * The shape carries no cloud of its own. The cloud is drawn once, across the whole
+ * view, by paintFogLayer, and this only says where it is lifted. An earlier version
+ * painted cumulus into this sheet too, and where its square met the cloud field
+ * outside it two different skies met at a hard rectangle — the faint lines running
+ * the height and width of the map that kept being reported.
  */
 export function bakeFog(explored: HTMLCanvasElement): HTMLCanvasElement {
-  const c = document.createElement('canvas');
-  c.width = explored.width;
-  c.height = explored.height;
-  const ctx = c.getContext('2d')!;
-
-  // The mask is already smooth (radial-gradient stamps), so only a light blur is
-  // needed. A wide one turned the explored island into a shapeless green smear.
-  ctx.filter = 'blur(3px)';
-  ctx.drawImage(explored, 0, 0);
-  ctx.filter = 'none';
-
-  // unexplored ground must barely read through. The whiten pass cannot RAISE
-  // alpha — Chromium's 'source-atop' keeps the destination alpha — so the
-  // near-opaque base has to come from the mask itself (see Game.initExploredMask).
-  ctx.globalCompositeOperation = 'source-atop';
-  ctx.fillStyle = 'rgba(236, 245, 250, 0.98)';
-  ctx.fillRect(0, 0, c.width, c.height);
-
-  // cloud lumps: bright cumulus highlights, cool shadow sides, fine speckle
-  seed = 7;
-  const n = 460;
-  for (let i = 0; i < n; i++) {
-    const x = rnd() * c.width;
-    const y = rnd() * c.height;
-    const r = 5 + rnd() * 22;
-    const g = ctx.createRadialGradient(x - r * 0.2, y - r * 0.25, r * 0.06, x, y, r);
-    const roll = rnd();
-    if (roll < 0.4) {
-      g.addColorStop(0, 'rgba(255,255,255,0.85)');
-      g.addColorStop(0.62, 'rgba(255,255,255,0.3)');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-    } else if (roll < 0.76) {
-      g.addColorStop(0, 'rgba(205,229,244,0.6)');
-      g.addColorStop(1, 'rgba(205,229,244,0)');
-    } else {
-      g.addColorStop(0, 'rgba(163,199,220,0.44)');
-      g.addColorStop(1, 'rgba(163,199,220,0)');
-    }
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
+  const pad = 16;
+  const w = explored.width;
+  const h = explored.height;
+  if (!fogShape) fogShape = document.createElement('canvas');
+  if (!fogShapeJoined) fogShapeJoined = document.createElement('canvas');
+  fogShapeJoined.width = w + pad * 2;
+  fogShapeJoined.height = h + pad * 2;
+  // nine copies joined before any blur: blurred one at a time, each copy faded at
+  // its own border and a darker valley ran along every seam
+  const jctx = fogShapeJoined.getContext('2d')!;
+  for (let j = -1; j <= 1; j++) {
+    for (let i = -1; i <= 1; i++) jctx.drawImage(explored, pad + i * w, pad + j * h);
   }
-
-  // FEATHER the edges. The mask is a finite square laid over an unbounded map;
-  // with a hard edge the boundary showed as a bright rectangle floating in the
-  // cloud field. Fading alpha to zero over the outermost ~4% lets the cloud
-  // tile drawn underneath continue seamlessly.
-  const feather = Math.max(8, Math.round(c.width * 0.04));
-  const edge = document.createElement('canvas');
-  edge.width = c.width;
-  edge.height = c.height;
-  const ectx = edge.getContext('2d')!;
-  ectx.fillStyle = '#ffffff';
-  ectx.fillRect(0, 0, c.width, c.height);
-  const fade = (x0: number, y0: number, x1: number, y1: number, horizontal: boolean) => {
-    const g = horizontal
-      ? ectx.createLinearGradient(x0, 0, x1, 0)
-      : ectx.createLinearGradient(0, y0, 0, y1);
-    g.addColorStop(0, 'rgba(0,0,0,0)');
-    g.addColorStop(1, 'rgba(0,0,0,1)');
-    ectx.fillStyle = g;
-    if (horizontal) ectx.fillRect(Math.min(x0, x1), 0, feather, c.height);
-    else ectx.fillRect(0, Math.min(y0, y1), c.width, feather);
-  };
-  fade(0, 0, feather, 0, true);
-  fade(c.width, 0, c.width - feather, 0, true);
-  fade(0, 0, 0, feather, false);
-  fade(0, c.height, 0, c.height - feather, false);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.globalCompositeOperation = 'destination-in';
-  ctx.drawImage(edge, 0, 0);
+  // a light blur: the mask's own edges are the shape of the known world
+  fogShape.width = w + pad * 2;
+  fogShape.height = h + pad * 2;
+  const ctx = fogShape.getContext('2d')!;
+  ctx.filter = 'blur(2px)';
+  ctx.drawImage(fogShapeJoined, 0, 0);
+  ctx.filter = 'none';
+  // flat white: only the alpha is read
+  ctx.globalCompositeOperation = 'source-in';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, fogShape.width, fogShape.height);
   ctx.globalCompositeOperation = 'source-over';
-
-  (c as HTMLCanvasElement & { worldSpan?: number }).worldSpan =
-    (explored as HTMLCanvasElement & { worldSpan?: number }).worldSpan;
-  return c;
+  // back to exactly the mask's own square (the pad was only for the blur)
+  const out = document.createElement('canvas');
+  out.width = w;
+  out.height = h;
+  out.getContext('2d')!.drawImage(fogShape, pad, pad, w, h, 0, 0, w, h);
+  const span = (explored as HTMLCanvasElement & { worldSpan?: number }).worldSpan;
+  (out as HTMLCanvasElement & { worldSpan?: number }).worldSpan = span;
+  return out;
 }
 
 /**
- * Fills everything on a canvas EXCEPT the given rectangle with `style`, using
- * even-odd winding. This is how the map gets fog everywhere the finite mask
- * cannot reach: the four-rect approach left uncovered corners whenever the mask
- * slid off-screen, which is why unexplored terrain used to show past the fog.
+ * THE fog layer, built for a whole view at once.
+ *
+ * The previous approach laid a finite cloud-mask square over an unbounded map and
+ * painted a *different* cloud outside it. Two cloud fields of different tone
+ * meeting at a hard rectangle is the visible square the user kept reporting.
+ * There is no seam to hide when there is only ONE field: fill the entire view
+ * with the seamless cloud tile, then punch the explored area out of it with
+ * destination-out. The mask's own soft alpha becomes the fog's edge, so the
+ * frontier feathers instead of stopping at a line.
  */
-export function fillOutsideRect(
-  ctx: CanvasRenderingContext2D,
+let fogLayerCanvas: HTMLCanvasElement | null = null;
+let fogMaskCanvas: HTMLCanvasElement | null = null;
+export function paintFogLayer(
   w: number,
   h: number,
-  rx: number,
-  ry: number,
-  rw: number,
-  rh: number,
-  style: string | CanvasPattern,
-) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0, 0, w, h);
-  // the inner rect is wound the other way, so even-odd leaves it empty
-  ctx.moveTo(rx, ry);
-  ctx.lineTo(rx, ry + rh);
-  ctx.lineTo(rx + rw, ry + rh);
-  ctx.lineTo(rx + rw, ry);
-  ctx.closePath();
-  ctx.fillStyle = style;
-  ctx.fill('evenodd');
-  ctx.restore();
+  drawMask: (ctx: CanvasRenderingContext2D) => void,
+  opts: { tileScale: number; originX: number; originY: number; maskRect: { x: number; y: number; w: number; h: number } },
+): HTMLCanvasElement {
+  let c = fogLayerCanvas;
+  if (!c) {
+    c = document.createElement('canvas');
+    fogLayerCanvas = c;
+  }
+  if (c.width !== w || c.height !== h) {
+    c.width = w;
+    c.height = h;
+  }
+  const ctx = c.getContext('2d')!;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  ctx.globalCompositeOperation = 'source-over';
+
+  // one seamless cloud field over the whole view, pinned to the WORLD origin so
+  // it pans with the map instead of sliding under it like a screen texture
+  const tile = bakeCloudTile();
+  const pat = ctx.createPattern(tile, 'repeat');
+  if (pat) {
+    const s = opts.tileScale;
+    pat.setTransform?.(new DOMMatrix([s, 0, 0, s, opts.originX, opts.originY]));
+    ctx.fillStyle = pat;
+    ctx.fillRect(0, 0, w, h);
+  } else {
+    ctx.fillStyle = 'rgb(214, 232, 244)';
+    ctx.fillRect(0, 0, w, h);
+  }
+  // one pale wash over the whole field: the minimap and the full map then cannot
+  // disagree about the fog tone
+  ctx.fillStyle = 'rgba(232, 244, 250, 0.55)';
+  ctx.fillRect(0, 0, w, h);
+
+  // Punch the explored area out. The mask's alpha is INVERTED relative to what
+  // destination-out needs: the baked mask is ~1 over *unexplored* cloud and ~0
+  // over walked ground, while destination-out erases by (1 - src.alpha). So the
+  // mask is first inverted into a scratch canvas — without that step the fog
+  // stayed over the walked island and vanished over the unknown sea, which is
+  // exactly backwards.
+  let inv = fogMaskCanvas;
+  if (!inv) {
+    inv = document.createElement('canvas');
+    fogMaskCanvas = inv;
+  }
+  if (inv.width !== w || inv.height !== h) {
+    inv.width = w;
+    inv.height = h;
+  }
+  const ictx = inv.getContext('2d')!;
+  ictx.setTransform(1, 0, 0, 1, 0, 0);
+  ictx.globalCompositeOperation = 'source-over';
+  ictx.fillStyle = '#ffffff';
+  ictx.fillRect(0, 0, w, h);
+  // white minus mask = "walked" alpha
+  ictx.globalCompositeOperation = 'destination-out';
+  drawMask(ictx);
+  ictx.globalCompositeOperation = 'source-over';
+  // The mask's own border is the one place the cloud could thin: a copy drawn
+  // edge to edge with the next one covers a seam pixel only half each, and a
+  // line of sea showed through it. So the "walked" alpha is wiped outright in a
+  // ring a pixel outside the mask, where nothing has been seen anyway.
+  const r = opts.maskRect;
+  const left = Math.floor(r.x) + 1;
+  const top = Math.floor(r.y) + 1;
+  const right = Math.ceil(r.x + r.w) - 1;
+  const bottom = Math.ceil(r.y + r.h) - 1;
+  const innerTop = Math.max(0, top);
+  const innerH = Math.min(h, bottom) - innerTop;
+  if (top > 0) ictx.clearRect(0, 0, w, top);
+  if (bottom < h) ictx.clearRect(0, bottom, w, h - bottom);
+  if (left > 0 && innerH > 0) ictx.clearRect(0, innerTop, left, innerH);
+  if (right < w && innerH > 0) ictx.clearRect(right, innerTop, w - right, innerH);
+
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.drawImage(inv, 0, 0);
+  ctx.globalCompositeOperation = 'source-over';
+  return c;
 }
 
 /**
@@ -255,5 +285,71 @@ export function bakeCloudTile(): HTMLCanvasElement {
     }
   }
   cloudTile = c;
+  return c;
+}
+
+/**
+ * The alpha mask of the minimap's rim: a disc whose edge is frayed like dry
+ * brushwork — a few slow lobes, many fine teeth, and grain that lets single hairs
+ * of the map reach further out than the rest. Baked once per size.
+ */
+let rimCache: { key: number; canvas: HTMLCanvasElement } | null = null;
+export function raggedRim(size: number): HTMLCanvasElement {
+  if (rimCache?.key === size) return rimCache.canvas;
+  const S = size * 2; // baked at double resolution, so the teeth stay crisp on HiDPI screens
+  const c = document.createElement('canvas');
+  c.width = S;
+  c.height = S;
+  const ctx = c.getContext('2d')!;
+  const img = ctx.createImageData(S, S);
+  const d = img.data;
+
+  seed = 23;
+  // (harmonics around the circle, amplitude as a share of the radius)
+  const waves: [number, number, number][] = [
+    [2, 0.028], [3, 0.03], [5, 0.02], [9, 0.014], [17, 0.011], [31, 0.009], [57, 0.007], [97, 0.0055], [161, 0.004],
+  ].map(([k, a]) => [k, a, rnd() * Math.PI * 2]);
+  // grain along the rim: value noise with 150 steps round the circle, so the hairs
+  // run outward and keep their width, like a brush that is running dry
+  const GN = 150;
+  const grain = new Float32Array(GN);
+  let acc = 0;
+  for (let i = 0; i < GN; i++) {
+    acc = acc * 0.55 + (rnd() * 2 - 1) * 0.6;
+    grain[i] = acc;
+  }
+  const grainAt = (u: number) => {
+    const f = ((u % 1) + 1) % 1 * GN;
+    const i = Math.floor(f);
+    const t = f - i;
+    return grain[i] * (1 - t) + grain[(i + 1) % GN] * t;
+  };
+
+  const R = S / 2;
+  const FEATHER = 0.05; // width of the fringe, as a share of the radius
+  const BASE = 0.9; // where the fringe starts on average: the map keeps a clear middle
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      const dx = (x + 0.5 - R) / R;
+      const dy = (y + 0.5 - R) / R;
+      const rho = Math.hypot(dx, dy);
+      if (rho > 1.08) continue;
+      const th = Math.atan2(dy, dx);
+      let e = BASE;
+      for (const [k, a, ph] of waves) e += a * Math.sin(k * th + ph);
+      // the teeth only bite near the rim; further in the disc is solid
+      const near = Math.min(1, Math.max(0, (rho - (e - FEATHER * 2.4)) / (FEATHER * 2.4)));
+      const g = grainAt(th / (Math.PI * 2)) * near;
+      const a = Math.min(1, Math.max(0, (e - rho) / FEATHER + 0.5 + g * 1.15));
+      // smoothstep keeps the last of the alpha from ending in a hard line
+      const o = (y * S + x) * 4;
+      d[o] = 255;
+      d[o + 1] = 255;
+      d[o + 2] = 255;
+      d[o + 3] = Math.round(a * a * (3 - 2 * a) * 255);
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  rimCache = { key: size, canvas: c };
   return c;
 }

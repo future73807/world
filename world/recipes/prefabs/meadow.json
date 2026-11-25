@@ -1,0 +1,124 @@
+[
+ {
+  "id": "meadow_tree_a",
+  "label": "平顶伞树",
+  "kind": "tree",
+  "group": "meadow",
+  "biomes": [
+   "meadow"
+  ],
+  "seed": 301,
+  "desc": "树干分叉后摊开成一顶扁平伞状树冠的草原大树。",
+  "collide": {
+   "r": 0.42,
+   "h": 4.0
+  },
+  "sink": 0.25,
+  "scale": [
+   0.85,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 3.6,
+    "r0": 0.3,
+    "r1": 0.12,
+    "bend": [
+     0.25,
+     0.1
+    ],
+    "wobble": 0.08,
+    "flare": 0.45,
+    "roots": {
+     "n": 3,
+     "len": 0.8,
+     "r": 0.15
+    },
+    "branches": {
+     "n": 4,
+     "from": 0.62,
+     "to": 0.82,
+     "len": [
+      1.3,
+      1.9
+     ],
+     "rise": [
+      0.5,
+      0.8
+     ],
+     "r": 0.12
+    },
+    "bark": {
+     "color": "#6b5240",
+     "color2": "#a98a6a",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      4.7,
+      1.3,
+      4.7
+     ],
+     "lobes": 7,
+     "noise": 0.18,
+     "tris": 560,
+     "paint": {
+      "color": "#7fae4c",
+      "color2": "#c8dd7e",
+      "under": "#4a7a3a",
+      "mode": "normal",
+      "jitter": 0.05,
+      "hue": 0.012
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "meadow_bush",
+  "label": "金雀花丛",
+  "kind": "shrub",
+  "group": "meadow",
+  "biomes": [
+   "meadow",
+   "beach"
+  ],
+  "seed": 302,
+  "desc": "贴地的一大团绿叶，顶上开满星星点点的黄花。",
+  "collide": false,
+  "scale": [
+   0.8,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "bush",
+    "size": [
+     1.9,
+     1.3,
+     1.9
+    ],
+    "lobes": 5,
+    "noise": 0.22,
+    "noiseF": 2.4,
+    "tris": 380,
+    "twigs": 0,
+    "paint": {
+     "color": "#5f9a46",
+     "color2": "#a8d070",
+     "under": "#3d6b34",
+     "mode": "normal",
+     "jitter": 0.05,
+     "hue": 0.012,
+     "coat": {
+      "color": "#f3cf4e",
+      "t0": 0.5,
+      "amount": 0.85,
+      "freq": 5.5
+     }
+    }
+   }
+  ]
+ }
+]

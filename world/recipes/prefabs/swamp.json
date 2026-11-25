@@ -1,0 +1,511 @@
+[
+ {
+  "id": "swamp_willow",
+  "label": "垂枝沼柳",
+  "kind": "tree",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 601,
+  "desc": "树冠像一把撑开的绿伞，伞沿垂下一帘帘细长的枝叶。",
+  "collide": {
+   "r": 0.55,
+   "h": 4.2
+  },
+  "sink": 0.3,
+  "scale": [
+   0.85,
+   1.2
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 3.9,
+    "r0": 0.46,
+    "r1": 0.16,
+    "bend": [
+     0.5,
+     0.2
+    ],
+    "wobble": 0.2,
+    "flare": 0.6,
+    "roots": {
+     "n": 5,
+     "len": 1.1,
+     "r": 0.22
+    },
+    "branches": {
+     "n": 6,
+     "from": 0.55,
+     "to": 0.82,
+     "len": [
+      1.2,
+      1.9
+     ],
+     "rise": [
+      0.5,
+      0.9
+     ],
+     "r": 0.12
+    },
+    "bark": {
+     "color": "#4f4838",
+     "color2": "#7d7360",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      5.2,
+      1.9,
+      5.2
+     ],
+     "lobes": 8,
+     "noise": 0.2,
+     "tris": 520,
+     "top": true,
+     "paint": {
+      "color": "#6f8c44",
+      "color2": "#b9cc74",
+      "under": "#44603a",
+      "mode": "normal",
+      "jitter": 0.06,
+      "hue": 0.015
+     }
+    }
+   },
+   {
+    "type": "curtain",
+    "n": 26,
+    "rings": 2,
+    "r": 2.5,
+    "len": [
+     1.7,
+     2.9
+    ],
+    "w": 0.07,
+    "yOff": [
+     -0.55,
+     -0.25
+    ],
+    "lean": [
+     6,
+     18
+    ],
+    "bend": [
+     -12,
+     12
+    ],
+    "paint": {
+     "color": "#8aa650",
+     "color2": "#c8d878",
+     "under": "#55743f",
+     "mode": "normal",
+     "jitter": 0.05,
+     "hue": 0.012
+    }
+   }
+  ]
+ },
+ {
+  "id": "swamp_mushroom_a",
+  "label": "灯菌",
+  "kind": "tree",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 602,
+  "desc": "伞盖青绿、菌褶会发光的高大真菌。",
+  "collide": {
+   "r": 0.32,
+   "h": 2.2
+  },
+  "sink": 0.1,
+  "scale": [
+   0.85,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "mushroom",
+    "h": 2.0,
+    "capR": 1.15,
+    "capH": 0.72,
+    "bend": 0.2,
+    "glow": true,
+    "stalk": {
+     "color": "#c9b892",
+     "color2": "#e6dcc0",
+     "mode": "height"
+    },
+    "cap": {
+     "color": "#4fae9c",
+     "color2": "#a8e8d6",
+     "under": "#3d8f82",
+     "mode": "normal",
+     "jitter": 0.04
+    },
+    "gill": {
+     "color": "#9fe9cd",
+     "mode": "uniform"
+    }
+   }
+  ]
+ },
+ {
+  "id": "swamp_mushroom_b",
+  "label": "琥珀菌",
+  "kind": "shrub",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 603,
+  "desc": "菌褶透着暖琥珀光的小蘑菇。",
+  "collide": {
+   "r": 0.22,
+   "h": 1.2
+  },
+  "sink": 0.08,
+  "scale": [
+   0.8,
+   1.35
+  ],
+  "parts": [
+   {
+    "type": "mushroom",
+    "h": 1.1,
+    "capR": 0.62,
+    "capH": 0.42,
+    "bend": 0.14,
+    "glow": true,
+    "spots": 3,
+    "stalk": {
+     "color": "#d6c7a4",
+     "color2": "#efe5c9",
+     "mode": "height"
+    },
+    "cap": {
+     "color": "#c97a3f",
+     "color2": "#efbf7f",
+     "under": "#9a5a2c",
+     "mode": "normal",
+     "jitter": 0.04
+    },
+    "gill": {
+     "color": "#ffcf7a",
+     "mode": "uniform"
+    },
+    "spotPaint": {
+     "color": "#fff1d2",
+     "mode": "uniform"
+    }
+   }
+  ]
+ },
+ {
+  "id": "swamp_reeds",
+  "label": "芦苇",
+  "kind": "plant",
+  "group": "swamp",
+  "biomes": [
+   "swamp",
+   "beach"
+  ],
+  "seed": 604,
+  "desc": "一丛宽叶芦苇，几根直挺的茎顶着褐色的蒲棒和一枝芦花。",
+  "collide": false,
+  "castShadow": false,
+  "scale": [
+   0.85,
+   1.35
+  ],
+  "farCut": 26,
+  "lod1": {
+   "n": 7,
+   "heads": 2
+  },
+  "parts": [
+   {
+    "type": "tuft",
+    "n": 15,
+    "len": [
+     0.85,
+     1.35
+    ],
+    "w": [
+     0.024,
+     0.034
+    ],
+    "leafW": 3.6,
+    "leafShare": 0.45,
+    "spread": 0.3,
+    "segs": 4,
+    "bend": [
+     35,
+     75
+    ],
+    "heads": 3,
+    "headR": 0.036,
+    "headH": 0.22,
+    "spike": 0.14,
+    "plumes": 1,
+    "plumeLen": 0.3,
+    "stem": [
+     1.3,
+     1.65
+    ],
+    "paint": {
+     "color": "#77894a",
+     "color2": "#c2c876",
+     "mode": "height"
+    },
+    "headPaint": {
+     "color": "#6a4a30",
+     "color2": "#8f6a45",
+     "mode": "height"
+    },
+    "plumePaint": {
+     "color": "#cdbd90",
+     "color2": "#efe6cf",
+     "mode": "height"
+    },
+    "arch": true,
+    "lean": [
+     0.3,
+     0.7
+    ]
+   }
+  ]
+ },
+ {
+  "id": "swamp_lily",
+  "label": "睡莲",
+  "kind": "detail",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 605,
+  "desc": "浮在水面的几片睡莲叶。",
+  "collide": false,
+  "castShadow": false,
+  "lod1": false,
+  "parts": [
+   {
+    "type": "loft",
+    "sides": 9,
+    "irreg": 0.06,
+    "wave": [
+     1,
+     0.0
+    ],
+    "rings": [
+     {
+      "y": 0,
+      "r": 0.27
+     },
+     {
+      "y": 0.014,
+      "r": 0.27
+     }
+    ],
+    "paint": {
+     "color": "#5f9a52",
+     "color2": "#8cc47a",
+     "under": "#3f7040",
+     "mode": "normal"
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 9,
+    "irreg": 0.06,
+    "rings": [
+     {
+      "y": 0,
+      "r": 0.2
+     },
+     {
+      "y": 0.012,
+      "r": 0.2
+     }
+    ],
+    "at": [
+     0.38,
+     0.01,
+     0.12
+    ],
+    "paint": {
+     "color": "#6aa657",
+     "color2": "#9bcd85",
+     "under": "#467a45",
+     "mode": "normal"
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 9,
+    "irreg": 0.06,
+    "rings": [
+     {
+      "y": 0,
+      "r": 0.16
+     },
+     {
+      "y": 0.012,
+      "r": 0.16
+     }
+    ],
+    "at": [
+     -0.24,
+     0.005,
+     -0.3
+    ],
+    "paint": {
+     "color": "#58914c",
+     "color2": "#86bf74",
+     "under": "#3b693c",
+     "mode": "normal"
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 6,
+    "rings": [
+     {
+      "y": 0.01,
+      "r": 0.07
+     },
+     {
+      "y": 0.06,
+      "r": 0.09
+     },
+     {
+      "y": 0.1,
+      "r": 0.035
+     },
+     {
+      "y": 0.13,
+      "r": 0.0
+     }
+    ],
+    "at": [
+     0.38,
+     0.01,
+     0.12
+    ],
+    "paint": {
+     "color": "#f6d3df",
+     "color2": "#fff3f6",
+     "under": "#e3a7bb",
+     "mode": "normal"
+    }
+   }
+  ]
+ },
+ {
+  "id": "swamp_snag",
+  "label": "枯木",
+  "kind": "tree",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 606,
+  "desc": "没有叶子、枝干扭曲发黑的沼泽枯木。",
+  "collide": {
+   "r": 0.4,
+   "h": 3.4
+  },
+  "sink": 0.25,
+  "scale": [
+   0.85,
+   1.25
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 3.4,
+    "r0": 0.3,
+    "r1": 0.06,
+    "bend": [
+     0.35,
+     -0.3
+    ],
+    "wobble": 0.24,
+    "flare": 0.55,
+    "roots": {
+     "n": 4,
+     "len": 0.85,
+     "r": 0.15
+    },
+    "branches": {
+     "n": 4,
+     "from": 0.45,
+     "to": 0.85,
+     "len": [
+      0.8,
+      1.5
+     ],
+     "rise": [
+      0.3,
+      0.9
+     ],
+     "r": 0.08
+    },
+    "bark": {
+     "color": "#4a4238",
+     "color2": "#6f6555",
+     "mode": "height",
+     "jitter": 0.06
+    }
+   }
+  ]
+ },
+ {
+  "id": "swamp_mossrock",
+  "label": "泽石",
+  "kind": "rock",
+  "group": "swamp",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 607,
+  "desc": "裹满厚苔的湿石头。",
+  "collide": {
+   "r": 0.75,
+   "h": 1.0
+  },
+  "scale": [
+   0.7,
+   1.5
+  ],
+  "parts": [
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     1.7,
+     1.0,
+     1.5
+    ],
+    "points": 24,
+    "noise": 0.24,
+    "paint": {
+     "color": "#5d6a5e",
+     "color2": "#8c9a86",
+     "under": "#3f4b45",
+     "mode": "normal",
+     "jitter": 0.05,
+     "coat": {
+      "color": "#78a04f",
+      "t0": 0.36,
+      "amount": 0.88
+     }
+    }
+   }
+  ]
+ }
+]

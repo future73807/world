@@ -1,0 +1,636 @@
+[
+ {
+  "id": "landmark_arch",
+  "label": "苔痕石拱",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "meadow",
+   "forest"
+  ],
+  "seed": 901,
+  "desc": "一座横跨小径的风化石拱，顶上长满青苔。",
+  "collide": [
+   {
+    "x": 3.1,
+    "z": 0,
+    "r": 1.25,
+    "h": 6
+   },
+   {
+    "x": -3.1,
+    "z": 0,
+    "r": 1.25,
+    "h": 6
+   }
+  ],
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "parts": [
+   {
+    "type": "arch",
+    "span": 6.2,
+    "rise": 6.0,
+    "thick": 1.2,
+    "lean": 0.25,
+    "tris": 420,
+    "paint": {
+     "color": "#a39f90",
+     "color2": "#d3cdb8",
+     "under": "#6d6b60",
+     "mode": "normal",
+     "jitter": 0.06,
+     "coat": {
+      "color": "#8db260",
+      "t0": 0.45,
+      "amount": 0.6,
+      "freq": 1.3
+     }
+    }
+   },
+   {
+    "type": "rock",
+    "style": "angular",
+    "size": [
+     2.0,
+     1.3,
+     1.9
+    ],
+    "points": 12,
+    "noise": 0.26,
+    "at": [
+     3.2,
+     0,
+     0.05
+    ],
+    "paint": {
+     "color": "#a39f90",
+     "color2": "#d3cdb8",
+     "under": "#6d6b60",
+     "mode": "normal",
+     "jitter": 0.06,
+     "coat": {
+      "color": "#8db260",
+      "t0": 0.45,
+      "amount": 0.6,
+      "freq": 1.3
+     }
+    }
+   },
+   {
+    "type": "rock",
+    "style": "angular",
+    "size": [
+     1.8,
+     1.2,
+     1.7
+    ],
+    "points": 12,
+    "noise": 0.26,
+    "at": [
+     -3.2,
+     0,
+     -0.05
+    ],
+    "paint": {
+     "color": "#a39f90",
+     "color2": "#d3cdb8",
+     "under": "#6d6b60",
+     "mode": "normal",
+     "jitter": 0.06,
+     "coat": {
+      "color": "#8db260",
+      "t0": 0.45,
+      "amount": 0.6,
+      "freq": 1.3
+     }
+    }
+   },
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     0.9,
+     0.6,
+     0.8
+    ],
+    "points": 16,
+    "noise": 0.24,
+    "at": [
+     4.3,
+     0,
+     0.7
+    ],
+    "paint": {
+     "color": "#a39f90",
+     "color2": "#d3cdb8",
+     "under": "#6d6b60",
+     "mode": "normal",
+     "jitter": 0.06,
+     "coat": {
+      "color": "#8db260",
+      "t0": 0.45,
+      "amount": 0.6,
+      "freq": 1.3
+     }
+    }
+   },
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     0.8,
+     0.55,
+     0.9
+    ],
+    "points": 16,
+    "noise": 0.24,
+    "at": [
+     -4.1,
+     0,
+     0.6
+    ],
+    "paint": {
+     "color": "#a39f90",
+     "color2": "#d3cdb8",
+     "under": "#6d6b60",
+     "mode": "normal",
+     "jitter": 0.06,
+     "coat": {
+      "color": "#8db260",
+      "t0": 0.45,
+      "amount": 0.6,
+      "freq": 1.3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "landmark_obelisk",
+  "label": "风蚀方尖碑",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 902,
+  "desc": "半埋在沙里的赭红砂岩方尖碑。",
+  "collide": {
+   "r": 1.2,
+   "h": 7.5
+  },
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "parts": [
+   {
+    "type": "loft",
+    "sides": 4,
+    "irreg": 0.05,
+    "rot": 45,
+    "tris": 90,
+    "rings": [
+     {
+      "y": -0.2,
+      "r": 1.25
+     },
+     {
+      "y": 0.5,
+      "r": 1.2
+     },
+     {
+      "y": 0.6,
+      "r": 0.95
+     },
+     {
+      "y": 5.8,
+      "r": 0.62
+     },
+     {
+      "y": 6.6,
+      "r": 0.0
+     }
+    ],
+    "paint": {
+     "color": "#c9925e",
+     "color2": "#e0b584",
+     "under": "#9a6440",
+     "mode": "bands",
+     "bandH": 1.1,
+     "jitter": 0.04
+    },
+    "tier": 0.05
+   },
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     1.2,
+     0.7,
+     1.0
+    ],
+    "tris": 70,
+    "noise": 0.2,
+    "at": [
+     1.3,
+     0,
+     0.5
+    ],
+    "paint": {
+     "color": "#c08457",
+     "color2": "#dcaa7c",
+     "under": "#8f5a3a",
+     "mode": "normal",
+     "jitter": 0.05
+    },
+    "points": 11
+   },
+   {
+    "type": "rock",
+    "style": "boulder",
+    "size": [
+     0.9,
+     0.5,
+     0.8
+    ],
+    "tris": 50,
+    "noise": 0.2,
+    "at": [
+     -1.1,
+     0,
+     -0.4
+    ],
+    "paint": {
+     "color": "#c98f5e",
+     "color2": "#e0b080",
+     "under": "#96603e",
+     "mode": "normal",
+     "jitter": 0.05
+    },
+    "points": 11
+   }
+  ]
+ },
+ {
+  "id": "landmark_crystal",
+  "label": "霜晶巨簇",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "snow"
+  ],
+  "seed": 903,
+  "desc": "一人多高的发光冰晶巨簇，是雪原上的路标。",
+  "collide": {
+   "r": 1.6,
+   "h": 6.2
+  },
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "material": {
+   "roughness": 0.2,
+   "metalness": 0.05
+  },
+  "parts": [
+   {
+    "type": "crystal",
+    "h": 6.2,
+    "shards": 7,
+    "sides": 6,
+    "glow": true,
+    "paint": {
+     "color": "#54bde3",
+     "color2": "#eafdff",
+     "under": "#2578a0",
+     "mode": "normal",
+     "jitter": 0.05
+    }
+   }
+  ]
+ },
+ {
+  "id": "landmark_giant_mushroom",
+  "label": "母菌",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "swamp"
+  ],
+  "seed": 904,
+  "desc": "沼泽中央那株会发光的巨型母菌，菌盖大得能躲雨。",
+  "collide": {
+   "r": 1.05,
+   "h": 5.6
+  },
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "parts": [
+   {
+    "type": "mushroom",
+    "h": 5.2,
+    "capR": 3.2,
+    "capH": 1.7,
+    "bend": 0.35,
+    "glow": true,
+    "spots": 11,
+    "spotR": 0.085,
+    "sides": 16,
+    "ring": true,
+    "ringY": 0.66,
+    "irreg": 0.06,
+    "stalk": {
+     "color": "#bfae88",
+     "color2": "#e2d7b8",
+     "mode": "height"
+    },
+    "cap": {
+     "color": "#2f8f86",
+     "color2": "#7fd6c4",
+     "under": "#3d9488",
+     "mode": "normal",
+     "jitter": 0.04
+    },
+    "gill": {
+     "color": "#9fe9cd",
+     "mode": "uniform"
+    },
+    "spotPaint": {
+     "color": "#eafcf4",
+     "mode": "uniform"
+    }
+   }
+  ]
+ },
+ {
+  "id": "landmark_vent",
+  "label": "余温喷口",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "volcanic"
+  ],
+  "seed": 905,
+  "desc": "一座还在冒着橙红熔光的熄火山喷口。",
+  "collide": {
+   "r": 1.9,
+   "h": 3.2
+  },
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "parts": [
+   {
+    "type": "loft",
+    "sides": 9,
+    "irreg": 0.12,
+    "caps": false,
+    "rings": [
+     {
+      "y": -0.2,
+      "r": 2.7
+     },
+     {
+      "y": 1.2,
+      "r": 2.2
+     },
+     {
+      "y": 2.4,
+      "r": 1.2
+     },
+     {
+      "y": 3.0,
+      "r": 0.9
+     }
+    ],
+    "paint": {
+     "color": "#34373e",
+     "color2": "#5e636e",
+     "under": "#1e2025",
+     "mode": "normal",
+     "jitter": 0.06
+    }
+   },
+   {
+    "type": "loft",
+    "sides": 9,
+    "irreg": 0.1,
+    "glow": true,
+    "rings": [
+     {
+      "y": 2.74,
+      "r": 0.8
+     },
+     {
+      "y": 2.94,
+      "r": 0.72
+     }
+    ],
+    "paint": {
+     "color": "#ff5a14",
+     "color2": "#ffd066",
+     "mode": "normal"
+    }
+   }
+  ]
+ },
+ {
+  "id": "landmark_elder_tree",
+  "label": "古树",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "forest",
+   "meadow"
+  ],
+  "seed": 906,
+  "desc": "要好几只史莱姆才抱得住的古树，树冠像一座绿色小山。",
+  "collide": {
+   "r": 1.15,
+   "h": 9.5
+  },
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 80,
+  "parts": [
+   {
+    "type": "tree",
+    "h": 9.5,
+    "r0": 1.0,
+    "r1": 0.26,
+    "bend": [
+     0.6,
+     -0.4
+    ],
+    "wobble": 0.3,
+    "flare": 0.5,
+    "roots": {
+     "n": 6,
+     "len": 2.4,
+     "r": 0.45
+    },
+    "branches": {
+     "n": 7,
+     "from": 0.5,
+     "to": 0.8,
+     "len": [
+      2.4,
+      3.8
+     ],
+     "rise": [
+      1.0,
+      2.2
+     ],
+     "r": 0.26
+    },
+    "bark": {
+     "color": "#5d4736",
+     "color2": "#96795b",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      8.6,
+      5.2,
+      8.6
+     ],
+     "lobes": 9,
+     "noise": 0.17,
+     "tris": 1500,
+     "top": true,
+     "paint": {
+      "color": "#5fa848",
+      "color2": "#b5dc7c",
+      "under": "#31633a",
+      "mode": "normal",
+      "jitter": 0.05,
+      "hue": 0.014
+     }
+    }
+   },
+   {
+    "type": "canopy",
+    "lobes": 4,
+    "noise": 0.18,
+    "tris": 420,
+    "at": [
+     "crown",
+     -2.6,
+     -1.6,
+     1.8
+    ],
+    "size": [
+     4.2,
+     2.6,
+     4.2
+    ],
+    "paint": {
+     "color": "#6cb04e",
+     "color2": "#c0e286",
+     "under": "#386d3c",
+     "mode": "normal",
+     "jitter": 0.05,
+     "hue": 0.014
+    }
+   }
+  ]
+ },
+ {
+  "id": "landmark_ribs",
+  "label": "鲸骨拱",
+  "kind": "landmark",
+  "group": "landmark",
+  "biomes": [
+   "beach",
+   "ocean"
+  ],
+  "seed": 907,
+  "desc": "沙滩上并排立着的两道灰白鲸骨拱门。",
+  "collide": [
+   {
+    "x": 2.3,
+    "z": 0,
+    "r": 0.4,
+    "h": 4.4
+   },
+   {
+    "x": -2.3,
+    "z": 0,
+    "r": 0.4,
+    "h": 4.4
+   },
+   {
+    "x": 2.09,
+    "z": -1.98,
+    "r": 0.36,
+    "h": 3.9
+   },
+   {
+    "x": -1.79,
+    "z": -1.02,
+    "r": 0.36,
+    "h": 3.9
+   }
+  ],
+  "scale": [
+   1,
+   1
+  ],
+  "farCut": 70,
+  "parts": [
+   {
+    "type": "arch",
+    "span": 4.6,
+    "rise": 5.2,
+    "thick": 0.5,
+    "tris": 300,
+    "paint": {
+     "color": "#cfccbf",
+     "color2": "#f1efe6",
+     "under": "#9a978b",
+     "mode": "normal",
+     "jitter": 0.04
+    }
+   },
+   {
+    "type": "arch",
+    "span": 4.0,
+    "rise": 4.4,
+    "thick": 0.42,
+    "tris": 240,
+    "at": [
+     0.15,
+     0,
+     -1.5
+    ],
+    "rot": [
+     0,
+     14,
+     0
+    ],
+    "paint": {
+     "color": "#c6c3b6",
+     "color2": "#eae8de",
+     "under": "#918e83",
+     "mode": "normal",
+     "jitter": 0.04
+    }
+   }
+  ]
+ }
+]

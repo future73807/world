@@ -12,11 +12,19 @@ export interface Collider {
   top: number;
 }
 
-export type LocomotionState = 'idle' | 'start' | 'move' | 'stop' | 'turn' | 'prepare' | 'rise' | 'apex' | 'fall' | 'land';
+export type LocomotionState = 'idle' | 'start' | 'move' | 'stop' | 'turn' | 'prepare' | 'rise' | 'apex' | 'fall' | 'land' | 'wade' | 'swim' | 'dive';
 
 /** dash: a short surge bought with stamina by clicking the bar */
 const DASH_TIME = 0.34;
 const DASH_COST = 0.18;
+/** water deeper than this carries the slime: it floats and swims instead of walking on the bottom */
+const SWIM_DEPTH = 0.58;
+/** how far the body sits under the surface while it floats (BU) */
+const FLOAT_DRAFT = 0.5;
+/** the deepest the slime will dive */
+const MAX_DIVE = 7;
+/** one breath, in seconds */
+const BREATH = 26;
 
 export class Player {
   readonly group = new THREE.Group();
@@ -56,6 +64,24 @@ export class Player {
   private dashCooldown = 0;
   private stepPhase = 0;
   private idleTimer = 0;
+  /** the water is deep enough here to swim in */
+  inWater = false;
+  /** held under the surface by the dive key */
+  swimHold = false;
+  private swimPhase = 0;
+  /** 1 right after a splash into the water; the engine reads it to draw the ring */
+  splash = 0;
+  private wasInWater = false;
+
+  /** True while the slime is in water deep enough to swim in. */
+  get swimming() {
+    return this.inWater;
+  }
+
+  /** True while the body is under the surface (the camera may still be above it). */
+  get submerged() {
+    return this.inWater && this.pos.y < -FLOAT_DRAFT - 0.2;
+  }
 
   /** Click the stamina bar: a short forward surge costing a fixed slice. */
   dash(): boolean {
@@ -76,6 +102,8 @@ export class Player {
 
   readonly walkSpeed = 3.15;
   readonly sprintSpeed = 7.0;
+  readonly swimSpeed = 2.3;
+  readonly swimSprint = 3.7;
   private readonly accel = 17;
   private readonly decel = 20;
   private readonly turnRate = 11.5;
@@ -158,14 +186,15 @@ export class Player {
     }
 
     this.sprintBlend = damp(this.sprintBlend, sprintWanted || this.dashTime > 0 ? 1 : 0, 9, dt);
-    const maxSpeed = lerp(this.walkSpeed, this.sprintSpeed, this.sprintBlend);
+    // water carries the slime: slower, and it takes longer to get going or to stop
+    const maxSpeed = lerp(this.inWater ? this.swimSpeed : this.walkSpeed, this.inWater ? this.swimSprint : this.sprintSpeed, this.sprintBlend);
 
     // accelerate toward the desired planar velocity (skipped during a dash, which
     // owns the velocity outright)
     if (this.dashTime <= 0) {
       const targetVX = desiredX * maxSpeed * moveLen;
       const targetVZ = desiredZ * maxSpeed * moveLen;
-      const rate = moveLen > 0.06 ? this.accel : this.decel;
+      const rate = this.inWater ? (moveLen > 0.06 ? 8 : 5) : moveLen > 0.06 ? this.accel : this.decel;
       this.vel.x = damp(this.vel.x, targetVX, rate, dt);
       this.vel.z = damp(this.vel.z, targetVZ, rate, dt);
     }
@@ -181,8 +210,6 @@ export class Player {
     }
 
     // planar integration
-    const prevX = this.pos.x;
-    const prevZ = this.pos.z;
     this.pos.x += this.vel.x * dt;
     this.pos.z += this.vel.z * dt;
 
@@ -199,14 +226,7 @@ export class Player {
       this.vel.z *= 0.2;
     }
 
-    // walkable ground: prevent walking into the sea
-    const h = this.field.height(this.pos.x, this.pos.z);
-    if (h < 0.28) {
-      this.pos.x = prevX;
-      this.pos.z = prevZ;
-      this.vel.x *= 0.1;
-      this.vel.z *= 0.1;
-    }
+    // solid props standing in the water are pushed out of just like on land (below)
 
     // solid props: circle-vs-circle push-out, then strip the velocity component
     // driving into the obstacle, so the slime slides along trunks and boulders
@@ -231,36 +251,57 @@ export class Player {
     }
 
     const groundNow = this.field.height(this.pos.x, this.pos.z);
+    // what is under the slime: the floor, and the water that may be standing on it
+    const depth = -groundNow;
+    this.inWater = depth > SWIM_DEPTH;
+    const floatY = -FLOAT_DRAFT;
+    this.splash = Math.max(0, this.splash - dt * 2.5);
 
-    // jump with coyote time + input buffering
-    if (intent.jump) this.jumpBuffer = 0.16;
+    // jump with coyote time + input buffering; from the water only while floating
+    if (intent.jump && !this.swimHold) this.jumpBuffer = 0.16;
     this.jumpBuffer = Math.max(0, this.jumpBuffer - dt);
     this.coyote = this.grounded ? 0.12 : Math.max(0, this.coyote - dt);
 
-    if (this.jumpBuffer > 0 && this.coyote > 0) {
-      this.verticalVel = this.jumpVel;
+    if (this.jumpBuffer > 0 && this.coyote > 0 && !this.swimHold) {
+      // a leap out of the water is a little higher than a hop on land: enough to
+      // clear a low bank and climb ashore
+      this.verticalVel = this.inWater ? this.jumpVel * 1.16 : this.jumpVel;
       this.grounded = false;
       this.coyote = 0;
       this.jumpBuffer = 0;
       this.slime.setSquash(-0.7);
       this.state = 'prepare';
+      if (this.inWater) this.splash = 1;
     }
 
     if (!this.grounded) {
       this.verticalVel -= this.gravity * dt;
       this.pos.y += this.verticalVel * dt;
-      if (this.pos.y <= groundNow) {
+      // coming down on the floor — or, over deep water, breaking the surface again
+      const intoWater = this.inWater && this.verticalVel < 0 && this.pos.y <= floatY + 0.05;
+      if (this.pos.y <= groundNow || intoWater) {
         const impact = Math.min(1, Math.abs(this.verticalVel) / 9);
-        this.pos.y = groundNow;
+        this.pos.y = intoWater ? floatY : groundNow;
         this.verticalVel = 0;
         this.grounded = true;
         this.landImpact = impact;
         this.landTimer = 0.26;
-        this.slime.setSquash(impact * 1.1);
-        this.state = 'land';
+        this.slime.setSquash(impact * (intoWater ? 1.6 : 1.1));
+        this.state = intoWater ? 'swim' : 'land';
+        if (intoWater) this.splash = 1;
+      }
+    } else if (this.inWater) {
+      if (this.pos.y > floatY + 0.3) {
+        // walked off a bank into deep water: fall the short way to the surface
+        this.grounded = false;
+        this.verticalVel = 0;
+      } else {
+        if (!this.wasInWater) this.splash = 1; // waded or slipped in
+        this.float(dt, intent, groundNow, floatY);
       }
     } else {
       // stick to the slope, with a small smoothing so steps don't jitter
+      this.swimHold = false;
       this.pos.y = damp(this.pos.y, groundNow, 22, dt);
       if (Math.abs(this.pos.y - groundNow) < 0.02) this.pos.y = groundNow;
     }
@@ -270,7 +311,13 @@ export class Player {
     this.speedSmoothed = damp(this.speedSmoothed, this.speed, 12, dt);
     const speedRatio = clamp01(this.speedSmoothed / this.walkSpeed);
 
-    if (!this.grounded) {
+    if (this.grounded && this.inWater) {
+      // borne by the water: a slow bob that quickens with the stroke, and a lean into it
+      this.swimPhase += dt * (0.7 + speedRatio * 0.8);
+      if (this.swimPhase > 1e4) this.swimPhase -= 1e4;
+      this.state = this.swimHold ? 'dive' : 'swim';
+      this.slime.setSquash(Math.sin(this.swimPhase * Math.PI * 2) * 0.09);
+    } else if (!this.grounded) {
       if (this.verticalVel > 1.5) this.state = this.verticalVel > 4.2 ? 'rise' : 'apex';
       else if (this.verticalVel > -1.2) this.state = 'apex';
       else this.state = 'fall';
@@ -280,7 +327,11 @@ export class Player {
       this.landTimer -= dt;
       this.state = 'land';
     } else if (speedRatio > 0.12) {
-      if (this.startTimer <= 0 && this.state !== 'move') {
+      if (depth > 0.08 && this.state !== 'wade') {
+        // shin-deep water: walked through, not swum
+        this.state = 'wade';
+      }
+      if (this.startTimer <= 0 && this.state !== 'move' && this.state !== 'wade') {
         this.startTimer = 0.14;
         this.slime.setSquash(-0.42);
       }
@@ -304,7 +355,8 @@ export class Player {
     if (this.stepPhase > 1e4) this.stepPhase -= 1e4;
 
     // procedural body language
-    const bob = this.grounded ? Math.abs(Math.sin(this.stepPhase * Math.PI)) * 0.055 * speedRatio : 0;
+    const wading = this.grounded && this.inWater;
+    const bob = wading ? Math.sin(this.swimPhase * Math.PI * 2) * 0.05 : this.grounded ? Math.abs(Math.sin(this.stepPhase * Math.PI)) * 0.055 * speedRatio : 0;
     const hop = this.grounded ? 0 : Math.sin(clamp01(this.verticalVel / this.jumpVel) * Math.PI * 0.5) * 0.03;
     this.visual.position.y = bob + hop;
 
@@ -312,7 +364,7 @@ export class Player {
     // body into the direction it pours toward
     const yawRate = wrapAngle(this.targetYaw - this.yaw);
     this.strafeLean = damp(this.strafeLean, THREE.MathUtils.clamp(yawRate * 0.62, -0.42, 0.42), 7, dt);
-    const forwardLean = speedRatio * 0.32 + this.sprintBlend * 0.14;
+    const forwardLean = speedRatio * (wading ? 0.2 : 0.32) + this.sprintBlend * (wading ? 0.06 : 0.14);
 
     // the body stays UPRIGHT; the base skirt (in slime.update) bends to follow
     // the terrain instead — conforming without tipping the gel over
@@ -330,6 +382,7 @@ export class Player {
     const yaw = this.yaw;
     const air = Math.max(0, this.pos.y - groundNow);
     this.slime.update(dt, speedRatio, (wx, wz) => this.field.height(wx, wz) - py, yaw, px, pz, air);
+    this.wasInWater = this.inWater;
     this.group.position.copy(this.pos);
     this.group.rotation.y = this.yaw;
     // the blob shadow is only needed while the body is off the ground — on the
@@ -344,9 +397,29 @@ export class Player {
     }
   }
 
-  /** Places the player on the ground exactly (used on spawn and after closing overlays). */
+  /**
+   * Borne by the water. Buoyancy settles the body at the surface; holding the dive
+   * key pulls it down as far as the floor (or MAX_DIVE) allows, and letting go
+   * brings it back up. Under the surface the stamina bar is the slime's breath:
+   * when it runs out the slime is carried up whether the key is held or not.
+   */
+  private float(dt: number, intent: Intent, groundNow: number, floatY: number) {
+    const under = this.pos.y < floatY - 0.2;
+    this.swimHold = intent.dive && this.stamina > 0.02;
+    const targetY = this.swimHold ? Math.max(groundNow + 0.1, -MAX_DIVE) : floatY;
+    this.pos.y = damp(this.pos.y, targetY, this.swimHold ? 2.6 : 4.4, dt);
+    this.verticalVel = 0;
+    if (under) {
+      this.stamina = Math.max(0, this.stamina - dt / BREATH);
+      this.staminaCooldown = 0.8; // no getting it back while still under
+    }
+  }
+
+  /** Places the player on the ground — or on the water — exactly (used on spawn and after closing overlays). */
   snapToGround() {
-    this.pos.y = this.field.height(this.pos.x, this.pos.z);
+    const ground = this.field.height(this.pos.x, this.pos.z);
+    this.inWater = -ground > SWIM_DEPTH;
+    this.pos.y = this.inWater ? -FLOAT_DRAFT : ground;
     this.group.position.copy(this.pos);
   }
 }

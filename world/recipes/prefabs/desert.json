@@ -1,0 +1,344 @@
+[
+ {
+  "id": "desert_cactus_a",
+  "label": "柱仙人掌",
+  "kind": "tree",
+  "group": "desert",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 501,
+  "desc": "带棱的墨绿柱状仙人掌，两条手臂向上弯，顶端开一朵粉花。",
+  "collide": {
+   "r": 0.42,
+   "h": 2.5
+  },
+  "scale": [
+   0.8,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "cactus",
+    "h": 2.5,
+    "r": 0.32,
+    "ribs": 7,
+    "arms": [
+     [
+      1,
+      0.4,
+      2.0,
+      2.6
+     ],
+     [
+      -1,
+      0.52,
+      1.6,
+      2.0
+     ]
+    ],
+    "spineN": 46,
+    "skin": {
+     "color": "#3f8a58",
+     "color2": "#8fcf7e",
+     "under": "#276446",
+     "mode": "normal",
+     "jitter": 0.04
+    },
+    "spinePaint": {
+     "color": "#f4ecbf",
+     "mode": "uniform"
+    },
+    "flower": {
+     "size": [
+      0.44,
+      0.28,
+      0.44
+     ],
+     "lobes": 3,
+     "tris": 60,
+     "noise": 0.1,
+     "paint": {
+      "color": "#f29db0",
+      "color2": "#ffdbe4",
+      "under": "#c76f8a",
+      "mode": "normal"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "desert_cactus_b",
+  "label": "刺球仙人掌",
+  "kind": "shrub",
+  "group": "desert",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 502,
+  "desc": "圆鼓鼓的刺球仙人掌，顶着一朵黄花。",
+  "collide": {
+   "r": 0.45,
+   "h": 0.8
+  },
+  "scale": [
+   0.8,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "cactus",
+    "h": 0.8,
+    "r": 0.5,
+    "ribs": 9,
+    "arms": [],
+    "spineN": 40,
+    "spineLen": 0.1,
+    "skin": {
+     "color": "#4a9460",
+     "color2": "#9ad585",
+     "under": "#2c6c4a",
+     "mode": "normal",
+     "jitter": 0.04
+    },
+    "spinePaint": {
+     "color": "#f6e9a8",
+     "mode": "uniform"
+    },
+    "flower": {
+     "size": [
+      0.34,
+      0.22,
+      0.34
+     ],
+     "lobes": 3,
+     "tris": 50,
+     "noise": 0.1,
+     "paint": {
+      "color": "#f3c43f",
+      "color2": "#fff0a6",
+      "under": "#c99a26",
+      "mode": "normal"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "desert_shrub",
+  "label": "刺灌",
+  "kind": "shrub",
+  "group": "desert",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 503,
+  "desc": "干枯多刺的灰绿小灌木。",
+  "collide": false,
+  "scale": [
+   0.8,
+   1.35
+  ],
+  "parts": [
+   {
+    "type": "tree",
+    "h": 0.7,
+    "r0": 0.06,
+    "r1": 0.03,
+    "bend": [
+     0.05,
+     0.03
+    ],
+    "roots": {
+     "n": 0
+    },
+    "branches": {
+     "n": 7,
+     "from": 0.3,
+     "to": 0.9,
+     "len": [
+      0.5,
+      0.9
+     ],
+     "rise": [
+      0.3,
+      0.6
+     ],
+     "r": 0.03
+    },
+    "bark": {
+     "color": "#7a6a50",
+     "color2": "#a5946f",
+     "mode": "height"
+    },
+    "canopy": {
+     "size": [
+      1.25,
+      0.75,
+      1.25
+     ],
+     "lobes": 3,
+     "noise": 0.3,
+     "noiseF": 3.2,
+     "tris": 150,
+     "paint": {
+      "color": "#97974f",
+      "color2": "#c9c176",
+      "under": "#6b6d3b",
+      "mode": "normal",
+      "jitter": 0.07,
+      "hue": 0.015
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "desert_grass",
+  "label": "针茅",
+  "kind": "plant",
+  "group": "desert",
+  "biomes": [
+   "desert",
+   "beach"
+  ],
+  "seed": 504,
+  "desc": "一丛金黄色的干草。",
+  "collide": false,
+  "castShadow": false,
+  "scale": [
+   0.85,
+   1.4
+  ],
+  "farCut": 28,
+  "lod1": {
+   "n": 5
+  },
+  "parts": [
+   {
+    "type": "tuft",
+    "n": 10,
+    "len": [
+     0.4,
+     0.6
+    ],
+    "w": [
+     0.022,
+     0.032
+    ],
+    "spread": 0.62,
+    "paint": {
+     "color": "#a89a4f",
+     "color2": "#eadfa2",
+     "mode": "height"
+    }
+   }
+  ]
+ },
+ {
+  "id": "desert_mesa",
+  "label": "风蚀岩丘",
+  "kind": "rock",
+  "group": "desert",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 505,
+  "desc": "一层层赭红砂岩叠起来的小岩丘。",
+  "collide": {
+   "r": 1.6,
+   "h": 2.2
+  },
+  "scale": [
+   0.7,
+   1.3
+  ],
+  "parts": [
+   {
+    "type": "loft",
+    "sides": 10,
+    "irreg": 0.1,
+    "tris": 200,
+    "rings": [
+     {
+      "y": -0.1,
+      "r": 2.0
+     },
+     {
+      "y": 0.5,
+      "r": 1.95
+     },
+     {
+      "y": 0.56,
+      "r": 1.7
+     },
+     {
+      "y": 1.3,
+      "r": 1.66
+     },
+     {
+      "y": 1.36,
+      "r": 1.45
+     },
+     {
+      "y": 2.0,
+      "r": 1.4
+     },
+     {
+      "y": 2.2,
+      "r": 1.15
+     }
+    ],
+    "paint": {
+     "color": "#b9764a",
+     "color2": "#e2b07f",
+     "under": "#8d5334",
+     "mode": "bands",
+     "bandH": 0.42,
+     "jitter": 0.06
+    },
+    "tier": 0.12
+   }
+  ]
+ },
+ {
+  "id": "desert_boulder",
+  "label": "赭石",
+  "kind": "rock",
+  "group": "desert",
+  "biomes": [
+   "desert"
+  ],
+  "seed": 506,
+  "desc": "暖赭色的风蚀巨石。",
+  "collide": {
+   "r": 0.7,
+   "h": 1.1
+  },
+  "scale": [
+   0.7,
+   1.6
+  ],
+  "parts": [
+   {
+    "type": "rock",
+    "style": "angular",
+    "size": [
+     1.7,
+     1.15,
+     1.5
+    ],
+    "points": 13,
+    "noise": 0.26,
+    "paint": {
+     "color": "#ae6d43",
+     "color2": "#dfa473",
+     "under": "#824d2d",
+     "mode": "normal",
+     "jitter": 0.06
+    }
+   }
+  ]
+ }
+]
