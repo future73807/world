@@ -1,0 +1,19 @@
+{
+ "id": "ani_cow",
+ "source": "models/refined/ani_cow.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2450,
+ "size": [
+  0.023,
+  0.08,
+  0.046
+ ],
+ "base": -0.051,
+ "crownRatio": 0.573,
+ "collide": {
+  "r": 0.01,
+  "h": 0.08
+ },
+ "verifiedNoMaterial": true
+}

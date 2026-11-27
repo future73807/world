@@ -1,0 +1,19 @@
+{
+ "id": "prop_crate_big",
+ "source": "models/refined/prop_crate_big.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2112,
+ "size": [
+  0.21,
+  0.21,
+  0.21
+ ],
+ "base": 0.0,
+ "crownRatio": 1.0,
+ "collide": {
+  "r": 0.05,
+  "h": 0.21
+ },
+ "verifiedNoMaterial": true
+}

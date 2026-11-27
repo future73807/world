@@ -1,0 +1,19 @@
+{
+ "id": "plant_mushroom_small_3",
+ "source": "models/nature/plants/plant_mushroom_small_3.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 138,
+ "size": [
+  0.403,
+  0.4,
+  0.393
+ ],
+ "base": 0.0,
+ "crownRatio": 1.007,
+ "collide": {
+  "r": 0.1,
+  "h": 0.4
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "tree_dead_2",
+ "source": "models/nature/trees/tree_dead_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 448,
+ "size": [
+  2.258,
+  7.0,
+  0.839
+ ],
+ "base": 0.0,
+ "crownRatio": 0.323,
+ "collide": {
+  "r": 0.54,
+  "h": 7.0
+ },
+ "verifiedNoMaterial": true
+}

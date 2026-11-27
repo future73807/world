@@ -1,0 +1,19 @@
+{
+ "id": "nat_crystal_2",
+ "source": "models/nature/nature/nat_crystal_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 116,
+ "size": [
+  0.661,
+  1.8,
+  0.582
+ ],
+ "base": 0.0,
+ "crownRatio": 0.367,
+ "collide": {
+  "r": 0.16,
+  "h": 1.8
+ },
+ "verifiedNoMaterial": true
+}

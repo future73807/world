@@ -1,0 +1,19 @@
+{
+ "id": "plant_vine_1",
+ "source": "models/nature/plants/plant_vine_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 200,
+ "size": [
+  0.678,
+  1.4,
+  0.548
+ ],
+ "base": 0.0,
+ "crownRatio": 0.484,
+ "collide": {
+  "r": 0.16,
+  "h": 1.4
+ },
+ "verifiedNoMaterial": true
+}

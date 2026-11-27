@@ -1,0 +1,19 @@
+{
+ "id": "plant_mushroom_giant_4",
+ "source": "models/nature/plants/plant_mushroom_giant_4.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 598,
+ "size": [
+  3.29,
+  12.0,
+  3.29
+ ],
+ "base": 0.0,
+ "crownRatio": 0.274,
+ "collide": {
+  "r": 0.79,
+  "h": 12.0
+ },
+ "verifiedNoMaterial": true
+}

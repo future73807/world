@@ -1,0 +1,19 @@
+{
+ "id": "prop_boulder_2",
+ "source": "models/refined/prop_boulder_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 336,
+ "size": [
+  0.8,
+  0.9,
+  0.826
+ ],
+ "base": 0.0,
+ "crownRatio": 0.918,
+ "collide": {
+  "r": 0.2,
+  "h": 0.9
+ },
+ "verifiedNoMaterial": true
+}

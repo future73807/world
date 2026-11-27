@@ -1,0 +1,19 @@
+{
+ "id": "rock_moss_1",
+ "source": "models/nature/rocks/rock_moss_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 128,
+ "size": [
+  1.518,
+  1.6,
+  2.553
+ ],
+ "base": 0.0,
+ "crownRatio": 1.596,
+ "collide": {
+  "r": 0.61,
+  "h": 1.6
+ },
+ "verifiedNoMaterial": true
+}

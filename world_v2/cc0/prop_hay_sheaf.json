@@ -1,0 +1,19 @@
+{
+ "id": "prop_hay_sheaf",
+ "source": "models/refined/prop_hay_sheaf.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1952,
+ "size": [
+  0.121,
+  0.179,
+  0.125
+ ],
+ "base": 0.0,
+ "crownRatio": 0.7,
+ "collide": {
+  "r": 0.03,
+  "h": 0.18
+ },
+ "verifiedNoMaterial": true
+}

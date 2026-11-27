@@ -1,0 +1,19 @@
+{
+ "id": "tree_giant_ancient",
+ "source": "models/nature/trees/tree_giant_ancient.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1748,
+ "size": [
+  21.393,
+  22.0,
+  17.566
+ ],
+ "base": 0.0,
+ "crownRatio": 0.972,
+ "collide": {
+  "r": 5.13,
+  "h": 22.0
+ },
+ "verifiedNoMaterial": true
+}

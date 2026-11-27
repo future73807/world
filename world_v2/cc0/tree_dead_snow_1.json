@@ -1,0 +1,19 @@
+{
+ "id": "tree_dead_snow_1",
+ "source": "models/nature/trees/tree_dead_snow_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1798,
+ "size": [
+  2.587,
+  5.492,
+  5.25
+ ],
+ "base": 0.008,
+ "crownRatio": 0.956,
+ "collide": {
+  "r": 1.26,
+  "h": 5.49
+ },
+ "verifiedNoMaterial": true
+}

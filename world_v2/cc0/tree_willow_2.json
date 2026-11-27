@@ -1,0 +1,19 @@
+{
+ "id": "tree_willow_2",
+ "source": "models/nature/trees/tree_willow_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1624,
+ "size": [
+  2.927,
+  7.0,
+  7.217
+ ],
+ "base": 0.0,
+ "crownRatio": 1.031,
+ "collide": {
+  "r": 1.73,
+  "h": 7.0
+ },
+ "verifiedNoMaterial": true
+}

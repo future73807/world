@@ -1,0 +1,19 @@
+{
+ "id": "tree_pine_3",
+ "source": "models/nature/trees/tree_pine_3.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1566,
+ "size": [
+  5.465,
+  10.0,
+  4.978
+ ],
+ "base": 0.0,
+ "crownRatio": 0.546,
+ "collide": {
+  "r": 1.31,
+  "h": 10.0
+ },
+ "verifiedNoMaterial": true
+}

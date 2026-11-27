@@ -11,3 +11,5 @@ world_v2/renders/*.log
 world/terrain/
 # Python byte-code of the Blender scripts
 __pycache__/
+
+.whetstone/

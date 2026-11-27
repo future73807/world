@@ -212,6 +212,9 @@ export class Game {
     this.cbs = cbs;
     this.input = input;
     this.host = canvasHost;
+    // Debug handle for the browser-side asset check: a headless screenshot cannot
+    // distinguish "placed but out of draw range" from "never placed".
+    (window as unknown as { __stats?: () => unknown }).__stats = () => this.stats;
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -624,6 +627,13 @@ export class Game {
     this.propRenderer.sync(this.props);
     this.refreshBlockers();
     if (this.missingModels.size) console.warn('[props] recipes reference models missing from the library:', [...this.missingModels]);
+    // Diagnostics for the asset-swap check: which ids actually placed, and which recipes
+    // referenced an id the library never loaded. A screenshot alone cannot tell them apart.
+    (window as unknown as { __propAudit?: () => unknown }).__propAudit = () => ({
+      missing: [...this.missingModels],
+      byModel: [...this.props.all.reduce((m, p) => m.set(p.model, (m.get(p.model) ?? 0) + 1), new Map<string, number>())]
+        .sort((a: [string, number], b: [string, number]) => b[1] - a[1]),
+    });
   }
 
   private refreshBlockers() {

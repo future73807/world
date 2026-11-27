@@ -1,0 +1,19 @@
+{
+ "id": "bld_boat_rowing",
+ "source": "models/refined/bld_boat_rowing.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 896,
+ "size": [
+  4.669,
+  2.01,
+  9.011
+ ],
+ "base": 0.0,
+ "crownRatio": 4.484,
+ "collide": {
+  "r": 2.16,
+  "h": 2.01
+ },
+ "verifiedNoMaterial": true
+}

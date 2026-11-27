@@ -1,0 +1,19 @@
+{
+ "id": "tree_ginkgo_1",
+ "source": "models/nature/trees/tree_ginkgo_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1730,
+ "size": [
+  4.232,
+  11.0,
+  4.758
+ ],
+ "base": 0.0,
+ "crownRatio": 0.433,
+ "collide": {
+  "r": 1.14,
+  "h": 11.0
+ },
+ "verifiedNoMaterial": true
+}

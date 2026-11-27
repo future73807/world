@@ -1,0 +1,19 @@
+{
+ "id": "ani_frog",
+ "source": "models/refined/ani_frog.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 4920,
+ "size": [
+  0.035,
+  0.032,
+  0.015
+ ],
+ "base": -0.017,
+ "crownRatio": 1.093,
+ "collide": {
+  "r": 0.01,
+  "h": 0.03
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "nat_crystal_cluster_6",
+ "source": "models/nature/nature/nat_crystal_cluster_6.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 590,
+ "size": [
+  2.854,
+  3.2,
+  2.866
+ ],
+ "base": 0.0,
+ "crownRatio": 0.896,
+ "collide": {
+  "r": 0.69,
+  "h": 3.2
+ },
+ "verifiedNoMaterial": true
+}

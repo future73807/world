@@ -1,0 +1,19 @@
+{
+ "id": "nat_fallen_trunk_1",
+ "source": "models/nature/nature/nat_fallen_trunk_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 634,
+ "size": [
+  8.375,
+  1.736,
+  1.214
+ ],
+ "base": 0.0,
+ "crownRatio": 4.825,
+ "collide": {
+  "r": 2.01,
+  "h": 1.74
+ },
+ "verifiedNoMaterial": true
+}

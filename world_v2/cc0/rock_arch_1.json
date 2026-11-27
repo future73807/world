@@ -1,0 +1,19 @@
+{
+ "id": "rock_arch_1",
+ "source": "models/nature/rocks/rock_arch_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 798,
+ "size": [
+  5.118,
+  4.953,
+  1.23
+ ],
+ "base": 0.024,
+ "crownRatio": 1.033,
+ "collide": {
+  "r": 1.23,
+  "h": 4.95
+ },
+ "verifiedNoMaterial": true
+}

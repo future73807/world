@@ -1,0 +1,19 @@
+{
+ "id": "prop_barrel_small",
+ "source": "models/refined/prop_barrel_small.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 3312,
+ "size": [
+  1.001,
+  1.018,
+  1.001
+ ],
+ "base": -0.0,
+ "crownRatio": 0.984,
+ "collide": {
+  "r": 0.24,
+  "h": 1.02
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "tree_broadleaf_snow_1",
+ "source": "models/nature/trees/tree_broadleaf_snow_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1672,
+ "size": [
+  3.303,
+  9.0,
+  4.045
+ ],
+ "base": 0.0,
+ "crownRatio": 0.449,
+ "collide": {
+  "r": 0.97,
+  "h": 9.0
+ },
+ "verifiedNoMaterial": true
+}

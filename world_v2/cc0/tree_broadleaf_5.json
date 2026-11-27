@@ -1,0 +1,19 @@
+{
+ "id": "tree_broadleaf_5",
+ "source": "models/nature/trees/tree_broadleaf_5.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1584,
+ "size": [
+  3.505,
+  9.5,
+  4.292
+ ],
+ "base": 0.0,
+ "crownRatio": 0.452,
+ "collide": {
+  "r": 1.03,
+  "h": 9.5
+ },
+ "verifiedNoMaterial": true
+}

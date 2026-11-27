@@ -1,0 +1,19 @@
+{
+ "id": "rock_snow_2",
+ "source": "models/nature/rocks/rock_snow_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 102,
+ "size": [
+  0.592,
+  1.2,
+  0.569
+ ],
+ "base": 0.0,
+ "crownRatio": 0.493,
+ "collide": {
+  "r": 0.14,
+  "h": 1.2
+ },
+ "verifiedNoMaterial": true
+}

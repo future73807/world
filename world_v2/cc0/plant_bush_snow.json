@@ -1,0 +1,19 @@
+{
+ "id": "plant_bush_snow",
+ "source": "models/nature/plants/plant_bush_snow.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 460,
+ "size": [
+  1.254,
+  1.157,
+  1.6
+ ],
+ "base": 0.0,
+ "crownRatio": 1.383,
+ "collide": {
+  "r": 0.38,
+  "h": 1.16
+ },
+ "verifiedNoMaterial": true
+}

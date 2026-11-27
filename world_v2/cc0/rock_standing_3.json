@@ -1,0 +1,19 @@
+{
+ "id": "rock_standing_3",
+ "source": "models/nature/rocks/rock_standing_3.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 128,
+ "size": [
+  3.606,
+  3.8,
+  6.064
+ ],
+ "base": 0.0,
+ "crownRatio": 1.596,
+ "collide": {
+  "r": 1.46,
+  "h": 3.8
+ },
+ "verifiedNoMaterial": true
+}

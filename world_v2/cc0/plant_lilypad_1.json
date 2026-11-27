@@ -1,0 +1,19 @@
+{
+ "id": "plant_lilypad_1",
+ "source": "models/refined/plant_lilypad_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 792,
+ "size": [
+  1.1,
+  0.203,
+  1.093
+ ],
+ "base": 0.0,
+ "crownRatio": 5.42,
+ "collide": {
+  "r": 0.26,
+  "h": 0.2
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "ani_hedgehog",
+ "source": "models/refined/ani_hedgehog.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1472,
+ "size": [
+  0.011,
+  0.013,
+  0.011
+ ],
+ "base": -0.005,
+ "crownRatio": 0.875,
+ "collide": {
+  "r": 0.0,
+  "h": 0.01
+ },
+ "verifiedNoMaterial": true
+}

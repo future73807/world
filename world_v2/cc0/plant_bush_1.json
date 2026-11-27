@@ -1,0 +1,19 @@
+{
+ "id": "plant_bush_1",
+ "source": "models/nature/plants/plant_bush_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 168,
+ "size": [
+  1.8,
+  1.142,
+  1.8
+ ],
+ "base": 0.0,
+ "crownRatio": 1.577,
+ "collide": {
+  "r": 0.43,
+  "h": 1.14
+ },
+ "verifiedNoMaterial": true
+}

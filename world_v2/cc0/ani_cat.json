@@ -1,0 +1,19 @@
+{
+ "id": "ani_cat",
+ "source": "models/refined/ani_cat.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2411,
+ "size": [
+  0.013,
+  0.022,
+  0.019
+ ],
+ "base": -0.012,
+ "crownRatio": 0.881,
+ "collide": {
+  "r": 0.0,
+  "h": 0.02
+ },
+ "verifiedNoMaterial": true
+}

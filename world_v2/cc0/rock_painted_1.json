@@ -1,0 +1,19 @@
+{
+ "id": "rock_painted_1",
+ "source": "models/nature/rocks/rock_painted_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 342,
+ "size": [
+  2.569,
+  1.8,
+  2.381
+ ],
+ "base": 0.0,
+ "crownRatio": 1.427,
+ "collide": {
+  "r": 0.62,
+  "h": 1.8
+ },
+ "verifiedNoMaterial": true
+}

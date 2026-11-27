@@ -1,0 +1,19 @@
+{
+ "id": "tree_maple_3",
+ "source": "models/nature/trees/tree_maple_3.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1351,
+ "size": [
+  4.252,
+  7.5,
+  4.85
+ ],
+ "base": 0.0,
+ "crownRatio": 0.647,
+ "collide": {
+  "r": 1.16,
+  "h": 7.5
+ },
+ "verifiedNoMaterial": true
+}

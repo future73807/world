@@ -1,0 +1,19 @@
+{
+ "id": "plant_grass_2",
+ "source": "models/nature/plants/plant_grass_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 200,
+ "size": [
+  0.747,
+  0.6,
+  0.698
+ ],
+ "base": 0.0,
+ "crownRatio": 1.245,
+ "collide": {
+  "r": 0.18,
+  "h": 0.6
+ },
+ "verifiedNoMaterial": true
+}

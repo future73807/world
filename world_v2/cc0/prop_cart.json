@@ -1,0 +1,19 @@
+{
+ "id": "prop_cart",
+ "source": "models/refined/prop_cart.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2631,
+ "size": [
+  0.462,
+  0.796,
+  0.927
+ ],
+ "base": 0.0,
+ "crownRatio": 1.164,
+ "collide": {
+  "r": 0.22,
+  "h": 0.8
+ },
+ "verifiedNoMaterial": true
+}

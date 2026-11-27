@@ -1,0 +1,19 @@
+{
+ "id": "plant_fern_1",
+ "source": "models/nature/plants/plant_fern_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 288,
+ "size": [
+  1.4,
+  0.416,
+  1.314
+ ],
+ "base": 0.0,
+ "crownRatio": 3.364,
+ "collide": {
+  "r": 0.34,
+  "h": 0.42
+ },
+ "verifiedNoMaterial": true
+}

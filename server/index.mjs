@@ -323,7 +323,15 @@ function serveFile(res, file) {
     return false;
   }
   const type = MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
-  const cache = file.endsWith('index.html') ? 'no-cache' : 'max-age=3600';
+  // The model library changes whenever the Blender pipeline or a CC0 merge runs. A stale
+  // prefabs.json makes the game skip every newly added id as "missing", which the player
+  // sees as props vanishing from the scene. `no-cache` alone was not enough: without an
+  // ETag/Last-Modified the browser has nothing to revalidate against and reuses its copy,
+  // so models/ is served `no-store`. Hashed Vite bundles keep the long cache.
+  const rel = STATIC_DIR ? path.relative(STATIC_DIR, file).split(path.sep).join('/') : '';
+  const cache = file.endsWith('index.html') ? 'no-cache'
+    : rel.startsWith('models/') ? 'no-store'
+    : 'max-age=3600';
   send(res, 200, data, { 'Content-Type': type, 'Cache-Control': cache });
   return true;
 }

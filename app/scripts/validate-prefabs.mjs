@@ -34,7 +34,14 @@ const models = manifest.models;
 const ids = Object.keys(models).sort();
 
 if (manifest.version !== 2) fail(`expected manifest version 2, got ${manifest.version}`);
-if (ids.length !== 55) fail(`expected 55 models, got ${ids.length}`);
+// The library is the 55 Blender-built models plus the CC0 imports merged in by
+// world_v2/blender/merge_cc0.py. The built set stays pinned so a regression in the
+// Blender pipeline still fails here; the CC0 set is checked by the same per-model
+// rules below and may grow independently.
+const CC0_SOURCE = 'majo-no-tabitabi (CC0)';
+const cc0Ids = ids.filter((id) => models[id].source === CC0_SOURCE);
+const builtIds = ids.filter((id) => models[id].source !== CC0_SOURCE);
+if (builtIds.length !== 55) fail(`expected 55 Blender-built models, got ${builtIds.length}`);
 if (report.rebuilt.length !== 47 || report.kept.length !== 8) fail('build report does not cover 47 rebuilt + 8 kept models');
 
 const meshNames = gltf.meshes.map((mesh) => mesh.name);

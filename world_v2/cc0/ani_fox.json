@@ -1,0 +1,19 @@
+{
+ "id": "ani_fox",
+ "source": "models/refined/ani_fox.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1848,
+ "size": [
+  0.011,
+  0.056,
+  0.026
+ ],
+ "base": -0.027,
+ "crownRatio": 0.465,
+ "collide": {
+  "r": 0.01,
+  "h": 0.06
+ },
+ "verifiedNoMaterial": true
+}

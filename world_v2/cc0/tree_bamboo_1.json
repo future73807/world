@@ -1,0 +1,19 @@
+{
+ "id": "tree_bamboo_1",
+ "source": "models/nature/trees/tree_bamboo_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 644,
+ "size": [
+  1.75,
+  9.0,
+  1.843
+ ],
+ "base": 0.0,
+ "crownRatio": 0.205,
+ "collide": {
+  "r": 0.44,
+  "h": 9.0
+ },
+ "verifiedNoMaterial": true
+}

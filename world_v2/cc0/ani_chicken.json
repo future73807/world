@@ -1,0 +1,19 @@
+{
+ "id": "ani_chicken",
+ "source": "models/refined/ani_chicken.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2089,
+ "size": [
+  0.006,
+  0.008,
+  0.013
+ ],
+ "base": -0.004,
+ "crownRatio": 1.586,
+ "collide": {
+  "r": 0.0,
+  "h": 0.01
+ },
+ "verifiedNoMaterial": true
+}

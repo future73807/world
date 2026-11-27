@@ -1,0 +1,19 @@
+{
+ "id": "ani_deer",
+ "source": "models/refined/ani_deer.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 2096,
+ "size": [
+  0.015,
+  0.045,
+  0.043
+ ],
+ "base": -0.028,
+ "crownRatio": 0.956,
+ "collide": {
+  "r": 0.01,
+  "h": 0.04
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "rock_boulder_6",
+ "source": "models/nature/rocks/rock_boulder_6.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 320,
+ "size": [
+  6.882,
+  5.5,
+  6.627
+ ],
+ "base": 0.0,
+ "crownRatio": 1.251,
+ "collide": {
+  "r": 1.65,
+  "h": 5.5
+ },
+ "verifiedNoMaterial": true
+}

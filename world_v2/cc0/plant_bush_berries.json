@@ -1,0 +1,19 @@
+{
+ "id": "plant_bush_berries",
+ "source": "models/nature/plants/plant_bush_berries.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 478,
+ "size": [
+  1.5,
+  1.266,
+  1.487
+ ],
+ "base": 0.0,
+ "crownRatio": 1.185,
+ "collide": {
+  "r": 0.36,
+  "h": 1.27
+ },
+ "verifiedNoMaterial": true
+}

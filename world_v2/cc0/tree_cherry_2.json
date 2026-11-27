@@ -1,0 +1,19 @@
+{
+ "id": "tree_cherry_2",
+ "source": "models/nature/trees/tree_cherry_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 978,
+ "size": [
+  5.293,
+  6.0,
+  5.293
+ ],
+ "base": 0.0,
+ "crownRatio": 0.882,
+ "collide": {
+  "r": 1.27,
+  "h": 6.0
+ },
+ "verifiedNoMaterial": true
+}

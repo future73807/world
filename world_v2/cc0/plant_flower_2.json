@@ -1,0 +1,19 @@
+{
+ "id": "plant_flower_2",
+ "source": "models/nature/plants/plant_flower_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 148,
+ "size": [
+  0.284,
+  0.794,
+  0.285
+ ],
+ "base": 0.0,
+ "crownRatio": 0.359,
+ "collide": {
+  "r": 0.07,
+  "h": 0.79
+ },
+ "verifiedNoMaterial": true
+}

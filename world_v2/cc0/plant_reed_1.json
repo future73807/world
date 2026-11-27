@@ -1,0 +1,19 @@
+{
+ "id": "plant_reed_1",
+ "source": "models/nature/plants/plant_reed_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 162,
+ "size": [
+  0.994,
+  1.6,
+  0.649
+ ],
+ "base": 0.0,
+ "crownRatio": 0.621,
+ "collide": {
+  "r": 0.24,
+  "h": 1.6
+ },
+ "verifiedNoMaterial": true
+}

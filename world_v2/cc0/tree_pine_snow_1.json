@@ -1,0 +1,19 @@
+{
+ "id": "tree_pine_snow_1",
+ "source": "models/nature/trees/tree_pine_snow_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 1681,
+ "size": [
+  5.042,
+  10.0,
+  5.491
+ ],
+ "base": 0.0,
+ "crownRatio": 0.549,
+ "collide": {
+  "r": 1.32,
+  "h": 10.0
+ },
+ "verifiedNoMaterial": true
+}

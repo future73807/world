@@ -1,0 +1,19 @@
+{
+ "id": "prop_bonfire",
+ "source": "models/refined/prop_bonfire.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 704,
+ "size": [
+  2.176,
+  2.311,
+  1.984
+ ],
+ "base": 0.0,
+ "crownRatio": 0.941,
+ "collide": {
+  "r": 0.52,
+  "h": 2.31
+ },
+ "verifiedNoMaterial": true
+}
