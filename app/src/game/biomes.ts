@@ -109,6 +109,12 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_boulder_a', 7, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
       R('cc0_boulder_a', 12, { minH: 0.8, maxSlope: 0.9, spacing: 1.5 }),
       R('cc0_rock_arch', 1, { minH: 1.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+      R('cc0_deer', 2, { minH: 1.2, maxSlope: 0.3, spacing: 6 }),
+      R('cc0_cow', 1, { minH: 1.2, maxSlope: 0.28, spacing: 6 }),
+      R('cc0_chicken', 3, { minH: 1.1, maxSlope: 0.35, spacing: 4 }),
+      R('cc0_hedgehog', 2, { minH: 1.1, maxSlope: 0.35, spacing: 4 }),
+      R('cc0_cart', 1, { minH: 1.3, maxSlope: 0.25, spacing: 6 }),
+      R('cc0_hay', 2, { minH: 1.3, maxSlope: 0.3, spacing: 4 }),
     ],
   },
   forest: {
@@ -131,6 +137,8 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_boulder_b', 4, { minH: 1.0, maxSlope: 0.9, spacing: 3 }),
       R('cc0_boulder_a', 12, { minH: 0.8, maxSlope: 0.9, spacing: 1.5 }),
       R('cc0_ancient', 1, { minH: 2.2, maxSlope: 0.25, spacing: 10, landmark: true }),
+      R('cc0_deer', 2, { minH: 1.3, maxSlope: 0.35, spacing: 6 }),
+      R('cc0_hedgehog', 3, { minH: 1.1, maxSlope: 0.4, spacing: 4 }),
     ],
   },
   snow: {
@@ -149,6 +157,7 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_crystal_a', 6, { minH: 1.2, maxSlope: 0.6, spacing: 4 }),
       R('cc0_boulder_a', 6, { minH: 0.8, maxSlope: 0.9, spacing: 1.6 }),
       R('cc0_crystal_e', 1, { minH: 2.0, maxSlope: 0.25, spacing: 9, landmark: true }),
+      R('cc0_fox', 2, { minH: 1.2, maxSlope: 0.4, spacing: 6 }),
     ],
   },
   desert: {
@@ -186,6 +195,7 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_log', 4, { minH: 0.5, maxSlope: 0.35, spacing: 4 }),
       R('cc0_grass_b', 90, { minH: 0.4, maxSlope: 0.6, spacing: 1.1 }),
       R('cc0_giant_mushroom_a', 1, { minH: 0.6, maxSlope: 0.22, spacing: 10, landmark: true }),
+      R('cc0_frog', 6, { minH: 0.3, maxSlope: 0.5, spacing: 4.5 }),
     ],
   },
   volcanic: {
@@ -217,6 +227,12 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_boulder_e', 3, { minH: 0.8, maxSlope: 0.9, spacing: 4 }),
       R('beach_starfish', 30, { minH: 0.25, maxH: 1.6, maxSlope: 0.3, spacing: 1.6 }),
       R('landmark_ribs', 1, { minH: 0.8, maxSlope: 0.22, spacing: 9, landmark: true }),
+      R('cc0_cat', 1, { minH: 1.0, maxSlope: 0.3, spacing: 6 }),
+      R('cc0_chicken', 2, { minH: 1.0, maxSlope: 0.3, spacing: 4 }),
+      R('cc0_campfire', 1, { minH: 1.2, maxSlope: 0.22, spacing: 6 }),
+      R('cc0_barrel_a', 1, { minH: 1.1, maxSlope: 0.3, spacing: 4 }),
+      R('cc0_crate_a', 2, { minH: 1.1, maxSlope: 0.3, spacing: 4 }),
+      R('cc0_boat', 1, { minH: 0.9, maxSlope: 0.25, spacing: 6 }),
     ],
   },
   ocean: {
@@ -334,6 +350,24 @@ export const SPECIES: SpeciesRule[] = [
   S('coral_branch', 36, (_w, temp) => warm(temp), { minH: -1.8, maxH: -0.08, maxSlope: 0.6, spacing: 1.3 }),
   S('coral_brain', 18, (_w, temp) => warm(temp), { minH: -1.8, maxH: -0.08, maxSlope: 0.6, spacing: 1.6 }),
   S('coral_fan', 18, (_w, temp) => warm(temp), { minH: -1.6, maxH: -0.08, maxSlope: 0.6, spacing: 1.6 }),
+
+  // — wildlife. Sparse by design: an animal should be an encounter, not a herd.
+  //   The niche weight is what confines each species to its biome.
+  S('cc0_deer', 2, (w) => w.meadow * 0.7 + w.forest * 0.6, { minH: 1.2, maxSlope: 0.35, spacing: 4 }),
+  S('cc0_cow', 1, (w) => w.meadow * 0.8, { minH: 1.2, maxSlope: 0.3, spacing: 4 }),
+  S('cc0_chicken', 3, (w, temp) => w.meadow * 0.7 + warm(temp) * 0.3, { minH: 1.0, maxH: 4.5, maxSlope: 0.35, spacing: 4 }),
+  S('cc0_hedgehog', 3, (w) => w.forest * 0.7 + w.meadow * 0.5, { minH: 1.0, maxSlope: 0.4, spacing: 4 }),
+  S('cc0_fox', 2, (w) => w.taiga * 0.8 + w.snow * 0.5, { minH: 1.1, maxSlope: 0.4, spacing: 4 }),
+  S('cc0_cat', 1, (w, temp) => warm(temp) * 0.6 + w.meadow * 0.3, { minH: 1.0, maxH: 4.0, maxSlope: 0.3, spacing: 4 }),
+  S('cc0_frog', 5, (w) => w.swamp * 0.9, { minH: 0.2, maxSlope: 0.5, spacing: 4 }),
+
+  // — camp dressing left by travellers; only on beaches and meadows
+  S('cc0_campfire', 1, (_w, temp) => warm(temp) * 0.7, { minH: 1.1, maxH: 3.0, maxSlope: 0.22, spacing: 4 }),
+  S('cc0_barrel_a', 1, (_w, temp) => warm(temp) * 0.5, { minH: 1.1, maxH: 3.0, maxSlope: 0.3, spacing: 4 }),
+  S('cc0_crate_a', 2, (_w, temp) => warm(temp) * 0.5, { minH: 1.1, maxH: 3.0, maxSlope: 0.3, spacing: 4 }),
+  S('cc0_boat', 1, (_w, temp) => warm(temp) * 0.6, { minH: 0.9, maxH: 2.6, maxSlope: 0.25, spacing: 4 }),
+  S('cc0_cart', 1, (w) => w.meadow * 0.4, { minH: 1.3, maxSlope: 0.25, spacing: 4 }),
+  S('cc0_hay', 2, (w) => w.meadow * 0.5, { minH: 1.3, maxSlope: 0.3, spacing: 4 }),
 ];
 
 /** One landmark at most per tile, whichever is most at home there. */

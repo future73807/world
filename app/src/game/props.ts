@@ -253,6 +253,9 @@ export function scatterTile(
     SPECIES.forEach((s, k) => {
       const a = speciesSum[k] / n;
       if (a > 0.035) jobs.push({ rule: s, niche: s.niche, target: s.n * a });
+      else if (s.model.startsWith('cc0_') && /deer|fox|cat|chicken|cow|frog|hedgehog|campfire|barrel|crate|cart|hay|boat/.test(s.model)) {
+        console.log('[props] fauna rule below gate', s.model, 'a=', a.toFixed(4), 'n=', s.n);
+      }
     });
     // one landmark at most, and only where it is truly at home
     let best = -1;
@@ -284,11 +287,15 @@ export function scatterTile(
   // their own spacing from each other, but ground cover only has to clear its own
   // spacing and the trunk it would otherwise grow through. Applying a tree's 4 BU
   // spacing to every blade of grass left a bare ring around each trunk.
+  // A solid prop (tree, rock, animal) does NOT have to clear ground cover: grass and
+  // flowers grow right up to a trunk, and an animal standing in a meadow is standing in
+  // grass. Returning 0 for that pair is what lets wide-spaced rules place at all — with
+  // spacing*0.5 they collided with the nearest blade of grass and every candidate failed.
   const limit = (spacing: number, solid: boolean, p: PropInstance) =>
     solid && p.solid
       ? Math.max(spacing, p.spacing) // two solid props honour both their spacings
       : solid
-        ? spacing // ground cover does not keep a tree away
+        ? 0 // a solid prop ignores ground cover entirely
         : p.solid
           ? p.r + 0.3 // ground cover clears the trunk, that is all
           : spacing * 0.5; // two plants just must not sit on the same spot
