@@ -1,0 +1,19 @@
+{
+ "id": "rock_cliff_3",
+ "source": "models/nature/rocks/rock_cliff_3.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 438,
+ "size": [
+  4.981,
+  4.5,
+  5.199
+ ],
+ "base": 0.0,
+ "crownRatio": 1.155,
+ "collide": {
+  "r": 1.25,
+  "h": 4.5
+ },
+ "verifiedNoMaterial": true
+}

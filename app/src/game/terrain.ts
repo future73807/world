@@ -729,7 +729,7 @@ export function mapPainter(field: IslandField, size: number, span: number, cx = 
   // the height field four extra times and made baking a tile take seconds.
   const cellBu = span / size;
   const lin = new Float32Array(3);
-  const w: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0 };
+  const w: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0, glacier: 0 };
   const slopeTone = new THREE.Color(0x9cbf89).clone();
   const toByte = (v: number) => (v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055) * 255;
   // light from the north-west, and how much steeper than life the relief is drawn

@@ -1,0 +1,19 @@
+{
+ "id": "nat_log_snow_1",
+ "source": "models/nature/nature/nat_log_snow_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 280,
+ "size": [
+  0.751,
+  0.7,
+  2.989
+ ],
+ "base": 0.0,
+ "crownRatio": 4.27,
+ "collide": {
+  "r": 0.72,
+  "h": 0.7
+ },
+ "verifiedNoMaterial": true
+}

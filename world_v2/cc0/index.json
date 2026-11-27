@@ -1822,5 +1822,290 @@
    "h": 0.18
   },
   "verifiedNoMaterial": true
+ },
+ "nat_crystal_3": {
+  "id": "nat_crystal_3",
+  "source": "models/nature/nature/nat_crystal_3.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 12,
+  "size": [
+   0.839,
+   2.0,
+   0.74
+  ],
+  "base": 0.0,
+  "crownRatio": 0.419,
+  "collide": {
+   "r": 0.2,
+   "h": 2.0
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_crystal_4": {
+  "id": "nat_crystal_4",
+  "source": "models/nature/nature/nat_crystal_4.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 22,
+  "size": [
+   1.46,
+   1.0,
+   1.31
+  ],
+  "base": 0.0,
+  "crownRatio": 1.46,
+  "collide": {
+   "r": 0.35,
+   "h": 1.0
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_crystal_cluster_3": {
+  "id": "nat_crystal_cluster_3",
+  "source": "models/nature/nature/nat_crystal_cluster_3.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 60,
+  "size": [
+   3.081,
+   2.6,
+   2.795
+  ],
+  "base": 0.0,
+  "crownRatio": 1.185,
+  "collide": {
+   "r": 0.74,
+   "h": 2.6
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_crystal_cluster_5": {
+  "id": "nat_crystal_cluster_5",
+  "source": "models/nature/nature/nat_crystal_cluster_5.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 176,
+  "size": [
+   1.365,
+   1.6,
+   1.611
+  ],
+  "base": 0.0,
+  "crownRatio": 1.007,
+  "collide": {
+   "r": 0.39,
+   "h": 1.6
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_log_1": {
+  "id": "nat_log_1",
+  "source": "models/nature/nature/nat_log_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 464,
+  "size": [
+   0.592,
+   0.7,
+   2.498
+  ],
+  "base": 0.0,
+  "crownRatio": 3.569,
+  "collide": {
+   "r": 0.6,
+   "h": 0.7
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_log_moss_1": {
+  "id": "nat_log_moss_1",
+  "source": "models/nature/nature/nat_log_moss_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 614,
+  "size": [
+   1.042,
+   0.8,
+   3.104
+  ],
+  "base": 0.0,
+  "crownRatio": 3.88,
+  "collide": {
+   "r": 0.74,
+   "h": 0.8
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_log_snow_1": {
+  "id": "nat_log_snow_1",
+  "source": "models/nature/nature/nat_log_snow_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 280,
+  "size": [
+   0.751,
+   0.7,
+   2.989
+  ],
+  "base": 0.0,
+  "crownRatio": 4.27,
+  "collide": {
+   "r": 0.72,
+   "h": 0.7
+  },
+  "verifiedNoMaterial": true
+ },
+ "nat_stump_snow_1": {
+  "id": "nat_stump_snow_1",
+  "source": "models/nature/nature/nat_stump_snow_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 258,
+  "size": [
+   1.3,
+   0.594,
+   0.986
+  ],
+  "base": 0.0,
+  "crownRatio": 2.187,
+  "collide": {
+   "r": 0.31,
+   "h": 0.59
+  },
+  "verifiedNoMaterial": true
+ },
+ "plant_lotus_1": {
+  "id": "plant_lotus_1",
+  "source": "models/refined/plant_lotus_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 914,
+  "size": [
+   0.839,
+   0.324,
+   0.835
+  ],
+  "base": -0.012,
+  "crownRatio": 2.593,
+  "collide": {
+   "r": 0.2,
+   "h": 0.32
+  },
+  "verifiedNoMaterial": true
+ },
+ "plant_rice_1": {
+  "id": "plant_rice_1",
+  "source": "models/nature/plants/plant_rice_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 196,
+  "size": [
+   0.724,
+   0.9,
+   0.275
+  ],
+  "base": 0.0,
+  "crownRatio": 0.804,
+  "collide": {
+   "r": 0.17,
+   "h": 0.9
+  },
+  "verifiedNoMaterial": true
+ },
+ "plant_vine_2": {
+  "id": "plant_vine_2",
+  "source": "models/nature/plants/plant_vine_2.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 200,
+  "size": [
+   0.796,
+   1.49,
+   0.945
+  ],
+  "base": 0.0,
+  "crownRatio": 0.634,
+  "collide": {
+   "r": 0.23,
+   "h": 1.49
+  },
+  "verifiedNoMaterial": true
+ },
+ "plant_wheat_1": {
+  "id": "plant_wheat_1",
+  "source": "models/nature/plants/plant_wheat_1.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 200,
+  "size": [
+   0.214,
+   0.9,
+   0.315
+  ],
+  "base": 0.0,
+  "crownRatio": 0.35,
+  "collide": {
+   "r": 0.08,
+   "h": 0.9
+  },
+  "verifiedNoMaterial": true
+ },
+ "plant_wheat_2": {
+  "id": "plant_wheat_2",
+  "source": "models/nature/plants/plant_wheat_2.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 200,
+  "size": [
+   0.347,
+   1.1,
+   0.349
+  ],
+  "base": 0.0,
+  "crownRatio": 0.317,
+  "collide": {
+   "r": 0.08,
+   "h": 1.1
+  },
+  "verifiedNoMaterial": true
+ },
+ "rock_cliff_3": {
+  "id": "rock_cliff_3",
+  "source": "models/nature/rocks/rock_cliff_3.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 438,
+  "size": [
+   4.981,
+   4.5,
+   5.199
+  ],
+  "base": 0.0,
+  "crownRatio": 1.155,
+  "collide": {
+   "r": 1.25,
+   "h": 4.5
+  },
+  "verifiedNoMaterial": true
+ },
+ "rock_cliff_4": {
+  "id": "rock_cliff_4",
+  "source": "models/nature/rocks/rock_cliff_4.glb",
+  "license": "CC0",
+  "attribution": null,
+  "tris": 488,
+  "size": [
+   4.355,
+   4.5,
+   5.25
+  ],
+  "base": 0.0,
+  "crownRatio": 1.167,
+  "collide": {
+   "r": 1.26,
+   "h": 4.5
+  },
+  "verifiedNoMaterial": true
  }
 }

@@ -1,0 +1,19 @@
+{
+ "id": "plant_wheat_2",
+ "source": "models/nature/plants/plant_wheat_2.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 200,
+ "size": [
+  0.347,
+  1.1,
+  0.349
+ ],
+ "base": 0.0,
+ "crownRatio": 0.317,
+ "collide": {
+  "r": 0.08,
+  "h": 1.1
+ },
+ "verifiedNoMaterial": true
+}

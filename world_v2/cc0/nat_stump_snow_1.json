@@ -1,0 +1,19 @@
+{
+ "id": "nat_stump_snow_1",
+ "source": "models/nature/nature/nat_stump_snow_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 258,
+ "size": [
+  1.3,
+  0.594,
+  0.986
+ ],
+ "base": 0.0,
+ "crownRatio": 2.187,
+ "collide": {
+  "r": 0.31,
+  "h": 0.59
+ },
+ "verifiedNoMaterial": true
+}

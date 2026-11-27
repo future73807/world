@@ -55,6 +55,8 @@ export interface BiomeWeights {
   tundra: number;
   /** high ground: grass thinning into rock, wherever it happens to be */
   highland: number;
+  /** the coldest end: ice ground, moraine, nothing green */
+  glacier: number;
 }
 
 /** A species and the climate it grows in: `niche` is a density factor from the climate (1 = as dense as `n`). */
@@ -97,7 +99,8 @@ const ss = (from: number, to: number, v: number): number => {
 };
 
 export const BIOME_ORDER: BiomeId[] = [
-  'meadow', 'forest', 'jungle', 'highland', 'snow', 'tundra', 'desert', 'badlands', 'swamp', 'volcanic', 'beach', 'ocean',
+  'meadow', 'forest', 'jungle', 'highland', 'snow', 'glacier', 'tundra', 'desert', 'badlands',
+  'swamp', 'volcanic', 'beach', 'ocean',
 ];
 
 export const BIOMES: Record<BiomeId, BiomeDef> = {
@@ -320,6 +323,29 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_rock_arch', 1, { minH: 1.8, maxSlope: 0.24, spacing: 10, landmark: true }),
     ],
   },
+  glacier: {
+    id: 'glacier', label: '裂冰原', temp: 0.06, moist: 0.3, land: 0.8, peak: 12, rough: 0.66,
+    feature: 'none', beachH: 1.0, snowline: 0,
+    ground: { shore: 0xbfd4dd, wet: 0xa8c4d0, low: 0xdfeef4, mid: 0xc4e0ec, high: 0xf2fafd, rock: 0x8fa8b8, deep: 0x6f8898 },
+    map: { low: 0xd8ecf4, high: 0xf6fbff, shore: '#e6f2f8' },
+    blurb: '整片地面是一层泛蓝的旧冰，冰面上裂出深沟，两侧堆着被冰推来的碎石与冰块。',
+    props: [
+      R('cc0_crystal_h', 10, { minH: 0.9, maxSlope: 0.8, spacing: 3.2 }),
+      R('cc0_crystal_f', 14, { minH: 0.8, maxSlope: 0.7, spacing: 2.4 }),
+      R('cc0_crystal_b', 8, { minH: 0.9, maxSlope: 0.8, spacing: 3.4 }),
+      R('cc0_crystal_g', 10, { minH: 0.7, maxSlope: 0.9, spacing: 2.6 }),
+      R('cc0_snowrock_a', 14, { minH: 0.8, maxSlope: 0.95, spacing: 2.6 }),
+      R('cc0_snowrock_b', 10, { minH: 0.7, maxSlope: 0.95, spacing: 2.8 }),
+      R('cc0_cliff_c', 5, { minH: 1.0, maxSlope: 0.95, spacing: 4.5 }),
+      R('cc0_cliff_d', 4, { minH: 1.0, maxSlope: 0.95, spacing: 4.8 }),
+      R('cc0_snow_log', 3, { minH: 0.9, maxSlope: 0.5, spacing: 6 }),
+      R('cc0_snow_stump', 2, { minH: 1.0, maxSlope: 0.45, spacing: 7 }),
+      R('cc0_dead_snow', 3, { minH: 1.0, maxSlope: 0.5, spacing: 6 }),
+      R('cc0_bush_snow', 4, { minH: 0.9, maxSlope: 0.5, spacing: 5 }),
+      R('cc0_fox', 1, { minH: 1.0, maxSlope: 0.4, spacing: 8 }),
+      R('cc0_crystal_e', 1, { minH: 1.4, maxSlope: 0.3, spacing: 11, landmark: true }),
+    ],
+  },
   ocean: {
     id: 'ocean', label: '碧礁浅海', temp: 0.75, moist: 0.6, land: 0.24, peak: 2.4, rough: 0.25,
     feature: 'none', beachH: 2.2, snowline: 99,
@@ -356,7 +382,8 @@ export const BIOME_NEIGHBOURS: Record<BiomeId, BiomeId[]> = {
   // the climate between them is continuous
   jungle: ['jungle', 'forest', 'swamp', 'beach', 'meadow'],
   badlands: ['badlands', 'desert', 'volcanic', 'highland', 'meadow'],
-  tundra: ['tundra', 'snow', 'meadow', 'highland', 'forest'],
+  tundra: ['tundra', 'snow', 'meadow', 'highland', 'forest', 'glacier'],
+  glacier: ['glacier', 'snow', 'tundra', 'highland'],
   highland: ['highland', 'meadow', 'forest', 'snow', 'tundra', 'badlands', 'desert'],
 };
 
@@ -492,6 +519,18 @@ export const SPECIES: SpeciesRule[] = [
   S('cc0_frog', 5, (w) => w.jungle * 0.8 + w.tundra * 0.1, { minH: 0.4, maxSlope: 0.5, spacing: 3 }),
   S('cc0_hedgehog', 2, (w) => w.badlands * 0.6 + w.highland * 0.4, { minH: 0.9, maxSlope: 0.4, spacing: 5 }),
   S('cc0_fox', 2, (w) => w.tundra * 0.85, { minH: 1.0, maxSlope: 0.4, spacing: 6 }),
+  // — glacier: ice ground. No grass, no trees — crystals, moraine rock and deadwood.
+  S('cc0_crystal_h', 9, (w) => w.glacier * 0.95, { minH: 0.9, maxSlope: 0.8, spacing: 3.2 }),
+  S('cc0_crystal_f', 12, (w) => w.glacier * 0.9, { minH: 0.8, maxSlope: 0.7, spacing: 2.4 }),
+  S('cc0_crystal_b', 7, (w) => w.glacier * 0.8, { minH: 0.9, maxSlope: 0.8, spacing: 3.4 }),
+  S('cc0_crystal_g', 9, (w) => w.glacier * 0.75, { minH: 0.7, maxSlope: 0.9, spacing: 2.6 }),
+  S('cc0_snowrock_a', 13, (w) => w.glacier * 0.9, { minH: 0.8, maxSlope: 0.95, spacing: 2.6 }),
+  S('cc0_snowrock_b', 9, (w) => w.glacier * 0.8, { minH: 0.7, maxSlope: 0.95, spacing: 2.8 }),
+  S('cc0_cliff_c', 4, (w) => w.glacier * 0.7, { minH: 1.0, maxSlope: 0.95, spacing: 4.5 }),
+  S('cc0_cliff_d', 3, (w) => w.glacier * 0.6, { minH: 1.0, maxSlope: 0.95, spacing: 4.8 }),
+  S('cc0_snow_log', 3, (w) => w.glacier * 0.7, { minH: 0.9, maxSlope: 0.5, spacing: 6 }),
+  S('cc0_dead_snow', 3, (w) => w.glacier * 0.65, { minH: 1.0, maxSlope: 0.5, spacing: 6 }),
+  S('cc0_fox', 1, (w) => w.glacier * 0.5, { minH: 1.0, maxSlope: 0.4, spacing: 8 }),
 
   // — camp dressing left by travellers; only on beaches and meadows
   S('cc0_campfire', 1, (_w, temp) => warm(temp) * 0.7, { minH: 1.1, maxH: 3.0, maxSlope: 0.22, spacing: 4 }),

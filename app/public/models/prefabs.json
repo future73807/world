@@ -1,7 +1,7 @@
 {
  "version": 2,
  "blender": "4.3.2",
- "generated": "2026-11-24 23:56:40 + cc0 + cc0 + cc0 + cc0 + cc0",
+ "generated": "2026-11-24 23:56:40 + cc0 + cc0 + cc0 + cc0 + cc0 + cc0",
  "glb": "prefabs.glb",
  "models": {
   "beach_driftwood": {
@@ -4449,6 +4449,478 @@
    "castShadow": false,
    "sink": 0.06,
    "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_crystal_f": {
+   "id": "cc0_crystal_f",
+   "label": "冰棱柱",
+   "kind": "rock",
+   "biomes": [
+    "glacier"
+   ],
+   "desc": "细高的冰棱，向上收成尖。",
+   "group": "glacier",
+   "tris": 12,
+   "lod1Tris": 3,
+   "glow": false,
+   "size": [
+    0.839,
+    2.0,
+    0.74
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.2,
+    "h": 2.0
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_crystal_g": {
+   "id": "cc0_crystal_g",
+   "label": "钝冰晶",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "snow"
+   ],
+   "desc": "低矮的钝头冰晶，埋在冰面里。",
+   "group": "glacier",
+   "tris": 22,
+   "lod1Tris": 6,
+   "glow": false,
+   "size": [
+    1.46,
+    1.0,
+    1.31
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.35,
+    "h": 1.0
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_crystal_h": {
+   "id": "cc0_crystal_h",
+   "label": "冰晶丛",
+   "kind": "rock",
+   "biomes": [
+    "glacier"
+   ],
+   "desc": "成丛的冰晶，棱面互相交叠。",
+   "group": "glacier",
+   "tris": 60,
+   "lod1Tris": 16,
+   "glow": false,
+   "size": [
+    3.081,
+    2.6,
+    2.795
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.74,
+    "h": 2.6
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_crystal_i": {
+   "id": "cc0_crystal_i",
+   "label": "碎冰簇",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "snow"
+   ],
+   "desc": "碎块状的小晶簇。",
+   "group": "glacier",
+   "tris": 176,
+   "lod1Tris": 49,
+   "glow": false,
+   "size": [
+    1.365,
+    1.6,
+    1.611
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.39,
+    "h": 1.6
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_snow_log": {
+   "id": "cc0_snow_log",
+   "label": "雪埋枯木",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "snow"
+   ],
+   "desc": "半埋在雪里的枯木。",
+   "group": "glacier",
+   "tris": 280,
+   "lod1Tris": 78,
+   "glow": false,
+   "size": [
+    0.751,
+    0.7,
+    2.989
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.72,
+    "h": 0.7
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_snow_stump": {
+   "id": "cc0_snow_stump",
+   "label": "雪树桩",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "tundra"
+   ],
+   "desc": "顶面积雪的树桩。",
+   "group": "glacier",
+   "tris": 258,
+   "lod1Tris": 72,
+   "glow": false,
+   "size": [
+    1.3,
+    0.594,
+    0.986
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.31,
+    "h": 0.59
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_cliff_c": {
+   "id": "cc0_cliff_c",
+   "label": "冰岩壁",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "highland"
+   ],
+   "desc": "层理清晰的岩壁。",
+   "group": "glacier",
+   "tris": 438,
+   "lod1Tris": 122,
+   "glow": false,
+   "size": [
+    4.981,
+    4.5,
+    5.199
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 1.25,
+    "h": 4.5
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_cliff_d": {
+   "id": "cc0_cliff_d",
+   "label": "断岩",
+   "kind": "rock",
+   "biomes": [
+    "glacier",
+    "highland"
+   ],
+   "desc": "断口锋利的岩块。",
+   "group": "glacier",
+   "tris": 488,
+   "lod1Tris": 136,
+   "glow": false,
+   "size": [
+    4.355,
+    4.5,
+    5.25
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 1.26,
+    "h": 4.5
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_lotus": {
+   "id": "cc0_lotus",
+   "label": "睡莲叶",
+   "kind": "detail",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "浮在水面的莲叶。",
+   "group": "swamp",
+   "tris": 914,
+   "lod1Tris": 255,
+   "glow": false,
+   "size": [
+    0.839,
+    0.324,
+    0.835
+   ],
+   "base": -0.012,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_vine_b": {
+   "id": "cc0_vine_b",
+   "label": "垂藤二",
+   "kind": "plant",
+   "biomes": [
+    "jungle"
+   ],
+   "desc": "另一种垂下的藤。",
+   "group": "jungle",
+   "tris": 200,
+   "lod1Tris": 56,
+   "glow": false,
+   "size": [
+    0.796,
+    1.49,
+    0.945
+   ],
+   "base": 0.0,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_rice": {
+   "id": "cc0_rice",
+   "label": "水稲",
+   "kind": "plant",
+   "biomes": [
+    "swamp"
+   ],
+   "desc": "成丛的水生禾草。",
+   "group": "swamp",
+   "tris": 196,
+   "lod1Tris": 54,
+   "glow": false,
+   "size": [
+    0.724,
+    0.9,
+    0.275
+   ],
+   "base": 0.0,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_wheat_a": {
+   "id": "cc0_wheat_a",
+   "label": "野麦",
+   "kind": "plant",
+   "biomes": [
+    "meadow"
+   ],
+   "desc": "抽穗的野麦。",
+   "group": "meadow",
+   "tris": 200,
+   "lod1Tris": 56,
+   "glow": false,
+   "size": [
+    0.214,
+    0.9,
+    0.315
+   ],
+   "base": 0.0,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_wheat_b": {
+   "id": "cc0_wheat_b",
+   "label": "高麦",
+   "kind": "plant",
+   "biomes": [
+    "meadow"
+   ],
+   "desc": "更高的麦草。",
+   "group": "meadow",
+   "tris": 200,
+   "lod1Tris": 56,
+   "glow": false,
+   "size": [
+    0.347,
+    1.1,
+    0.349
+   ],
+   "base": 0.0,
+   "collide": false,
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": false,
+   "sink": 0.06,
+   "farCut": 22,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_log_b": {
+   "id": "cc0_log_b",
+   "label": "倒木二",
+   "kind": "rock",
+   "biomes": [
+    "forest"
+   ],
+   "desc": "横倒的木干。",
+   "group": "forest",
+   "tris": 464,
+   "lod1Tris": 129,
+   "glow": false,
+   "size": [
+    0.592,
+    0.7,
+    2.498
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.6,
+    "h": 0.7
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
+   "source": "majo-no-tabitabi (CC0)"
+  },
+  "cc0_log_moss": {
+   "id": "cc0_log_moss",
+   "label": "苔倒木",
+   "kind": "rock",
+   "biomes": [
+    "forest",
+    "jungle"
+   ],
+   "desc": "长满苔的倒木。",
+   "group": "forest",
+   "tris": 614,
+   "lod1Tris": 171,
+   "glow": false,
+   "size": [
+    1.042,
+    0.8,
+    3.104
+   ],
+   "base": 0.0,
+   "collide": {
+    "r": 0.74,
+    "h": 0.8
+   },
+   "material": {},
+   "scale": [
+    0.85,
+    1.25
+   ],
+   "castShadow": true,
+   "sink": 0.12,
+   "farCut": 26,
    "source": "majo-no-tabitabi (CC0)"
   }
  }

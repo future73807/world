@@ -30,6 +30,7 @@ export type BiomeId =
   | 'badlands' // hot + very dry + terraced: the banded clay buttes
   | 'tundra'   // cold but not frozen: moss, lichen, low shrubs, no tall trees
   | 'highland' // high ground anywhere: grass breaking into rock and scree
+  | 'glacier'  // the coldest end: ice is the ground, moraine rubble, nothing green
 
 export const TILE = 40; // world units per tile
 export const CHUNK = 10; // terrain chunk edge
@@ -340,7 +341,7 @@ export class IslandField {
   private _terrace = 0;
   private _dune = 0;
   private _pool = 0;
-  private _wB: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0 };
+  private _wB: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0, glacier: 0 };
 
   constructor(settings: WorldSettings, birth = true) {
     this.settings = settings;
@@ -460,6 +461,7 @@ export class IslandField {
     // narrower band carved out of an original: jungle out of forest, badlands out of
     // desert, tundra out of snow/taiga. Comparing them at the same priority would leave
     // them permanently losing to the broader biome they were split from.
+    if (w.glacier > 0.22) return 'glacier';
     if (w.badlands > 0.24 && w.badlands >= w.desert * 0.85) return 'badlands';
     if (w.jungle > 0.28 && w.jungle >= w.forest * 0.9) return 'jungle';
     if (w.tundra > 0.28) return 'tundra';
@@ -616,6 +618,15 @@ export class IslandField {
     wB.jungle = Math.min(1, (1 - wB.volcanic) * humid * 1.6);
     wB.badlands = Math.min(1, (1 - wB.volcanic) * baked * 1.25);
     wB.tundra = Math.min(1, (1 - wB.volcanic) * alpine * 0.62);
+    // glacier: ice ground, and it cannot be separated from snow by temperature.
+    //
+    // Measured on land over the spawn region: `temp`'s 25th percentile is exactly 0.000 and
+    // its median is 0.516 — the clamp flattens a quarter of the world to a single value, so
+    // "cold" and "deep cold" are the same number and no threshold between them exists.
+    // Altitude is the signal that does separate them: ice lies where the ground is both cold
+    // and high, which is also how a glacier reads in reality.
+    const ice = (1 - smoothstep(0.02, 0.34, temp)) * smoothstep(0.30, 0.74, mount);
+    wB.glacier = Math.min(1, (1 - wB.volcanic) * ice);
     wB.highland = (1 - wB.volcanic) * upland * 0.66;
     // take their share out of the base weights so the sum stays ~1
     const extra = wB.jungle + wB.badlands + wB.tundra + wB.highland;
@@ -705,6 +716,7 @@ export class IslandField {
     out.badlands = w.badlands;
     out.tundra = w.tundra;
     out.highland = w.highland;
+    out.glacier = w.glacier;
     return out;
   }
 

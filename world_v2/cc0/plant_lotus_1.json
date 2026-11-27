@@ -1,0 +1,19 @@
+{
+ "id": "plant_lotus_1",
+ "source": "models/refined/plant_lotus_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 914,
+ "size": [
+  0.839,
+  0.324,
+  0.835
+ ],
+ "base": -0.012,
+ "crownRatio": 2.593,
+ "collide": {
+  "r": 0.2,
+  "h": 0.32
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "nat_log_moss_1",
+ "source": "models/nature/nature/nat_log_moss_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 614,
+ "size": [
+  1.042,
+  0.8,
+  3.104
+ ],
+ "base": 0.0,
+ "crownRatio": 3.88,
+ "collide": {
+  "r": 0.74,
+  "h": 0.8
+ },
+ "verifiedNoMaterial": true
+}

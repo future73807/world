@@ -1,0 +1,19 @@
+{
+ "id": "plant_rice_1",
+ "source": "models/nature/plants/plant_rice_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 196,
+ "size": [
+  0.724,
+  0.9,
+  0.275
+ ],
+ "base": 0.0,
+ "crownRatio": 0.804,
+ "collide": {
+  "r": 0.17,
+  "h": 0.9
+ },
+ "verifiedNoMaterial": true
+}

@@ -1,0 +1,19 @@
+{
+ "id": "nat_log_1",
+ "source": "models/nature/nature/nat_log_1.glb",
+ "license": "CC0",
+ "attribution": null,
+ "tris": 464,
+ "size": [
+  0.592,
+  0.7,
+  2.498
+ ],
+ "base": 0.0,
+ "crownRatio": 3.569,
+ "collide": {
+  "r": 0.6,
+  "h": 0.7
+ },
+ "verifiedNoMaterial": true
+}
