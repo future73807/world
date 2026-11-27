@@ -47,6 +47,14 @@ export interface BiomeWeights {
   meadow: number;
   volcanic: number;
   taiga: number;
+  /** hottest + wettest: a rainforest band above `forest` */
+  jungle: number;
+  /** hot, very dry, terraced: the banded clay country */
+  badlands: number;
+  /** cold but above the tree line: moss and lichen, no tall trees */
+  tundra: number;
+  /** high ground: grass thinning into rock, wherever it happens to be */
+  highland: number;
 }
 
 /** A species and the climate it grows in: `niche` is a density factor from the climate (1 = as dense as `n`). */
@@ -88,7 +96,9 @@ const ss = (from: number, to: number, v: number): number => {
   return t * t * (3 - 2 * t);
 };
 
-export const BIOME_ORDER: BiomeId[] = ['meadow', 'forest', 'snow', 'desert', 'swamp', 'volcanic', 'beach', 'ocean'];
+export const BIOME_ORDER: BiomeId[] = [
+  'meadow', 'forest', 'jungle', 'highland', 'snow', 'tundra', 'desert', 'badlands', 'swamp', 'volcanic', 'beach', 'ocean',
+];
 
 export const BIOMES: Record<BiomeId, BiomeDef> = {
   meadow: {
@@ -235,6 +245,81 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
       R('cc0_boat', 1, { minH: 0.9, maxSlope: 0.25, spacing: 6 }),
     ],
   },
+  jungle: {
+    id: 'jungle', label: '藤蔓雨林', temp: 0.9, moist: 0.92, land: 0.82, peak: 10, rough: 0.5,
+    feature: 'none', beachH: 1.4, snowline: 99,
+    ground: { shore: 0xd8cc96, wet: 0xb9c47a, low: 0x4e8f3a, mid: 0x3d7a30, high: 0x5fa244, rock: 0x6f7a66, deep: 0x46603f },
+    map: { low: 0x5c9548, high: 0x9ac276, shore: '#e6dcb4' },
+    blurb: '湿热得能拧出水的密林，藤蔓从高冠垂到地面，林下是层层蕨与巨叶。',
+    props: [
+      R('cc0_broadleaf_c', 14, { minH: 1.4, maxSlope: 0.45, spacing: 3.2 }),
+      R('cc0_broadleaf_a', 12, { minH: 1.4, maxSlope: 0.42, spacing: 3.4 }),
+      R('cc0_bamboo_a', 10, { minH: 1.3, maxSlope: 0.4, spacing: 2.6 }),
+      R('cc0_vine', 22, { minH: 1.2, maxSlope: 0.5, spacing: 2.0 }),
+      R('cc0_fern_a', 40, { minH: 1.1, maxSlope: 0.5, spacing: 1.4 }),
+      R('cc0_fern_b', 28, { minH: 1.0, maxSlope: 0.5, spacing: 1.5 }),
+      R('cc0_bush_c', 10, { minH: 1.2, maxSlope: 0.4, spacing: 2.4 }),
+      R('cc0_grass_c', 220, { minH: 1.2, maxSlope: 0.7, spacing: 0.9 }),
+      R('cc0_mushroom_m', 30, { minH: 1.1, maxSlope: 0.5, spacing: 1.6 }),
+      R('cc0_deer', 2, { minH: 1.2, maxSlope: 0.35, spacing: 5 }),
+      R('cc0_frog', 6, { minH: 0.6, maxSlope: 0.5, spacing: 3 }),
+      R('cc0_giant_mushroom_b', 1, { minH: 1.2, maxSlope: 0.24, spacing: 10, landmark: true }),
+    ],
+  },
+  badlands: {
+    id: 'badlands', label: '赤色恶地', temp: 0.92, moist: 0.12, land: 0.68, peak: 8, rough: 0.62,
+    feature: 'none', beachH: 1.5, snowline: 99,
+    ground: { shore: 0xd9a878, wet: 0xc08a5c, low: 0xb5673c, mid: 0xa2562f, high: 0xc78a52, rock: 0x8c5230, deep: 0x6e3f24 },
+    map: { low: 0xb96a3e, high: 0xdcaa72, shore: '#e4c49a' },
+    blurb: '风把软泥岩一层层刮出条纹，赤橙的台地之间只剩干裂的河床和零星的枯灌。',
+    props: [
+      R('cc0_painted_rock', 14, { minH: 0.9, maxSlope: 0.9, spacing: 2.6 }),
+      R('cc0_standing_c', 8, { minH: 1.0, maxSlope: 0.7, spacing: 4 }),
+      R('cc0_boulder_c', 10, { minH: 0.8, maxSlope: 0.9, spacing: 2.4 }),
+      R('cc0_dead_b', 6, { minH: 0.9, maxSlope: 0.5, spacing: 5 }),
+      R('cc0_bush_d', 12, { minH: 0.9, maxSlope: 0.5, spacing: 2.6 }),
+      R('cc0_grass_c', 90, { minH: 1.0, maxSlope: 0.6, spacing: 1.4 }),
+      R('cc0_hedgehog', 2, { minH: 0.9, maxSlope: 0.4, spacing: 5 }),
+      R('desert_mesa', 3, { minH: 1.2, maxSlope: 0.5, spacing: 7 }),
+      R('landmark_obelisk', 1, { minH: 1.6, maxSlope: 0.28, spacing: 10, landmark: true }),
+    ],
+  },
+  tundra: {
+    id: 'tundra', label: '苔原冻土', temp: 0.26, moist: 0.44, land: 0.76, peak: 7, rough: 0.4,
+    feature: 'none', beachH: 1.2, snowline: 3,
+    ground: { shore: 0xcfd6d2, wet: 0xb4bdb8, low: 0x8f9c86, mid: 0x7d8c78, high: 0xb9c2b0, rock: 0x77807c, deep: 0x5f6a64 },
+    map: { low: 0x93a08c, high: 0xcdd4c6, shore: '#dfe4dd' },
+    blurb: '雪线以下的冻土，地衣和矮柳贴着地面长，风把石头磨得圆钝。',
+    props: [
+      R('cc0_bush_snow', 16, { minH: 1.0, maxSlope: 0.5, spacing: 2.4 }),
+      R('cc0_bush_e', 12, { minH: 1.0, maxSlope: 0.5, spacing: 2.6 }),
+      R('cc0_dead_snow', 4, { minH: 1.0, maxSlope: 0.45, spacing: 5 }),
+      R('cc0_grass_b', 160, { minH: 0.9, maxSlope: 0.6, spacing: 1.0 }),
+      R('cc0_snowrock_b', 12, { minH: 0.8, maxSlope: 0.9, spacing: 2.6 }),
+      R('cc0_boulder_b', 8, { minH: 0.8, maxSlope: 0.9, spacing: 3 }),
+      R('cc0_fox', 2, { minH: 1.0, maxSlope: 0.4, spacing: 6 }),
+      R('cc0_hedgehog', 2, { minH: 0.9, maxSlope: 0.4, spacing: 5 }),
+      R('cc0_standing_a', 1, { minH: 1.4, maxSlope: 0.28, spacing: 11, landmark: true }),
+    ],
+  },
+  highland: {
+    id: 'highland', label: '裂风高地', temp: 0.42, moist: 0.5, land: 0.7, peak: 13, rough: 0.58,
+    feature: 'none', beachH: 1.2, snowline: 11,
+    ground: { shore: 0xc8c2a8, wet: 0xb0a992, low: 0x8f9a72, mid: 0x7d8a66, high: 0xa5ad8c, rock: 0x8a8a86, deep: 0x6b6d68 },
+    map: { low: 0x97a17e, high: 0xd0d2bc, shore: '#ded9c4' },
+    blurb: '抬升的台地边缘，草皮被风刮薄，露出成片的碎石与裸岩。',
+    props: [
+      R('cc0_broadleaf_d', 5, { minH: 1.6, maxSlope: 0.34, spacing: 5 }),
+      R('cc0_bush_a', 10, { minH: 1.2, maxSlope: 0.45, spacing: 2.4 }),
+      R('cc0_grass_a', 200, { minH: 1.2, maxSlope: 0.7, spacing: 0.95 }),
+      R('cc0_grass_b', 80, { minH: 1.2, maxSlope: 0.65, spacing: 1.1 }),
+      R('cc0_boulder_e', 12, { minH: 0.9, maxSlope: 0.9, spacing: 2.6 }),
+      R('cc0_cliff_a', 6, { minH: 1.0, maxSlope: 0.95, spacing: 4 }),
+      R('cc0_flower_a', 40, { minH: 1.2, maxSlope: 0.4, spacing: 1.5 }),
+      R('cc0_deer', 2, { minH: 1.3, maxSlope: 0.4, spacing: 6 }),
+      R('cc0_rock_arch', 1, { minH: 1.8, maxSlope: 0.24, spacing: 10, landmark: true }),
+    ],
+  },
   ocean: {
     id: 'ocean', label: '碧礁浅海', temp: 0.75, moist: 0.6, land: 0.24, peak: 2.4, rough: 0.25,
     feature: 'none', beachH: 2.2, snowline: 99,
@@ -259,14 +344,20 @@ export const BIOMES: Record<BiomeId, BiomeDef> = {
  * towards a biome of its own.
  */
 export const BIOME_NEIGHBOURS: Record<BiomeId, BiomeId[]> = {
-  meadow: ['meadow', 'forest', 'beach', 'desert', 'snow', 'swamp'],
-  forest: ['forest', 'meadow', 'swamp', 'snow', 'desert'],
-  snow: ['snow', 'forest', 'meadow', 'volcanic'],
-  desert: ['desert', 'volcanic', 'beach', 'meadow', 'forest'],
-  swamp: ['swamp', 'forest', 'meadow', 'ocean'],
-  volcanic: ['volcanic', 'desert', 'snow', 'beach'],
-  beach: ['beach', 'ocean', 'desert', 'meadow', 'forest'],
+  meadow: ['meadow', 'forest', 'beach', 'desert', 'snow', 'swamp', 'highland', 'tundra'],
+  forest: ['forest', 'meadow', 'swamp', 'snow', 'desert', 'jungle', 'highland'],
+  snow: ['snow', 'forest', 'meadow', 'volcanic', 'tundra', 'highland'],
+  desert: ['desert', 'volcanic', 'beach', 'meadow', 'forest', 'badlands'],
+  swamp: ['swamp', 'forest', 'meadow', 'ocean', 'jungle'],
+  volcanic: ['volcanic', 'desert', 'snow', 'beach', 'badlands'],
+  beach: ['beach', 'ocean', 'desert', 'meadow', 'forest', 'jungle'],
   ocean: ['ocean', 'beach', 'swamp', 'meadow'],
+  // the added terrains neighbour the places they were split from, plus each other where
+  // the climate between them is continuous
+  jungle: ['jungle', 'forest', 'swamp', 'beach', 'meadow'],
+  badlands: ['badlands', 'desert', 'volcanic', 'highland', 'meadow'],
+  tundra: ['tundra', 'snow', 'meadow', 'highland', 'forest'],
+  highland: ['highland', 'meadow', 'forest', 'snow', 'tundra', 'badlands', 'desert'],
 };
 
 // --------------------------------------------------------------------------- species
@@ -360,6 +451,47 @@ export const SPECIES: SpeciesRule[] = [
   S('cc0_fox', 2, (w) => w.taiga * 0.8 + w.snow * 0.5, { minH: 1.1, maxSlope: 0.4, spacing: 4 }),
   S('cc0_cat', 1, (w, temp) => warm(temp) * 0.6 + w.meadow * 0.3, { minH: 1.0, maxH: 4.0, maxSlope: 0.3, spacing: 4 }),
   S('cc0_frog', 5, (w) => w.swamp * 0.9, { minH: 0.2, maxSlope: 0.5, spacing: 4 }),
+
+  // — jungle: the rainforest undergrowth. Vines hang, ferns layer, the canopy is tall.
+  S('cc0_broadleaf_c', 14, (w) => w.jungle * 0.95, { minH: 1.4, maxSlope: 0.45, spacing: 3.2 }),
+  S('cc0_broadleaf_a', 11, (w) => w.jungle * 0.8, { minH: 1.4, maxSlope: 0.42, spacing: 3.4 }),
+  S('cc0_bamboo_a', 9, (w) => w.jungle * 0.7, { minH: 1.3, maxSlope: 0.4, spacing: 2.6 }),
+  S('cc0_vine', 20, (w) => w.jungle * 0.85, { minH: 1.2, maxSlope: 0.5, spacing: 2.0 }),
+  S('cc0_fern_a', 38, (w) => w.jungle * 0.9, { minH: 1.1, maxSlope: 0.5, spacing: 1.4 }),
+  S('cc0_fern_b', 26, (w) => w.jungle * 0.8, { minH: 1.0, maxSlope: 0.5, spacing: 1.5 }),
+  S('cc0_mushroom_m', 28, (w) => w.jungle * 0.7 + w.swamp * 0.3, { minH: 1.1, maxSlope: 0.5, spacing: 1.6 }),
+  S('cc0_grass_c', 240, (w) => w.jungle * 0.95, { minH: 1.2, maxSlope: 0.7, spacing: 0.9 }),
+
+  // — badlands: banded clay, dry scrub, the odd skeleton tree
+  S('cc0_painted_rock', 15, (w) => w.badlands * 0.95, { minH: 0.9, maxSlope: 0.9, spacing: 2.6 }),
+  S('cc0_standing_c', 7, (w) => w.badlands * 0.8, { minH: 1.0, maxSlope: 0.7, spacing: 4 }),
+  S('cc0_boulder_c', 10, (w) => w.badlands * 0.7 + w.desert * 0.3, { minH: 0.8, maxSlope: 0.9, spacing: 2.4 }),
+  S('cc0_dead_b', 6, (w) => w.badlands * 0.85, { minH: 0.9, maxSlope: 0.5, spacing: 5 }),
+  S('cc0_bush_d', 11, (w) => w.badlands * 0.75 + w.desert * 0.3, { minH: 0.9, maxSlope: 0.5, spacing: 2.6 }),
+  S('cc0_grass_c', 80, (w) => w.badlands * 0.6, { minH: 1.0, maxSlope: 0.6, spacing: 1.6 }),
+  S('desert_mesa', 3, (w) => w.badlands * 0.9, { minH: 1.2, maxSlope: 0.5, spacing: 7 }),
+
+  // — tundra: moss, low willow, no tall trees
+  S('cc0_bush_snow', 15, (w) => w.tundra * 0.9, { minH: 1.0, maxSlope: 0.5, spacing: 2.4 }),
+  S('cc0_bush_e', 11, (w) => w.tundra * 0.8, { minH: 1.0, maxSlope: 0.5, spacing: 2.6 }),
+  S('cc0_dead_snow', 4, (w) => w.tundra * 0.7 + w.taiga * 0.2, { minH: 1.0, maxSlope: 0.45, spacing: 5 }),
+  S('cc0_grass_b', 150, (w) => w.tundra * 0.85, { minH: 0.9, maxSlope: 0.6, spacing: 1.0 }),
+  S('cc0_snowrock_b', 11, (w) => w.tundra * 0.8, { minH: 0.8, maxSlope: 0.9, spacing: 2.6 }),
+  S('cc0_boulder_b', 8, (w) => w.tundra * 0.6, { minH: 0.8, maxSlope: 0.9, spacing: 3 }),
+
+  // — highland: thin grass over scree, the rock shows through
+  S('cc0_broadleaf_d', 4, (w) => w.highland * 0.6, { minH: 1.6, maxSlope: 0.34, spacing: 5 }),
+  S('cc0_bush_a', 9, (w) => w.highland * 0.7, { minH: 1.2, maxSlope: 0.45, spacing: 2.4 }),
+  S('cc0_grass_a', 180, (w) => w.highland * 0.9, { minH: 1.2, maxSlope: 0.7, spacing: 0.95 }),
+  S('cc0_boulder_e', 11, (w) => w.highland * 0.85, { minH: 0.9, maxSlope: 0.9, spacing: 2.6 }),
+  S('cc0_cliff_a', 5, (w) => w.highland * 0.7, { minH: 1.0, maxSlope: 0.95, spacing: 4 }),
+  S('cc0_flower_a', 36, (w) => w.highland * 0.5, { minH: 1.2, maxSlope: 0.4, spacing: 1.5 }),
+
+  // — wildlife on the new ground
+  S('cc0_deer', 2, (w) => w.jungle * 0.5 + w.highland * 0.6, { minH: 1.2, maxSlope: 0.4, spacing: 5 }),
+  S('cc0_frog', 5, (w) => w.jungle * 0.8 + w.tundra * 0.1, { minH: 0.4, maxSlope: 0.5, spacing: 3 }),
+  S('cc0_hedgehog', 2, (w) => w.badlands * 0.6 + w.highland * 0.4, { minH: 0.9, maxSlope: 0.4, spacing: 5 }),
+  S('cc0_fox', 2, (w) => w.tundra * 0.85, { minH: 1.0, maxSlope: 0.4, spacing: 6 }),
 
   // — camp dressing left by travellers; only on beaches and meadows
   S('cc0_campfire', 1, (_w, temp) => warm(temp) * 0.7, { minH: 1.1, maxH: 3.0, maxSlope: 0.22, spacing: 4 }),

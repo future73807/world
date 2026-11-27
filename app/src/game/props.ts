@@ -222,7 +222,7 @@ export function scatterTile(
   const missing: string[] = [];
   const key = tileKey(tile.x, tile.z);
   const scratch: PropInstance[] = [];
-  const w: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0 };
+  const w: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0 };
   const tm: [number, number] = [0, 0];
 
   // what to grow, and how much of it. A species' niche, averaged over the tile,

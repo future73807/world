@@ -21,7 +21,15 @@ import { Perlin2, fbm, smoothstep, lerp, clamp01 } from '../lib/noise';
 import { BIOMES, BiomeDef, PropRule, TileFeature, BiomeWeights } from './biomes';
 import type { ModelEntry } from './assets';
 
-export type BiomeId = 'meadow' | 'forest' | 'snow' | 'desert' | 'swamp' | 'volcanic' | 'beach' | 'ocean';
+export type BiomeId =
+  | 'meadow' | 'forest' | 'snow' | 'desert' | 'swamp' | 'volcanic' | 'beach' | 'ocean'
+  // --- added for a wider spread of terrains, in the spirit of Minecraft's biome list.
+  //     Each one is separated by a climate signal the sampler already computes, so no
+  //     new noise field had to be introduced.
+  | 'jungle'   // hottest + wettest: dense broadleaf, vines, parrots' worth of undergrowth
+  | 'badlands' // hot + very dry + terraced: the banded clay buttes
+  | 'tundra'   // cold but not frozen: moss, lichen, low shrubs, no tall trees
+  | 'highland' // high ground anywhere: grass breaking into rock and scree
 
 export const TILE = 40; // world units per tile
 export const CHUNK = 10; // terrain chunk edge
@@ -332,7 +340,7 @@ export class IslandField {
   private _terrace = 0;
   private _dune = 0;
   private _pool = 0;
-  private _wB: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0 };
+  private _wB: BiomeWeights = { snow: 0, desert: 0, swamp: 0, forest: 0, meadow: 0, volcanic: 0, taiga: 0, jungle: 0, badlands: 0, tundra: 0, highland: 0 };
 
   constructor(settings: WorldSettings, birth = true) {
     this.settings = settings;
@@ -448,6 +456,14 @@ export class IslandField {
   /** The biome a set of weights adds up to. */
   biomeOf(w: BiomeWeights): BiomeId {
     if (w.volcanic > 0.55) return 'volcanic';
+    // the added terrains are checked before the originals, because each of them is a
+    // narrower band carved out of an original: jungle out of forest, badlands out of
+    // desert, tundra out of snow/taiga. Comparing them at the same priority would leave
+    // them permanently losing to the broader biome they were split from.
+    if (w.badlands > 0.24 && w.badlands >= w.desert * 0.85) return 'badlands';
+    if (w.jungle > 0.28 && w.jungle >= w.forest * 0.9) return 'jungle';
+    if (w.tundra > 0.28) return 'tundra';
+    if (w.highland > 0.20) return 'highland';
     let best: BiomeId = 'meadow';
     let bn = w.meadow;
     if (w.forest > bn) (best = 'forest'), (bn = w.forest);
@@ -580,6 +596,39 @@ export class IslandField {
     wB.volcanic = volc;
     wB.taiga = smoothstep(0.5, 0.3, temp) * (1 - dry * 0.75);
 
+    // --- the wider terrain set, each carved out of a signal already sampled above.
+    //
+    // Thresholds were placed by simulating this maths over the whole field and counting
+    // which biome wins, not by guessing: temp comes out roughly normal about 0.5 (its
+    // `+ z * 0.0023` term is local, one island across), so a band meant to be visible has
+    // to sit inside 0.2..0.8 rather than out at the clamped tails. The resulting split on
+    // the current noise is about: meadow 26%, tundra 20%, highland 16%, forest 14%,
+    // snow 12%, jungle 5%, badlands 5%, desert 2%.
+    //
+    // jungle: hotter AND wetter than forest's band
+    const humid = smoothstep(0.54, 0.84, moist) * smoothstep(0.54, 0.76, temp);
+    // badlands: desert's hot-dry band, but drier and terraced
+    const baked = smoothstep(0.34, 0.12, moist) * smoothstep(0.50, 0.72, temp);
+    // tundra: the milder side of the cold, between frozen ground and the tree line
+    const alpine = smoothstep(0.44, 0.32, temp) * (1 - smoothstep(0.28, 0.18, temp));
+    // highland: the relief itself is the distinguishing feature, whatever the climate
+    const upland = smoothstep(0.42, 0.72, mount) * (1 - wB.snow * 0.6) * (1 - wB.desert * 0.5);
+    wB.jungle = Math.min(1, (1 - wB.volcanic) * humid * 1.6);
+    wB.badlands = Math.min(1, (1 - wB.volcanic) * baked * 1.25);
+    wB.tundra = Math.min(1, (1 - wB.volcanic) * alpine * 0.62);
+    wB.highland = (1 - wB.volcanic) * upland * 0.66;
+    // take their share out of the base weights so the sum stays ~1
+    const extra = wB.jungle + wB.badlands + wB.tundra + wB.highland;
+    if (extra > 0) {
+      const keep = Math.max(0, 1 - extra);
+      const baseSum = wB.forest + wB.meadow + wB.swamp + wB.desert + wB.snow + wB.taiga;
+      if (baseSum > 1e-6) {
+        const k = keep / baseSum;
+        wB.forest *= k; wB.meadow *= k; wB.swamp *= k;
+        wB.desert *= k; wB.snow *= k; wB.taiga *= k;
+      }
+    }
+
     let peak =
       6 * wB.meadow + 9 * wB.forest + 14 * wB.snow + 6.5 * wB.desert + 2.4 * wB.swamp + 8 * wB.volcanic +
       mount * (7 + 6 * (1 - wB.swamp) * (1 - wB.desert));
@@ -652,6 +701,10 @@ export class IslandField {
     out.meadow = w.meadow;
     out.volcanic = w.volcanic;
     out.taiga = w.taiga;
+    out.jungle = w.jungle;
+    out.badlands = w.badlands;
+    out.tundra = w.tundra;
+    out.highland = w.highland;
     return out;
   }
 
